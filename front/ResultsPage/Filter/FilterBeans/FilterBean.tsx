@@ -27,7 +27,18 @@ class FilterBean extends React.Component<{ name: string }> {
     } else if (
       filterBeans.findIndex(bean => bean.name === this.props.name) === -1
     ) {
-      selectedFilterBean.index = filterBeans[filterBeans.length - 1].index + 1;
+      filterBeans[filterBeans.length - 1].index < colors.length - 2
+        ? (selectedFilterBean.index =
+            filterBeans[filterBeans.length - 1].index + 1)
+        : (selectedFilterBean.index = 0);
+      (event.target as HTMLButtonElement).setAttribute(
+        `style`,
+        `background-color: ${colors[selectedFilterBean.index]}`,
+      );
+      storeFilter.addSelectedFilterBean(selectedFilterBean);
+    } else if (filterBeans[filterBeans.length - 1].index > colors.length - 2) {
+      console.log(true);
+      selectedFilterBean.index = 0;
       (event.target as HTMLButtonElement).setAttribute(
         `style`,
         `background-color: ${colors[selectedFilterBean.index]}`,
