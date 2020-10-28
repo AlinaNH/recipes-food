@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Chip from '@material-ui/core/Chip';
 
-let ingredientsData: object[] = [
+const ingredientsData: any[] = [
   { type: 'apple' },
   { type: 'tomato' },
   { type: 'pepper' },
@@ -29,7 +29,7 @@ let ingredientsData: object[] = [
   { type: 'garlics' },
 ];
 
-let colors: string[] = [
+const colors: string[] = [
   'green',
   'blue',
   'crimson',
@@ -62,7 +62,7 @@ export const AutocompleteSearch: React.FunctionComponent = () => {
     indexStore: number[],
   ): number => {
     while (true) {
-      let randomIndex = Math.floor(Math.random() * indexRange);
+      const randomIndex = Math.floor(Math.random() * indexRange);
       if (!indexStore.includes(randomIndex)) {
         setColorIndex([...indexStore, randomIndex]);
       } else if (indexStore.length == indexRange) {
@@ -88,24 +88,24 @@ export const AutocompleteSearch: React.FunctionComponent = () => {
       options={ingredientsData}
       getOptionSelected={(option, value) => option.type === value.type}
       getOptionLabel={option => option.type}
-      onChange={(_, newValue: object[] | null, reason: string) => {
+      onChange={(_, newValue: any[] | null, reason: string) => {
         switch (reason) {
           case 'clear':
             setColorIndex([]);
             setValue([]);
             break;
           case 'remove-option':
-            let updateColorIndex = colorIndex.filter(
+            const updateColorIndex = colorIndex.filter(
               (e, i) => i != colorIndex.length - 1,
             );
-            let updateValue = value.filter((e, i) => i != value.length - 1);
+            const updateValue = value.filter((e, i) => i != value.length - 1);
             setColorIndex(updateColorIndex);
             setValue(updateValue);
             break;
           default:
-            let randomColor =
+            const randomColor =
               colors[getRandomUniqIndex(colors.length, colorIndex)];
-            let addColorElement = newValue.map((e, i) => {
+            const addColorElement = newValue.map((e, i) => {
               if (i == newValue.length - 1 && reason !== 'remove-option') {
                 return { ...e, color: randomColor };
               }
