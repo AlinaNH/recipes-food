@@ -73,6 +73,31 @@ export const AutocompleteSearch: React.FunctionComponent = () => {
       return randomIndex;
     }
   };
+  const onChangeHandler = (reason: string, newValue: object[]) => {
+    switch (reason) {
+      case 'clear':
+        setColorIndex([]);
+        setValue([]);
+        break;
+      case 'remove-option':
+        let updateColorIndex = colorIndex.filter(
+          (e, i) => i != colorIndex.length - 1,
+        );
+        let updateValue = value.filter((e, i) => i != value.length - 1);
+        setColorIndex(updateColorIndex);
+        setValue(updateValue);
+        break;
+      default:
+        let randomColor = colors[getRandomUniqIndex(colors.length, colorIndex)];
+        let addColorElement = newValue.map((e, i) => {
+          if (i == newValue.length - 1 && reason !== 'remove-option') {
+            return { ...e, color: randomColor };
+          }
+          return e;
+        });
+        setValue(addColorElement);
+    }
+  };
   return (
     <Autocomplete
       id="autocomplete"
@@ -89,30 +114,7 @@ export const AutocompleteSearch: React.FunctionComponent = () => {
       getOptionSelected={(option, value) => option.type === value.type}
       getOptionLabel={option => option.type}
       onChange={(_, newValue: object[] | null, reason: string) => {
-        switch (reason) {
-          case 'clear':
-            setColorIndex([]);
-            setValue([]);
-            break;
-          case 'remove-option':
-            let updateColorIndex = colorIndex.filter(
-              (e, i) => i != colorIndex.length - 1,
-            );
-            let updateValue = value.filter((e, i) => i != value.length - 1);
-            setColorIndex(updateColorIndex);
-            setValue(updateValue);
-            break;
-          default:
-            let randomColor =
-              colors[getRandomUniqIndex(colors.length, colorIndex)];
-            let addColorElement = newValue.map((e, i) => {
-              if (i == newValue.length - 1 && reason !== 'remove-option') {
-                return { ...e, color: randomColor };
-              }
-              return e;
-            });
-            setValue(addColorElement);
-        }
+        onChangeHandler(reason, newValue);
       }}
       onInputChange={(_, newInputValue: string) => {
         setInputValue(newInputValue);
