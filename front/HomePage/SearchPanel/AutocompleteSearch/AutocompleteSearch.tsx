@@ -29,26 +29,27 @@ const ingredientsData: any[] = [
   { type: 'garlics' },
 ];
 
-const colors: string[] = [
-  'green',
-  'blue',
-  'crimson',
-  'orange',
-  'pink',
-  'coral',
-  'olive',
-  'gold',
-  'beige',
-  'HotPink',
-  'violet',
-  'aqua',
-  'SpringGreen',
-  'cadetblue',
-  'darkslateblue',
-  'greenyellow',
-  'tomato',
-  'slateblue',
-  'skyblue',
+let colors = [
+  '#47BFFF',
+  '#F29CA8',
+  '#FF9D14',
+  '#FDE12D',
+  '#E699FF',
+  '#9bf6ff',
+  '#73C49E',
+  '#cb997e',
+  '#FF5659',
+  '#AAF683',
+  '#ffcbf2',
+  '#FDC500',
+  '#C9A6ED',
+  '#dee2ff',
+  '#41ead4',
+  '#ffcad4',
+  '#BCF4DE',
+  '#B8B8FF',
+  '#c08497',
+  '#ff777b',
 ];
 
 export const AutocompleteSearch: React.FunctionComponent = () => {
@@ -73,6 +74,31 @@ export const AutocompleteSearch: React.FunctionComponent = () => {
       return randomIndex;
     }
   };
+  const onChangeHandler = (reason: string, newValue: object[]) => {
+    switch (reason) {
+      case 'clear':
+        setColorIndex([]);
+        setValue([]);
+        break;
+      case 'remove-option':
+        let updateColorIndex = colorIndex.filter(
+          (e, i) => i != colorIndex.length - 1,
+        );
+        let updateValue = value.filter((e, i) => i != value.length - 1);
+        setColorIndex(updateColorIndex);
+        setValue(updateValue);
+        break;
+      default:
+        let randomColor = colors[getRandomUniqIndex(colors.length, colorIndex)];
+        let addColorElement = newValue.map((e, i) => {
+          if (i == newValue.length - 1 && reason !== 'remove-option') {
+            return { ...e, color: randomColor };
+          }
+          return e;
+        });
+        setValue(addColorElement);
+    }
+  };
   return (
     <Autocomplete
       id="autocomplete"
@@ -88,31 +114,8 @@ export const AutocompleteSearch: React.FunctionComponent = () => {
       options={ingredientsData}
       getOptionSelected={(option, value) => option.type === value.type}
       getOptionLabel={option => option.type}
-      onChange={(_, newValue: any[] | null, reason: string) => {
-        switch (reason) {
-          case 'clear':
-            setColorIndex([]);
-            setValue([]);
-            break;
-          case 'remove-option':
-            const updateColorIndex = colorIndex.filter(
-              (e, i) => i != colorIndex.length - 1,
-            );
-            const updateValue = value.filter((e, i) => i != value.length - 1);
-            setColorIndex(updateColorIndex);
-            setValue(updateValue);
-            break;
-          default:
-            const randomColor =
-              colors[getRandomUniqIndex(colors.length, colorIndex)];
-            const addColorElement = newValue.map((e, i) => {
-              if (i == newValue.length - 1 && reason !== 'remove-option') {
-                return { ...e, color: randomColor };
-              }
-              return e;
-            });
-            setValue(addColorElement);
-        }
+      onChange={(_, newValue: object[] | null, reason: string) => {
+        onChangeHandler(reason, newValue);
       }}
       onInputChange={(_, newInputValue: string) => {
         setInputValue(newInputValue);
