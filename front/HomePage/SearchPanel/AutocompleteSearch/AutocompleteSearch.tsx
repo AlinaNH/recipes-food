@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Chip from '@material-ui/core/Chip';
 
-let ingredientsData: object[] = [
+const ingredientsData: any[] = [
   { type: 'apple' },
   { type: 'tomato' },
   { type: 'pepper' },
@@ -63,7 +63,7 @@ export const AutocompleteSearch: React.FunctionComponent = () => {
     indexStore: number[],
   ): number => {
     while (true) {
-      let randomIndex = Math.floor(Math.random() * indexRange);
+      const randomIndex = Math.floor(Math.random() * indexRange);
       if (!indexStore.includes(randomIndex)) {
         setColorIndex([...indexStore, randomIndex]);
       } else if (indexStore.length == indexRange) {
