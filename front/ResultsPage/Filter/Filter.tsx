@@ -1,6 +1,8 @@
 import * as React from 'react';
 import './Filter.css';
 
+import FilterBean from './FilterBeans/FilterBean';
+
 export const Filter: React.FunctionComponent = () => (
   <div className="filter-container">
     <div className="filter-name">Filter Recipes:</div>
@@ -8,27 +10,27 @@ export const Filter: React.FunctionComponent = () => (
       Check multiple beans below to narrow recipe search results
     </div>
     <div className="filter-type">Filter by Ingestion</div>
-    <button className="filter-button">breakfast</button>
-    <button className="filter-button">lunch</button>
-    <button className="filter-button">dinner</button>
+    <FilterBean name="breakfast" />
+    <FilterBean name="lunch" />
+    <FilterBean name="dinner" />
     <div className="filter-type">Filter by Cooking Time</div>
-    <button className="filter-button">25 minutes</button>
-    <button className="filter-button">40 minutes</button>
-    <button className="filter-button">60 minutes</button>
-    <button className="filter-button">120 minutes</button>
+    <FilterBean name="25 minutes" />
+    <FilterBean name="40 minutes" />
+    <FilterBean name="60 minutes" />
+    <FilterBean name="120 minutes" />
     <div className="filter-type">Filter by Spicy</div>
-    <button className="filter-button">not spicy</button>
-    <button className="filter-button">spicy</button>
-    <button className="filter-button">very spicy</button>
+    <FilterBean name="not spicy" />
+    <FilterBean name="spicy" />
+    <FilterBean name="very spicy" />
     <div className="filter-type">Filter by Type</div>
-    <button className="filter-button">daily recipes</button>
-    <button className="filter-button">desserts</button>
-    <button className="filter-button">soups</button>
-    <button className="filter-button">snacks</button>
-    <button className="filter-button">meat</button>
-    <button className="filter-button">salads</button>
-    <button className="filter-button">pizza</button>
-    <button className="filter-button">mast to make</button>
-    <button className="filter-button">popular</button>
+    <FilterBean name="daily recipes" />
+    <FilterBean name="desserts" />
+    <FilterBean name="soups" />
+    <FilterBean name="snacks" />
+    <FilterBean name="meat" />
+    <FilterBean name="salads" />
+    <FilterBean name="pizza" />
+    <FilterBean name="fast to make" />
+    <FilterBean name="popular" />
   </div>
 );

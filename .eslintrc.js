@@ -47,6 +47,7 @@ module.exports = {
     'no-unused-vars': 'off',
     'require-jsdoc': 'off',
     'new-cap': 'off',
-    'max-len': 'off'
+    'max-len': 'off',
+    'comma-dangle': 'off'
   },
 };

@@ -1,0 +1,18 @@
+.filter-button {
+    margin: 4px 4px 4px 0;
+    padding: 0.30em 0.8em;
+    border: none;
+    border-radius: 10rem;
+    font-family: Catamaran, sans-serif;
+    font-size: 14px;
+    background-color: #d3d3d3;
+    user-select: none;
+}
+
+.filter-button:focus {
+    outline: none;
+}
+
+.filter-button:hover {
+    background-color: #808080;
+}
