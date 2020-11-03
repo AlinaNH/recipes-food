@@ -6,6 +6,7 @@ import Chip from '@material-ui/core/Chip';
 import { observer, inject } from 'mobx-react';
 import { AutocompleteStorProps } from '../../../stores/storeAutocomplete';
 
+
 interface IngredientsType {
   type: string;
   color?: string;
@@ -46,10 +47,7 @@ export const AutocompleteSearch = inject('AutocompleteStore')(
     const [inputValue, setInputValue] = React.useState('');
     const [open, setOpen] = React.useState(false);
     const maxAvailableTag = 20;
-    const onChangeHandler = (
-      reason: string,
-      newValue: Array<IngredientsType>,
-    ) => {
+    const onChangeHandler = (reason: string, newValue: Array<IngredientsType>) => {
       switch (reason) {
         case 'clear':
           store.clearAllSelectedIngredients();
@@ -69,20 +67,14 @@ export const AutocompleteSearch = inject('AutocompleteStore')(
         open={open}
         inputValue={inputValue}
         onOpen={() => {
-          store.selectedIngredients.length == maxAvailableTag
-            ? setOpen(false)
-            : setOpen(true);
+          store.selectedIngredients.length == maxAvailableTag ? setOpen(false): setOpen(true);
         }}
         onClose={() => setOpen(false)}
         filterSelectedOptions
         options={ingredientsData}
         getOptionSelected={(option, value) => option.type === value.type}
         getOptionLabel={option => option.type}
-        onChange={(
-          _,
-          newValue: Array<IngredientsType> | null,
-          reason: string,
-        ) => {
+        onChange={(_,newValue: Array<IngredientsType> | null,reason: string) => {
           onChangeHandler(reason, newValue);
         }}
         onInputChange={(_, newInputValue: string) => {
