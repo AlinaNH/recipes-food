@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './Filter.css';
 
-import { FilterBean } from './FilterBeans/FilterBean';
+import FilterBean from './FilterBeans/FilterBean';
 
 export const Filter: React.FunctionComponent = () => (
   <div className="filter-container">
