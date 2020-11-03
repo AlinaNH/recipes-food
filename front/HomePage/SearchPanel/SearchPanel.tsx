@@ -3,6 +3,7 @@ import './SearchPanel.css';
 import { CgSearch } from 'react-icons/cg';
 import { Link } from 'react-router-dom';
 import { AutocompleteSearch } from './AutocompleteSearch/AutocompleteSearch';
+
 export const SearchPanel: React.FunctionComponent = () => {
   return (
     <div className="SearchPanel">
