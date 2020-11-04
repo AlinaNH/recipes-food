@@ -78,10 +78,10 @@ export default class AutocompleteStore {
 
   @action removeSelectedIngredients(optionType, optionColor) {
     this.addIngredients(
-      toJS(this.selectedIngredients).filter(e => e.type !== optionType),
+      toJS(this.selectedIngredients).filter((e) => e.type !== optionType),
     );
     this.addColorIndex(
-      toJS(this.colorsIndex).filter(e => e !== colorsTag.indexOf(optionColor)),
+      toJS(this.colorsIndex).filter((e) => e !== colorsTag.indexOf(optionColor)),
     );
   }
 }
