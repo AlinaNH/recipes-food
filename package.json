@@ -131,8 +131,8 @@
     }
   },
   "lint-staged": {
-    "*.ts": "prettier --write",
-    "*.tsx": "prettier --write"
+    "*.ts": "eslint \"**/*.{ts,tsx}\" --fix",
+    "*.tsx": "eslint \"**/*.{ts,tsx}\" --fix"
   },
   "browserslist": [
     "last 2 version",
