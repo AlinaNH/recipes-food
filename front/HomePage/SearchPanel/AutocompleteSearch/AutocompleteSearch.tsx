@@ -37,12 +37,12 @@ let ingredientsData: Array<IngredientsType> = [
 ];
 
 interface AutocompleteProps {
-  AutocompleteStore?: AutocompleteStorProps;
+  autocompleteStore?: AutocompleteStorProps;
 }
 
-export const AutocompleteSearch = inject('AutocompleteStore')(
+export const AutocompleteSearch = inject('autocompleteStore')(
   observer((props: AutocompleteProps) => {
-    const store = props.AutocompleteStore;
+    const store = props.autocompleteStore;
     const [inputValue, setInputValue] = React.useState('');
     const [open, setOpen] = React.useState(false);
     const maxAvailableTag = 20;
