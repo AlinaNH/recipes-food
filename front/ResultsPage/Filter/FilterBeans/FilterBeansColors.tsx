@@ -9,5 +9,4 @@ export const FILTER_BEANS_COLORS = {
   'Cadet Blue': '#4D908E',
   'Queen Blue': '#577590',
   'CG Blue': '#277DA1',
-  Grey: '#D3D3D3',
 };
