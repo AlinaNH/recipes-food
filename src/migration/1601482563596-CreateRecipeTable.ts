@@ -58,13 +58,14 @@ export class CreateRecipeTable1601482563596 implements MigrationInterface {
     );
 
     await queryRunner.query(
-      "CREATE TYPE e_recipe_type AS ENUM ('soup', 'dessert', 'drink', 'salad', 'second')",
+      // eslint-disable-next-line max-len
+      'CREATE TYPE e_recipe_type AS ENUM (\'soup\', \'dessert\', \'drink\', \'salad\', \'second\')',
     );
 
     await queryRunner.query('ALTER TABLE recipe ADD COLUMN type e_recipe_type');
 
     await queryRunner.query(
-      "CREATE TYPE e_recipe_difficult AS ENUM ('easy', 'medium', 'hard')",
+      'CREATE TYPE e_recipe_difficult AS ENUM (\'easy\', \'medium\', \'hard\')',
     );
 
     await queryRunner.query(
@@ -75,7 +76,7 @@ export class CreateRecipeTable1601482563596 implements MigrationInterface {
   public async down(queryRunner: QueryRunner): Promise<void> {
     const table = await queryRunner.getTable('recipe');
     const foreignKey = table.foreignKeys.find(
-      fk => fk.columnNames.indexOf('country_id') !== -1,
+      (fk) => fk.columnNames.indexOf('country_id') !== -1,
     );
     await queryRunner.dropForeignKey('recipe', foreignKey);
     await queryRunner.dropTable('recipe');
