@@ -6,12 +6,12 @@ export interface AutocompleteStorProps {
   selectedIngredients: Array<selectedIngredientsType>;
   colorsIndex: Array<number>;
   getSelectedIngredients(): void;
-  addIngredients(ingredients: object[]): void;
+  addIngredients(ingredients: any[]): void;
   addColorIndex(colorIndex: Array<number>): void;
   removeSelectedIngredients(optionType: string, optionColor: string): void;
   clearAllSelectedIngredients(): void;
   removeLastSelectedIngredients(): void;
-  addIngredientsWhitColor(newValue: object[], reason: string): void;
+  addIngredientsWhitColor(newValue: any[], reason: string): void;
 }
 
 interface selectedIngredientsType {
@@ -58,8 +58,8 @@ export default class AutocompleteStore {
   }
 
   @action addIngredientsWhitColor(newValue, reason) {
-    let randomColor = colorsTag[this.getRandomUniqColorIndex()];
-    let addColorElement = newValue.map((e, i) => {
+    const randomColor = colorsTag[this.getRandomUniqColorIndex()];
+    const addColorElement = newValue.map((e, i) => {
       if (i == newValue.length - 1 && reason !== 'remove-option') {
         return { ...e, color: randomColor };
       }

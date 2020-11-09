@@ -21,6 +21,7 @@ module.exports = {
   rules: {
     '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
+    "@typescript-eslint/explicit-module-boundary-types": "off",
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-unused-vars': 'off',
     'operator-linebreak': ['error', 'before'],
@@ -47,7 +48,7 @@ module.exports = {
     'no-unused-vars': 'off',
     'require-jsdoc': 'off',
     'new-cap': 'off',
-    'max-len': 'off',
+    'max-len': ["error", { "code": 90 }],
     'comma-dangle': 'off'
   },
 };

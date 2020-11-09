@@ -1,57 +1,43 @@
-/* eslint-disable require-jsdoc */
 import * as React from 'react';
+import { inject, observer } from 'mobx-react';
+
 import { FILTER_BEANS_COLORS } from './FilterBeansColors';
-import { storeFilter } from '../../../stores/storeFilter';
 import './FilterBean.css';
 
 interface FilterBeanProps {
   name: string;
+  filterStore?: any;
 }
 
-export const FilterBean: React.FunctionComponent<FilterBeanProps> = ({
+const FilterBean: React.FunctionComponent<FilterBeanProps> = ({
   name,
-}): any => {
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
+  filterStore,
+}) => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     const colors = Object.values(FILTER_BEANS_COLORS);
-    const filterBeans = storeFilter.getSelectedFilterBeans();
-    const selectedFilterBean = {
-      name: name,
-      path: event.target,
-      index: 0,
-    };
+    const filters = filterStore.getFilters;
+    const target = event.target as HTMLButtonElement;
+    const currentColor = colors[filters.length % colors.length];
+    const basicColor = '#D3D3D3';
 
-    if (!filterBeans.length) {
-      // change background color and save data for the first clicked filter bean
-      (event.target as HTMLButtonElement).setAttribute(
-        `style`,
-        `background-color: ${colors[selectedFilterBean.index]}`,
-      );
-      storeFilter.addSelectedFilterBean(selectedFilterBean);
-    } else if (
-      filterBeans.findIndex(bean => bean.name === name) === -1 // change background color and save data for other filter beans clicked after the first one
-    ) {
-      filterBeans[filterBeans.length - 1].index < colors.length - 2 // set index for filter beans which quantity is less / more than quantity of backound color (needed for looping of backgound colors)
-        ? (selectedFilterBean.index =
-            filterBeans[filterBeans.length - 1].index + 1)
-        : (selectedFilterBean.index = 0);
-      (event.target as HTMLButtonElement).setAttribute(
-        `style`,
-        `background-color: ${colors[selectedFilterBean.index]}`,
-      );
-      storeFilter.addSelectedFilterBean(selectedFilterBean);
+    if (!filters.includes(name)) {
+      changeBackgroundColor(target, currentColor);
+      filterStore.setFilter(name);
     } else {
-      // change background color and remove data for the filter bean clicked the second time
-      (event.target as HTMLButtonElement).setAttribute(
-        `style`,
-        `background-color: ${colors[colors.length - 1]}`,
-      );
-      storeFilter.removeSelectedFilterBean(selectedFilterBean);
+      changeBackgroundColor(target, basicColor);
+      filterStore.deleteFilter(name);
     }
   };
 
+  const changeBackgroundColor = (element: HTMLButtonElement, color: string) => {
+    element.setAttribute(`style`, `background-color: ${color}`);
+  };
+
   return (
-    <button className="filter-button" id={name} onClick={handleClick}>
+    <button className="filter-button" onClick={handleClick}>
       {name}
     </button>
   );
 };
+
+export default inject('filterStore')(observer(FilterBean));
