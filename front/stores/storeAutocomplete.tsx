@@ -26,9 +26,9 @@ export default class AutocompleteStore {
   @action getRandomUniqColorIndex = () => {
     while (true) {
       let randomIndex = Math.floor(Math.random() * colorsTag.length);
-      if (!toJS(this.colorsIndex).includes(randomIndex)) {
-        this.addColorIndex([...toJS(this.colorsIndex), randomIndex]);
-      } else if (toJS(this.selectedIngredients).length == colorsTag.length) {
+      if (!this.colorsIndex.includes(randomIndex)) {
+        this.addColorIndex([...this.colorsIndex, randomIndex]);
+      } else if (this.selectedIngredients.length == colorsTag.length) {
         this.addColorIndex([randomIndex]);
       } else {
         continue;
@@ -43,11 +43,11 @@ export default class AutocompleteStore {
   }
 
   @action removeLastSelectedIngredients() {
-    let updateColorIndex = toJS(this.colorsIndex).filter(
-      (e, i) => i != toJS(this.colorsIndex).length - 1,
+    let updateColorIndex = this.colorsIndex.filter(
+      (e, i) => i != this.colorsIndex.length - 1,
     );
-    let updateValue = toJS(this.selectedIngredients).filter(
-      (e, i) => i != toJS(this.selectedIngredients).length - 1,
+    let updateValue = this.selectedIngredients.filter(
+      (e, i) => i != this.selectedIngredients.length - 1,
     );
     this.addColorIndex(updateColorIndex);
     this.addIngredients(updateValue);
@@ -78,10 +78,10 @@ export default class AutocompleteStore {
 
   @action removeSelectedIngredients(optionType, optionColor) {
     this.addIngredients(
-      toJS(this.selectedIngredients).filter(e => e.type !== optionType),
+      this.selectedIngredients.filter(e => e.type !== optionType),
     );
     this.addColorIndex(
-      toJS(this.colorsIndex).filter(e => e !== colorsTag.indexOf(optionColor)),
+      this.colorsIndex.filter(e => e !== colorsTag.indexOf(optionColor)),
     );
   }
 }
