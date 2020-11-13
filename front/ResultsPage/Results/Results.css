@@ -1,7 +1,20 @@
 .Results {
   width: 79%;
-  height: 200vh;
   min-height: 92vh;
-  border: 1px solid red;
   text-align: center;
+  display: -webkit-box;
+  display: flex;
+  justify-content: center;
+  padding: 3%;
+  flex-wrap: wrap;
 }
+
+.cardWrapper{
+  width: 310px;
+  height: 410px;
+  margin: 10px;
+}
+/* 
+.RecipesCard_descriptions_rating{
+
+} */

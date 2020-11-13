@@ -8,16 +8,18 @@ interface AuthenticationProps extends RouteComponentProps {
   operation: string;
 }
 
+
 export const Authentication = ({
   history,
   operation,
+  location
 }: AuthenticationProps): any => {
   return (
     <div className="authentication-container-fade">
       <div className="authentication-container">
         <span
           className="authentication-container-close"
-          onClick={() => history.push('/')}
+          onClick={() => history.push(`/`)}
         >
           &times;
         </span>
