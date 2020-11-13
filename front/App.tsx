@@ -7,6 +7,7 @@ import { Authentication } from './Header/Authentication/Authentication';
 import { HomePage } from './HomePage/HomePage';
 import { Footer } from './Footer/Footer';
 import { ResultsPage } from './ResultsPage/ResultsPage';
+import { UserPage } from './UserPage/UserPage';
 
 export const App: React.FunctionComponent = () =>{
   return (
@@ -33,6 +34,7 @@ export const App: React.FunctionComponent = () =>{
           <Switch>
             <Route exact path="/(|signin|signup)" component={HomePage} />
             <Route path="/searchResults" component={ResultsPage} />
+            <Route path="/my-account" component={UserPage} />
           </Switch>
         </AnimatePresence>
       </div>
