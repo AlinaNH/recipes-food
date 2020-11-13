@@ -3,15 +3,16 @@ import './Header.css';
 import { NavLink } from 'react-router-dom';
 import { BsFillPersonCheckFill, BsFillPersonPlusFill } from 'react-icons/bs';
 
+
 export const Header: React.FunctionComponent = () => (
   <div className="header-container">
     <nav className="header-nav-container">
       <ul>
-        <NavLink className="nav-button" to="/signin">
+        <NavLink className="nav-button" to={{ pathname: `/signin` }}>
           <BsFillPersonCheckFill />
           <li>SIGN IN</li>
         </NavLink>
-        <NavLink className="nav-button" to="/signup">
+        <NavLink className="nav-button" to={{ pathname: `/signup` }}>
           <BsFillPersonPlusFill />
           <li>SIGN UP</li>
         </NavLink>
