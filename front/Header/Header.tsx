@@ -3,7 +3,6 @@ import './Header.css';
 import { NavLink } from 'react-router-dom';
 import { BsFillPersonCheckFill, BsFillPersonPlusFill } from 'react-icons/bs';
 
-
 export const Header: React.FunctionComponent = () => (
   <div className="header-container">
     <nav className="header-nav-container">

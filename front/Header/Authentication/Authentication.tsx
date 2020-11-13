@@ -8,7 +8,6 @@ interface AuthenticationProps extends RouteComponentProps {
   operation: string;
 }
 
-
 export const Authentication = ({
   history,
   operation,
