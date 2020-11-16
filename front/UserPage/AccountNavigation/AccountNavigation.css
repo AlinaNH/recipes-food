@@ -4,7 +4,6 @@
   border-right: 4px solid black;
   display: flex;
   justify-content: center;
-  background: url("./bg.jpg");
   background-size: cover;
 }
 

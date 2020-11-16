@@ -10,42 +10,26 @@ import {
   RiLogoutBoxFill,
 } from 'react-icons/ri';
 import { IoMdContact } from 'react-icons/io';
-// import * as bg from "./bg.jpg";
 
 export const AccountNavigation: React.FunctionComponent = () => {
-  const [activeList, setActiveList] = React.useState({
-    MyProfile: true,
-    MyRecipes: false,
-    AddRecipes: false,
-    Settings: false,
-    Logout: false,
-  });
+  const [activeNav, setActiveNav] = React.useState('MyProfile');
 
-  const selectNavigationHandler = (e) => {
-    const newActiveList = { MyProfile: true,
-      MyRecipes: false,
-      AddRecipes: false,
-      Settings: false,
-      Logout: false, };
-    for (const item in activeList) {
-      if (e === item) {
-        newActiveList[`${item}`] = true;
-      } else {
-        newActiveList[`${item}`] = false;
-      }
-    }
-    console.log(newActiveList);
-    setActiveList(newActiveList);
+  //   all li add in array with object like
+  //   {id:num , nameNav:str , icon:{iconElement:<>,iconSelect:<>}}
+
+  const selectNavigationHandler = (e:string) => {
+    setActiveNav(e);
   };
+
   return (
     <div style={{ background: 'url(https://i.pinimg.com/564x/4f/a8/5a/4fa85a38f8a5e7a3f209d99b884417a5.jpg)' }} className="Account_wrapper">
       <ul className="Account_navigation">
         <li
           onClick={(e) => selectNavigationHandler('MyProfile')}
           className={`Account_navigation__list 
-          ${activeList.MyProfile ? 'Account_navigation__list_active' : ''}`}
+          ${activeNav == 'MyProfile' ? 'Account_navigation__list_active' : ''}`}
         >
-          {activeList.MyProfile ? (
+          {activeNav == 'MyProfile' ? (
             <IoMdContact className="Account_navigation__icon" />
           ) : (
             <CgProfile className="Account_navigation__icon" />
@@ -55,9 +39,9 @@ export const AccountNavigation: React.FunctionComponent = () => {
         <li
           onClick={(e) => selectNavigationHandler('MyRecipes')}
           className={`Account_navigation__list 
-          ${activeList.MyRecipes ? 'Account_navigation__list_active' : ''}`}
+          ${activeNav == 'MyRecipes' ? 'Account_navigation__list_active' : ''}`}
         >
-          {activeList.MyRecipes ? (
+          {activeNav == 'MyRecipes' ? (
             <GiBookmarklet className="Account_navigation__icon" />
           ) : (
             <GiBookmark className="Account_navigation__icon" />
@@ -67,9 +51,9 @@ export const AccountNavigation: React.FunctionComponent = () => {
         <li
           onClick={(e) => selectNavigationHandler('AddRecipes')}
           className={`Account_navigation__list
-           ${activeList.AddRecipes ? 'Account_navigation__list_active' : ''}`}
+           ${activeNav == 'AddRecipes' ? 'Account_navigation__list_active' : ''}`}
         >
-          {activeList.AddRecipes ? (
+          {activeNav == 'AddRecipes' ? (
             <GiSpellBook className="Account_navigation__icon" />
           ) : (
             <BiBookAdd className="Account_navigation__icon" />
@@ -79,9 +63,9 @@ export const AccountNavigation: React.FunctionComponent = () => {
         <li
           onClick={(e) => selectNavigationHandler('Settings')}
           className={`Account_navigation__list 
-          ${activeList.Settings ? 'Account_navigation__list_active' : ''}`}
+          ${activeNav == 'Settings' ? 'Account_navigation__list_active' : ''}`}
         >
-          {activeList.Settings ? (
+          {activeNav == 'Settings' ? (
             <RiUserSettingsFill className="Account_navigation__icon" />
           ) : (
             <RiUserSettingsLine className="Account_navigation__icon" />
@@ -91,9 +75,9 @@ export const AccountNavigation: React.FunctionComponent = () => {
         <li
           onClick={(e) => selectNavigationHandler('Logout')}
           className={`Account_navigation__list 
-          ${activeList.Logout ? 'Account_navigation__list_active' : ''}`}
+          ${activeNav == 'Logout' ? 'Account_navigation__list_active' : ''}`}
         >
-          {activeList.Logout ? (
+          {activeNav == 'Logout' ? (
             <RiLogoutBoxFill className="Account_navigation__icon" />
           ) : (
             <RiLogoutBoxLine className="Account_navigation__icon" />
