@@ -34,9 +34,17 @@
 
 .MuiPaper-root {
     width: 25%;
-    height: 42%;
+    height: 50%;
 }
 
-.alert-dialog-description input {
-    margin: 5px 0;
+.MuiDialogContent-root form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.MuiFormControl-root {
+    width: 90%;
+    margin: 5px !important;
 }

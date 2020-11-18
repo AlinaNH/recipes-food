@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { inject, observer } from 'mobx-react';
 import BootstrapTable, { SelectRowProps } from 'react-bootstrap-table-next';
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
 import paginationFactory from 'react-bootstrap-table2-paginator';
@@ -9,34 +9,20 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import TextField from '@material-ui/core/TextField';
 import { FaPlus, FaTrash } from 'react-icons/fa';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './IngredientsTable.css';
 
-export const IngredientsTable: React.FunctionComponent = () => {
-  const rowsData = [
-    {
-      name: 'test1',
-      type: 'test1',
-      unit: 'test1'
-    },
-    {
-      name: 'test2',
-      type: 'test2',
-      unit: 'test2'
-    },
-    {
-      name: 'test3',
-      type: 'test3',
-      unit: 'test3'
-    },
-    {
-      name: 'test11',
-      type: 'test11',
-      unit: 'test11'
-    }
-  ];
+interface IngredientsTableProps {
+  ingredientsStore?: any;
+}
+
+const IngredientsTable: React.FunctionComponent<IngredientsTableProps> = (
+  { ingredientsStore }
+) => {
+  const { SearchBar } = Search;
 
   const columnsData = [
     {
@@ -56,56 +42,54 @@ export const IngredientsTable: React.FunctionComponent = () => {
     }
   ];
 
-  const { SearchBar } = Search;
-
   const selectRow: SelectRowProps<any> = {
     mode: 'checkbox',
     clickToSelect: true,
-    style: { backgroundColor: '#007bff33' }
+    style: { backgroundColor: 'rgba(0, 123, 255, 0.2)' }
   };
 
   const [openModal, setOpenModal] = React.useState(false);
 
   function addRow() {
-    rowsData.push({
-      name: (document.querySelector('#nameInput') as HTMLInputElement).value,
-      type: (document.querySelector('#typeInput') as HTMLInputElement).value,
-      unit: (document.querySelector('#unitInput') as HTMLInputElement).value
-    });
-    console.log(rowsData);
-    setOpenModal(false);
-    (document.querySelector('tbody') as HTMLTableSectionElement).insertAdjacentHTML(
-      'beforeend',
-      `<tr>
-        <td class="selection-cell">
-          <input type="checkbox" class="selection-input-4">
-        </td>
-        <td>${rowsData[rowsData.length-1].name}</td>
-        <td>${rowsData[rowsData.length-1].type}</td>
-        <td>${rowsData[rowsData.length-1].unit}</td>
-      </tr>`
-    );
+    const [name, type, unit] = [
+      (document.querySelector('#nameInput') as HTMLInputElement).value,
+      (document.querySelector('#typeInput') as HTMLInputElement).value,
+      (document.querySelector('#unitInput') as HTMLInputElement).value
+
+    ];
+
+    if (
+      name && type && unit
+      && isNaN(+name) && isNaN(+type) && isNaN(+unit)
+    ) {
+      ingredientsStore.setIngredient({
+        name: name,
+        type: type,
+        unit: unit
+      });
+      setOpenModal(false);
+    }
   }
 
   function deleteRow() {
     const checkboxesToDelete = document.querySelectorAll(
-      'input[type="checkbox"]:checked'
+      'input[type=\'checkbox\']:checked'
     );
     [].forEach.call(checkboxesToDelete, (checkbox) => {
-      const id = checkbox.parentNode.nextSibling.textContent;
-      const indexToDelete = rowsData.findIndex((data) => data.name === id);
-      rowsData.splice(indexToDelete, 1);
       const row = checkbox.parentNode.parentNode;
-      row.parentNode.removeChild(row);
+      if (row.style.backgroundColor === 'rgba(0, 123, 255, 0.2)') {
+        const ingredientToDelete = checkbox.parentNode.nextSibling.textContent;
+        ingredientsStore.deleteIngredient(ingredientToDelete);
+        row.parentNode.removeChild(row);
+      }
     });
   }
-
   return (
     <div className='ingredients-table-container'>
       <h2 className='ingredients-table-header'>Ingredients Table</h2>
       <ToolkitProvider
-        keyField="name"
-        data={ rowsData }
+        keyField='name'
+        data={ ingredientsStore.getIngredients }
         columns={ columnsData }
         search
         bootstrap4
@@ -118,57 +102,63 @@ export const IngredientsTable: React.FunctionComponent = () => {
                 <Dialog
                   open={openModal}
                   onClose={() => setOpenModal(false)}
-                  aria-labelledby="alert-dialog-title"
-                  aria-describedby="alert-dialog-description"
+                  aria-labelledby='alert-dialog-title'
+                  aria-describedby='alert-dialog-description'
                 >
                   <DialogTitle>
                     {'Add New Ingredient'}
                     <hr />
                   </DialogTitle>
                   <DialogContent>
-                    <DialogContentText className="alert-dialog-description">
-                      <input
-                        type='text'
-                        placeholder='Name'
-                        id='nameInput'
-                        className='form-control'
-                        required/>
-                      <input
-                        type='text'
-                        placeholder='Type'
-                        id='typeInput'
-                        className='form-control'
-                        required
-                      />
-                      <input
-                        type='text'
-                        placeholder='Unit'
-                        id='unitInput'
-                        className='form-control'
-                        required
-                      />
+                    <DialogContentText>
+                      <form id='addIngredientForm'>
+                        <TextField
+                          id='nameInput'
+                          label='Name'
+                          inputProps={{ pattern: '[A-Za-z]+' }}
+                          required
+                        />
+                        <TextField
+                          id='typeInput'
+                          label='Type'
+                          inputProps={{ pattern: '[A-Za-z]+' }}
+                          required
+                        />
+                        <TextField
+                          id='unitInput'
+                          label='Unit'
+                          inputProps={{ pattern: '[A-Za-z]+' }}
+                          required
+                        />
+                      </form>
                     </DialogContentText>
                   </DialogContent>
                   <DialogActions>
-                    <Button onClick={() => setOpenModal(false)} color="primary">
-                    Cancel
+                    <Button onClick={() => setOpenModal(false)} color='primary'>
+                      Cancel
                     </Button>
-                    <Button onClick={addRow} color="primary" autoFocus>
-                    Save
+                    <Button
+                      onClick={addRow}
+                      color='primary'
+                      type='submit'
+                      form='addIngredientForm'
+                      autoFocus
+                    >
+                      Save
                     </Button>
                   </DialogActions>
                 </Dialog>
                 <Button
-                  variant="contained"
-                  color="primary"
+                  variant='contained'
+                  color='primary'
                   className='ingredients-table-button'
                   onClick={() => setOpenModal(true)}
                 >
                   <FaPlus />
                 </Button>
                 <Button
-                  variant="contained"
-                  color="secondary"
+                  variant='contained'
+                  color='secondary'
                   className='ingredients-table-button'
                   onClick={deleteRow}
                 >
@@ -187,3 +177,6 @@ export const IngredientsTable: React.FunctionComponent = () => {
     </div>
   );
 };
+
+export default inject('ingredientsStore')(observer(IngredientsTable));
+
