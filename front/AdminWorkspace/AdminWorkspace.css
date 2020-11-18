@@ -2,11 +2,13 @@
     display: flex;
     width: 100%;
     min-height: calc(100vh - 80px);
+    background-color: #dddddd;
 }
 
 .admin-workspace-nav {
-    width: 15rem;
-    background-color: #f0f0f0;
+    min-width: 300px;
+    background-color: #ffffff;
+    box-shadow: 2px 0 5px -2px #888888;
 }
 
 .admin-workspace-heading {
@@ -14,4 +16,9 @@
     font-size: 18px;
     font-weight: bold;
     text-align: center;
+}
+
+.admin-workspace-link {
+    text-decoration: none;
+    color: inherit;
 }

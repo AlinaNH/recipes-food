@@ -1,0 +1,42 @@
+.ingredients-table-container {
+    width: 70%;
+    min-height: 90%;
+    margin: auto;
+    padding: 40px;
+    background-color: #ffffff;
+    border-radius: 4px;
+    box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
+}
+
+.ingredients-table-header {
+    margin-bottom: 30px;
+}
+
+.ingredients-table-button-container {
+    float: right;
+}
+
+.ingredients-table-button {
+    margin: 0 3px !important;
+    padding: 12px 7px !important;
+}
+
+.search-label {
+    width: 35%;
+    float: left;
+}
+
+.ingredients-table-container th:focus,
+.ingredients-table-button:focus,
+.MuiButtonBase-root:focus {
+    outline: none;
+}
+
+.MuiPaper-root {
+    width: 25%;
+    height: 42%;
+}
+
+.alert-dialog-description input {
+    margin: 5px 0;
+}
