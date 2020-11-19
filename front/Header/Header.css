@@ -1,20 +1,20 @@
 .header-container {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   height: 40px;
   background-color: #000;
 }
 
-.header-nav-container ul {
+.header-container ul {
   display: flex;
-  margin-right: 50px;
+  margin: 0 25px;
 }
 
 .nav-button {
   display: flex;
   height: 18px;
-  margin-right: 50px;
+  margin: 0 25px;
   color: #fff;
   list-style-type: none;
   text-decoration: none;

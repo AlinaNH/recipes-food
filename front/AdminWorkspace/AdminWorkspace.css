@@ -1,0 +1,24 @@
+.admin-workspace-container {
+    display: flex;
+    width: 100%;
+    min-height: calc(100vh - 80px);
+    background-color: #dddddd;
+}
+
+.admin-workspace-nav {
+    min-width: 300px;
+    background-color: #ffffff;
+    box-shadow: 2px 0 5px -2px #888888;
+}
+
+.admin-workspace-heading {
+    margin: 25px 0;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.admin-workspace-link {
+    text-decoration: none;
+    color: inherit;
+}

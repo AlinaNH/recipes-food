@@ -4,6 +4,7 @@ import { AnimatePresence } from 'framer-motion';
 import { Route, Switch, RouteComponentProps } from 'react-router-dom';
 import { Header } from './Header/Header';
 import { Authentication } from './Header/Authentication/Authentication';
+import { AdminWorkspace } from './AdminWorkspace/AdminWorkspace';
 import { HomePage } from './HomePage/HomePage';
 import { Footer } from './Footer/Footer';
 import { ResultsPage } from './ResultsPage/ResultsPage';

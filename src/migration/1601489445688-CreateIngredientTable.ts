@@ -22,7 +22,8 @@ export class CreateIngredientTable1601489445688 implements MigrationInterface {
     );
 
     await queryRunner.query(
-      "CREATE TYPE e_ingredient_type AS ENUM ('meat', 'vegetable', 'fruit', 'spice')",
+      // eslint-disable-next-line max-len
+      'CREATE TYPE e_ingredient_type AS ENUM (\'meat\', \'vegetable\', \'fruit\', \'spice\')',
     );
 
     await queryRunner.query(

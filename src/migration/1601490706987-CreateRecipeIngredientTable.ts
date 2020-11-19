@@ -6,7 +6,7 @@ import {
 } from 'typeorm';
 
 export class CreateRecipeIngredientTable1601490706987
-  implements MigrationInterface {
+implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
@@ -50,12 +50,12 @@ export class CreateRecipeIngredientTable1601490706987
   public async down(queryRunner: QueryRunner): Promise<void> {
     const table = await queryRunner.getTable('recipe_ingredient');
     const foreignKey = table.foreignKeys.find(
-      fk => fk.columnNames.indexOf('recipe_id') !== -1,
+      (fk) => fk.columnNames.indexOf('recipe_id') !== -1,
     );
     await queryRunner.dropForeignKey('recipe_ingredient', foreignKey);
 
     const foreignKey2 = table.foreignKeys.find(
-      fk => fk.columnNames.indexOf('ingredient_id') !== -1,
+      (fk) => fk.columnNames.indexOf('ingredient_id') !== -1,
     );
     await queryRunner.dropForeignKey('recipe_ingredient', foreignKey2);
 

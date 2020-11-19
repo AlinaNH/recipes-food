@@ -49,13 +49,14 @@ describe('Autocomplete', () => {
       document.querySelector('.MuiAutocomplete-listbox').children.length > 0,
     ).toBe(true);
   });
+
   it('Select option and add tag', () => {
     act(() => {
       render(React.createElement(AutocompleteSearch,{autocompleteStore}), container);
       let buttonOpen = container.querySelector('.MuiAutocomplete-popupIndicator');
       buttonOpen.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     });
-    let option = document.querySelector('.MuiAutocomplete-option');
+    const option = document.querySelector('.MuiAutocomplete-option');
     act(() => {
       option.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     });
