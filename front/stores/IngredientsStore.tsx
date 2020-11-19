@@ -24,6 +24,10 @@ class IngredientsStore {
     this.ingredients.splice(id, 1);
   }
 
+  hasIngredient(name: string): boolean {
+    return this._findIngredientByName(name) !== -1 ? true : false;
+  }
+
   _generateId(): string {
     return (
       performance.now().toString(36) + Math.random().toString(36)
@@ -31,9 +35,9 @@ class IngredientsStore {
   }
 
   _findIngredientByName(name: string): number {
-    return [...this.ingredients].findIndex(
+    return this.ingredients.findIndex(
       (ingredient) => ingredient.name === name
-    )[0];
+    );
   }
 }
 
@@ -42,6 +46,7 @@ decorate(IngredientsStore, {
   getIngredients: computed,
   setIngredient: action,
   deleteIngredient: action,
+  hasIngredient: action
 });
 
 export default IngredientsStore;

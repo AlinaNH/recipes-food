@@ -10,6 +10,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
+import Alert from '@material-ui/lab/Alert/Alert';
+import { Snackbar } from '@material-ui/core';
 import { FaPlus, FaTrash } from 'react-icons/fa';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -49,18 +51,19 @@ const IngredientsTable: React.FunctionComponent<IngredientsTableProps> = (
   };
 
   const [openModal, setOpenModal] = React.useState(false);
+  const [openAlert, setOpenAlert] = React.useState(false);
 
   function addRow() {
     const [name, type, unit] = [
       (document.querySelector('#nameInput') as HTMLInputElement).value,
       (document.querySelector('#typeInput') as HTMLInputElement).value,
       (document.querySelector('#unitInput') as HTMLInputElement).value
-
     ];
 
     if (
       name && type && unit
       && isNaN(+name) && isNaN(+type) && isNaN(+unit)
+      && !ingredientsStore.hasIngredient(name)
     ) {
       ingredientsStore.setIngredient({
         name: name,
@@ -68,6 +71,8 @@ const IngredientsTable: React.FunctionComponent<IngredientsTableProps> = (
         unit: unit
       });
       setOpenModal(false);
+    } else {
+      setOpenAlert(true);
     }
   }
 
@@ -80,10 +85,10 @@ const IngredientsTable: React.FunctionComponent<IngredientsTableProps> = (
       if (row.style.backgroundColor === 'rgba(0, 123, 255, 0.2)') {
         const ingredientToDelete = checkbox.parentNode.nextSibling.textContent;
         ingredientsStore.deleteIngredient(ingredientToDelete);
-        row.parentNode.removeChild(row);
       }
     });
   }
+
   return (
     <div className='ingredients-table-container'>
       <h2 className='ingredients-table-header'>Ingredients Table</h2>
@@ -101,7 +106,6 @@ const IngredientsTable: React.FunctionComponent<IngredientsTableProps> = (
               <div className='ingredients-table-button-container'>
                 <Dialog
                   open={openModal}
-                  onClose={() => setOpenModal(false)}
                   aria-labelledby='alert-dialog-title'
                   aria-describedby='alert-dialog-description'
                 >
@@ -111,37 +115,38 @@ const IngredientsTable: React.FunctionComponent<IngredientsTableProps> = (
                   </DialogTitle>
                   <DialogContent>
                     <DialogContentText>
-                      <form id='addIngredientForm'>
-                        <TextField
-                          id='nameInput'
-                          label='Name'
-                          inputProps={{ pattern: '[A-Za-z]+' }}
-                          required
-                        />
-                        <TextField
-                          id='typeInput'
-                          label='Type'
-                          inputProps={{ pattern: '[A-Za-z]+' }}
-                          required
-                        />
-                        <TextField
-                          id='unitInput'
-                          label='Unit'
-                          inputProps={{ pattern: '[A-Za-z]+' }}
-                          required
-                        />
-                      </form>
+                      <TextField
+                        id='nameInput'
+                        label='Name'
+                        inputProps={{ pattern: '[A-Za-z]+' }}
+                        required
+                      />
+                      <TextField
+                        id='typeInput'
+                        label='Type'
+                        inputProps={{ pattern: '[A-Za-z]+' }}
+                        required
+                      />
+                      <TextField
+                        id='unitInput'
+                        label='Unit'
+                        inputProps={{ pattern: '[A-Za-z]+' }}
+                        required
+                      />
                     </DialogContentText>
                   </DialogContent>
                   <DialogActions>
-                    <Button onClick={() => setOpenModal(false)} color='primary'>
+                    <Button
+                      onClick={() => setOpenModal(false)}
+                      color='primary'
+                      id='closeModalButton'
+                    >
                       Cancel
                     </Button>
                     <Button
                       onClick={addRow}
+                      id='saveIngredientButton'
                       color='primary'
-                      type='submit'
-                      form='addIngredientForm'
                       autoFocus
                     >
                       Save
@@ -152,6 +157,7 @@ const IngredientsTable: React.FunctionComponent<IngredientsTableProps> = (
                   variant='contained'
                   color='primary'
                   className='ingredients-table-button'
+                  id='addIngredientButton'
                   onClick={() => setOpenModal(true)}
                 >
                   <FaPlus />
@@ -160,6 +166,7 @@ const IngredientsTable: React.FunctionComponent<IngredientsTableProps> = (
                   variant='contained'
                   color='secondary'
                   className='ingredients-table-button'
+                  id='deleteIngredientButton'
                   onClick={deleteRow}
                 >
                   <FaTrash />
@@ -170,6 +177,15 @@ const IngredientsTable: React.FunctionComponent<IngredientsTableProps> = (
                 pagination={ paginationFactory({}) }
                 { ...props.baseProps }
               />
+              <Snackbar
+                open={openAlert}
+                autoHideDuration={3000}
+                onClose={() => setOpenAlert(false) }
+              >
+                <Alert onClose={() => setOpenAlert(false) } severity="error">
+                  Ingredients data must be not empty, numbers, duplicate.
+                </Alert>
+              </Snackbar>
             </div>
           )
         }
