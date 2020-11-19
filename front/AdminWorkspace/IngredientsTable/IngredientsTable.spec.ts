@@ -1,6 +1,6 @@
 import React from 'react';
 import { unmountComponentAtNode, render } from 'react-dom';
-import '@testing-library/jest-dom';
+import { act } from 'react-dom/test-utils';
 
 import IngredientsTable from './IngredientsTable';
 import IngredientsStore from './../../stores/IngredientsStore';
@@ -53,7 +53,9 @@ describe('Add ingredient', () => {
 
   it('Modal inputs must not contain numbers', () => {
     const initialIngredientsQty = ingredientsStore.getIngredients.length;
-    addIngredient('0', '0', '0');
+    act(() => {
+      addIngredient('0', '0', '0');
+    });
     expect(document.querySelector('.MuiDialog-root')).not.toBeNull;
     expect(ingredientsStore.getIngredients.length).toBe(initialIngredientsQty);
   });
@@ -67,13 +69,17 @@ describe('Add ingredient', () => {
 
   it('Modal inputs don\'t save dublicate data', () => {
     const initialIngredientsQty = ingredientsStore.getIngredients.length;
-    addIngredient('test1', 'test1', 'test1');
+    act(() => {
+      addIngredient('test1', 'test1', 'test1');
+    });
     expect(document.querySelector('.MuiDialog-root')).toBeNull;
     expect(ingredientsStore.getIngredients.length).toBe(initialIngredientsQty);
   });
 
   it('Close error message after trying to save a duplicate ingredient', () => {
-    addIngredient('test1', 'test1', 'test1');
+    act(() => {
+      addIngredient('test1', 'test1', 'test1');
+    });
     (document
       .querySelector('.MuiSnackbar-root button') as HTMLButtonElement)
       .dispatchEvent(new MouseEvent('click', { bubbles: true }));
@@ -100,21 +106,21 @@ describe('Add ingredient', () => {
 });
 
 describe('Delete ingredient', () => {
-  it('Choosing one ingredient changes background color of its row', () => {
-    addIngredient('test3', 'test3', 'test3');
-    (document
-      .querySelector('tr:last-child td:nth-child(1)').firstChild as HTMLInputElement)
-      .dispatchEvent(new MouseEvent('click', { bubbles: true }));
-    expect(
-      document.querySelector('tbody tr:last-child') as HTMLTableRowElement
-    ).toHaveStyle(`background: rgba(0, 123, 255, 0.2)`);
-  });
-
   it('Delete one ingredient ', () => {
+    act(() => {
+      addIngredient('test3', 'test3', 'test3');
+    });
     const initialIngredientsQty = ingredientsStore.getIngredients.length;
-    (document
-      .querySelector('#deleteIngredientButton') as HTMLButtonElement)
-      .dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    act(() => {
+      (document
+        .querySelector(`tr:nth-last-child(1) td:nth-child(1)`) as HTMLInputElement)
+        .dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    });
+    act(() => {
+      (document
+        .querySelector('#deleteIngredientButton') as HTMLButtonElement)
+        .dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    });
     expect(
       (document
         .querySelector('tr:last-child td:nth-child(2)') as HTMLTableCellElement)
@@ -124,18 +130,24 @@ describe('Delete ingredient', () => {
   });
 
   it('Delete two ingredients', () => {
-    addIngredient('test4', 'test4', 'test4');
-    addIngredient('test5', 'test5', 'test5');
+    act(() => {
+      addIngredient('test4', 'test4', 'test4');
+      addIngredient('test5', 'test5', 'test5');
+    });
     const initialIngredientsQty = ingredientsStore.getIngredients.length;
-    (document
-      .querySelector(`tr:nth-last-child(2) td:nth-child(1)`) as HTMLInputElement)
-      .dispatchEvent(new MouseEvent('click', { bubbles: true }));
-    (document
-      .querySelector(`tr:nth-last-child(1) td:nth-child(1)`) as HTMLInputElement)
-      .dispatchEvent(new MouseEvent('click', { bubbles: true }));
-    (document
-      .querySelector('#deleteIngredientButton') as HTMLButtonElement)
-      .dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    act(() => {
+      (document
+        .querySelector(`tr:nth-last-child(2) td:nth-child(1)`) as HTMLInputElement)
+        .dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      (document
+        .querySelector(`tr:nth-last-child(1) td:nth-child(1)`) as HTMLInputElement)
+        .dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    });
+    act(() => {
+      (document
+        .querySelector('#deleteIngredientButton') as HTMLButtonElement)
+        .dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    });
     expect(
       (document
         .querySelector('tr:nth-last-child(1) td:nth-child(2)') as HTMLTableCellElement)

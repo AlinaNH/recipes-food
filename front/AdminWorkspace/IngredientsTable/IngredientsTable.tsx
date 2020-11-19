@@ -81,11 +81,8 @@ const IngredientsTable: React.FunctionComponent<IngredientsTableProps> = (
       'input[type=\'checkbox\']:checked'
     );
     [].forEach.call(checkboxesToDelete, (checkbox) => {
-      const row = checkbox.parentNode.parentNode;
-      if (row.style.backgroundColor === 'rgba(0, 123, 255, 0.2)') {
-        const ingredientToDelete = checkbox.parentNode.nextSibling.textContent;
-        ingredientsStore.deleteIngredient(ingredientToDelete);
-      }
+      const ingredientToDelete = checkbox.parentNode.nextSibling.textContent;
+      ingredientsStore.deleteIngredient(ingredientToDelete);
     });
   }
 
@@ -114,7 +111,7 @@ const IngredientsTable: React.FunctionComponent<IngredientsTableProps> = (
                     <hr />
                   </DialogTitle>
                   <DialogContent>
-                    <DialogContentText>
+                    <DialogContentText component={'span'}>
                       <TextField
                         id='nameInput'
                         label='Name'
