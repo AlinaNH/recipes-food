@@ -49,13 +49,13 @@ export class CreateTableRecipeUser1601486410642 implements MigrationInterface {
   public async down(queryRunner: QueryRunner): Promise<void> {
     const table = await queryRunner.getTable('recipe_user');
     const foreignKey = table.foreignKeys.find(
-      fk => fk.columnNames.indexOf('recipe_id') !== -1,
+      (fk) => fk.columnNames.indexOf('recipe_id') !== -1,
     );
     await queryRunner.dropForeignKey('recipe_user', foreignKey);
 
     const table2 = await queryRunner.getTable('recipe_user');
     const foreignKey2 = table2.foreignKeys.find(
-      fk => fk.columnNames.indexOf('user_id') !== -1,
+      (fk) => fk.columnNames.indexOf('user_id') !== -1,
     );
     await queryRunner.dropForeignKey('recipe_user', foreignKey2);
 

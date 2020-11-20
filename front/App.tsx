@@ -34,7 +34,7 @@ export const App: React.FunctionComponent = () =>{
           <Switch>
             <Route exact path="/(|signin|signup)" component={HomePage} />
             <Route path="/searchResults" component={ResultsPage} />
-            <Route path="/my-account" component={UserPage} />
+            <Route path="/my-account/:sections" component={UserPage} />
           </Switch>
         </AnimatePresence>
       </div>

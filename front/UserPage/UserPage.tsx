@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Route, Switch } from 'react-router-dom';
 import './UserPage.css';
 import { motion } from 'framer-motion';
 import { AccountNavigation } from './AccountNavigation/AccountNavigation';
@@ -21,5 +22,14 @@ export const UserPage: React.FunctionComponent = () => (
     className="UserPage"
   >
     <AccountNavigation/>
+    <div>
+      <Switch>
+        <Route exact path="/my-account/my-profile" component={null} />
+        <Route exact path="/my-account/my-recipes" component={null} />
+        <Route exact path="/my-account/add-recipes" component={null} />
+        <Route exact path="/my-account/settings" component={null} />
+        <Route exact path="/my-account/logout" component={null} />
+      </Switch>
+    </div>
   </motion.div>
 );

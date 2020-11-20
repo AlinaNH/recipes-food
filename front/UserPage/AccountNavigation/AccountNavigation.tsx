@@ -1,90 +1,24 @@
 import * as React from 'react';
+import { observer, inject } from 'mobx-react';
+import { UserPageNavigationProps } from '../../stores/UserPageNavigationStore';
 import './AccountNavigation.css';
-import { CgProfile } from 'react-icons/cg';
-import { GiBookmarklet, GiBookmark, GiSpellBook } from 'react-icons/gi';
-import { BiBookAdd } from 'react-icons/bi';
-import {
-  RiUserSettingsLine,
-  RiUserSettingsFill,
-  RiLogoutBoxLine,
-  RiLogoutBoxFill,
-} from 'react-icons/ri';
-import { IoMdContact } from 'react-icons/io';
+import bg from './assets/bg.jpg';
+import { NavigationLink } from './NavigationLink/NavigationLink';
+const br = 'url(https://i.pinimg.com/564x/4f/a8/5a/4fa85a38f8a5e7a3f209d99b884417a5.jpg)';
 
-export const AccountNavigation: React.FunctionComponent = () => {
-  const [activeNav, setActiveNav] = React.useState('MyProfile');
+interface AccountNavigationProps {
+  userPageNavStore?: UserPageNavigationProps;
+}
 
-  //   all li add in array with object like
-  //   {id:num , nameNav:str , icon:{iconElement:<>,iconSelect:<>}}
-
-  const selectNavigationHandler = (e:string) => {
-    setActiveNav(e);
-  };
-
-  return (
-    <div style={{ background: 'url(https://i.pinimg.com/564x/4f/a8/5a/4fa85a38f8a5e7a3f209d99b884417a5.jpg)' }} className="Account_wrapper">
-      <ul className="Account_navigation">
-        <li
-          onClick={(e) => selectNavigationHandler('MyProfile')}
-          className={`Account_navigation__list 
-          ${activeNav == 'MyProfile' ? 'Account_navigation__list_active' : ''}`}
-        >
-          {activeNav == 'MyProfile' ? (
-            <IoMdContact className="Account_navigation__icon" />
-          ) : (
-            <CgProfile className="Account_navigation__icon" />
-          )}
-          My profile
-        </li>
-        <li
-          onClick={(e) => selectNavigationHandler('MyRecipes')}
-          className={`Account_navigation__list 
-          ${activeNav == 'MyRecipes' ? 'Account_navigation__list_active' : ''}`}
-        >
-          {activeNav == 'MyRecipes' ? (
-            <GiBookmarklet className="Account_navigation__icon" />
-          ) : (
-            <GiBookmark className="Account_navigation__icon" />
-          )}
-          My recipes
-        </li>
-        <li
-          onClick={(e) => selectNavigationHandler('AddRecipes')}
-          className={`Account_navigation__list
-           ${activeNav == 'AddRecipes' ? 'Account_navigation__list_active' : ''}`}
-        >
-          {activeNav == 'AddRecipes' ? (
-            <GiSpellBook className="Account_navigation__icon" />
-          ) : (
-            <BiBookAdd className="Account_navigation__icon" />
-          )}
-          Add recipes
-        </li>
-        <li
-          onClick={(e) => selectNavigationHandler('Settings')}
-          className={`Account_navigation__list 
-          ${activeNav == 'Settings' ? 'Account_navigation__list_active' : ''}`}
-        >
-          {activeNav == 'Settings' ? (
-            <RiUserSettingsFill className="Account_navigation__icon" />
-          ) : (
-            <RiUserSettingsLine className="Account_navigation__icon" />
-          )}
-          Settings
-        </li>
-        <li
-          onClick={(e) => selectNavigationHandler('Logout')}
-          className={`Account_navigation__list 
-          ${activeNav == 'Logout' ? 'Account_navigation__list_active' : ''}`}
-        >
-          {activeNav == 'Logout' ? (
-            <RiLogoutBoxFill className="Account_navigation__icon" />
-          ) : (
-            <RiLogoutBoxLine className="Account_navigation__icon" />
-          )}
-          Logout
-        </li>
-      </ul>
-    </div>
-  );
-};
+export const AccountNavigation = inject('userPageNavStore')(
+  observer((props: AccountNavigationProps) => {
+    const store = props.userPageNavStore;
+    return (
+      <div style={{ background: `url(/dist/${bg})`, backgroundSize: 'contain' }}
+        className="Account_wrapper">
+        <ul className="Account_navigation">
+          <NavigationLink NavigationLink={store.NavigationLink} />
+        </ul>
+      </div>
+    );
+  }));
