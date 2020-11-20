@@ -58,7 +58,6 @@ export class CreateRecipeTable1601482563596 implements MigrationInterface {
     );
 
     await queryRunner.query(
-      // eslint-disable-next-line max-len
       'CREATE TYPE e_recipe_type AS ENUM (\'soup\', \'dessert\', \'drink\', \'salad\', \'second\')',
     );
 
