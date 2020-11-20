@@ -7,7 +7,6 @@ install:
     - npm run build
     - npm run build:front:prod
     - npm run test
-    - npm run test:e2e
     - npm run migration
 
 node_js:
