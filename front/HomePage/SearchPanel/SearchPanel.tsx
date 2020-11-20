@@ -8,13 +8,13 @@ export const SearchPanel: React.FunctionComponent = () => {
   return (
     <div className="SearchPanel">
       <div className="SearchPanel_wrapper">
-        <form onSubmit={e => e.preventDefault}>
+        <form onSubmit={(e) => e.preventDefault}>
           <div className="SearchPanel_searchInput">
             <AutocompleteSearch />
           </div>
           <div className="SearchPanel_buttonGroup">
             <Link to="/searchResults">
-              <button onClick={e => e.preventDefault}>
+              <button onClick={(e) => e.preventDefault}>
                 <CgSearch />
               </button>
             </Link>

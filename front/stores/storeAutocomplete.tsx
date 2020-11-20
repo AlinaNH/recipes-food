@@ -25,7 +25,7 @@ export default class AutocompleteStore {
 
   @action getRandomUniqColorIndex = () => {
     while (true) {
-      let randomIndex = Math.floor(Math.random() * colorsTag.length);
+      const randomIndex = Math.floor(Math.random() * colorsTag.length);
       if (!this.colorsIndex.includes(randomIndex)) {
         this.addColorIndex([...this.colorsIndex, randomIndex]);
       } else if (this.selectedIngredients.length == colorsTag.length) {
@@ -43,10 +43,10 @@ export default class AutocompleteStore {
   }
 
   @action removeLastSelectedIngredients() {
-    let updateColorIndex = this.colorsIndex.filter(
+    const updateColorIndex = this.colorsIndex.filter(
       (e, i) => i != this.colorsIndex.length - 1,
     );
-    let updateValue = this.selectedIngredients.filter(
+    const updateValue = this.selectedIngredients.filter(
       (e, i) => i != this.selectedIngredients.length - 1,
     );
     this.addColorIndex(updateColorIndex);
@@ -78,10 +78,10 @@ export default class AutocompleteStore {
 
   @action removeSelectedIngredients(optionType, optionColor) {
     this.addIngredients(
-      this.selectedIngredients.filter(e => e.type !== optionType),
+      this.selectedIngredients.filter((e) => e.type !== optionType),
     );
     this.addColorIndex(
-      this.colorsIndex.filter(e => e !== colorsTag.indexOf(optionColor)),
+      this.colorsIndex.filter((e) => e !== colorsTag.indexOf(optionColor)),
     );
   }
 }

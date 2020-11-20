@@ -11,7 +11,7 @@ interface IngredientsType {
   color?: string;
 }
 
-let ingredientsData: Array<IngredientsType> = [
+const ingredientsData: Array<IngredientsType> = [
   { type: 'apple' },
   { type: 'tomato' },
   { type: 'pepper' },
@@ -51,14 +51,14 @@ export const AutocompleteSearch = inject('autocompleteStore')(
       newValue: Array<IngredientsType>,
     ) => {
       switch (reason) {
-        case 'clear':
-          store.clearAllSelectedIngredients();
-          break;
-        case 'remove-option':
-          store.removeLastSelectedIngredients();
-          break;
-        default:
-          store.addIngredientsWhitColor(newValue, reason);
+          case 'clear':
+            store.clearAllSelectedIngredients();
+            break;
+          case 'remove-option':
+            store.removeLastSelectedIngredients();
+            break;
+          default:
+            store.addIngredientsWhitColor(newValue, reason);
       }
     };
     return (
@@ -77,7 +77,7 @@ export const AutocompleteSearch = inject('autocompleteStore')(
         filterSelectedOptions
         options={ingredientsData}
         getOptionSelected={(option, value) => option.type === value.type}
-        getOptionLabel={option => option.type}
+        getOptionLabel={(option) => option.type}
         onChange={(
           _,
           newValue: Array<IngredientsType> | null,
@@ -88,7 +88,7 @@ export const AutocompleteSearch = inject('autocompleteStore')(
         onInputChange={(_, newInputValue: string) => {
           setInputValue(newInputValue);
         }}
-        renderInput={params => <TextField {...params} variant="outlined" />}
+        renderInput={(params) => <TextField {...params} variant="outlined" />}
         renderTags={(tagValue, getTagProps) => {
           return tagValue.map((option, index) => {
             return (

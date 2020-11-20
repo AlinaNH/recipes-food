@@ -13,13 +13,11 @@ export const Results: React.FunctionComponent = () => {
   ));
 
   const loadElement = () => {
-    if (
-      window.innerHeight + window.scrollY
-      > document.body.scrollHeight - 280
-    ) {
+    if ( window.innerHeight + window.scrollY > document.body.scrollHeight - 280) {
       setRecipes([...recipes, 1, 2, 3, 4]);
     }
   };
+
   React.useEffect(() => {
     window.addEventListener('scroll', loadElement);
     return () => {

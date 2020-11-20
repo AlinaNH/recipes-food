@@ -1,0 +1,44 @@
+.Account_wrapper{
+  width: 15%;
+  height: 100%;
+  border-right: 4px solid black;
+  display: flex;
+  justify-content: center;
+  background-size: cover;
+}
+
+.Account_navigation{
+  list-style: none;
+  margin-top: 10%;
+  width: 97%;
+  background: white;
+  height: max-content;
+  background-size: contain;
+  border-radius: 20px;
+}
+
+.Account_navigation a{
+  color: black;
+  text-decoration: none;
+}
+
+.Account_navigation__icon{
+ position: relative;
+ top: 3px;
+ margin-right: 8px;
+}
+.Account_navigation__list{
+  margin: 10%;
+  transition: all 0.2s;
+  cursor: pointer;
+  padding-bottom: 2px;
+  border-bottom: 1px solid white;
+   }
+
+ .Account_navigation__list_active{
+  transform: scale(1.1);
+   font-weight: 600;
+   transition: all 0.2s;
+   padding-bottom: 2px;
+   border-bottom: 1px solid black;
+ }

@@ -21,16 +21,16 @@ afterEach(() => {
 describe('Autocomplete', () => {
   it('Renders without crashing', () => {
     act(() => {
-      render(React.createElement(AutocompleteSearch,{autocompleteStore}), container);
+      render(React.createElement(AutocompleteSearch, { autocompleteStore }), container);
     });
     expect(container).not.toBe(null);
   });
 
   it('Open list-option after click', () => {
     act(() => {
-      render(React.createElement(AutocompleteSearch,{autocompleteStore}), container);
-    })
-    let buttonOpen = container.querySelector('.MuiAutocomplete-popupIndicator');
+      render(React.createElement(AutocompleteSearch, { autocompleteStore }), container);
+    });
+    const buttonOpen = container.querySelector('.MuiAutocomplete-popupIndicator');
     expect(buttonOpen.title).toBe('Open');
     act(() => {
       buttonOpen.dispatchEvent(new MouseEvent('click', { bubbles: true }));
@@ -41,8 +41,8 @@ describe('Autocomplete', () => {
 
   it('List-option not empty', () => {
     act(() => {
-      render(React.createElement(AutocompleteSearch,{autocompleteStore}), container);
-      let buttonOpen = container.querySelector('.MuiAutocomplete-popupIndicator');
+      render(React.createElement(AutocompleteSearch, { autocompleteStore }), container);
+      const buttonOpen = container.querySelector('.MuiAutocomplete-popupIndicator');
       buttonOpen.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     });
     expect(
@@ -51,11 +51,11 @@ describe('Autocomplete', () => {
   });
   it('Select option and add tag', () => {
     act(() => {
-      render(React.createElement(AutocompleteSearch,{autocompleteStore}), container);
-      let buttonOpen = container.querySelector('.MuiAutocomplete-popupIndicator');
+      render(React.createElement(AutocompleteSearch, { autocompleteStore }), container);
+      const buttonOpen = container.querySelector('.MuiAutocomplete-popupIndicator');
       buttonOpen.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     });
-    let option = document.querySelector('.MuiAutocomplete-option');
+    const option = document.querySelector('.MuiAutocomplete-option');
     act(() => {
       option.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     });
@@ -64,9 +64,9 @@ describe('Autocomplete', () => {
 
   it('Delete tag', () => {
     act(() => {
-      render(React.createElement(AutocompleteSearch,{autocompleteStore}), container);
+      render(React.createElement(AutocompleteSearch, { autocompleteStore }), container);
     });
-    let tagDeleteButton = container.querySelector('.MuiChip-deleteIcon');
+    const tagDeleteButton = container.querySelector('.MuiChip-deleteIcon');
     act(() => {
       tagDeleteButton.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     });

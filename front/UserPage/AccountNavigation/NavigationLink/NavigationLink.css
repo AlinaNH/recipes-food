@@ -1,0 +1,21 @@
+.Account_navigation__icon{
+ position: relative;
+ top: 3px;
+ margin-right: 8px;
+}
+.Account_navigation__list{
+  margin: 10%;
+  transition: all 0.2s;
+  cursor: pointer;
+  padding-bottom: 2px;
+  border-bottom: 1px solid white;
+   }
+
+ .Account_navigation__list_active{
+  transform: scale(1.1);
+   font-weight: 600;
+   transition: all 0.2s;
+   padding-bottom: 2px;
+   border-bottom: 1px solid black;
+ }
+
