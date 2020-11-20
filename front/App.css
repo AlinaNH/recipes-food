@@ -1,6 +1,6 @@
 body {
     margin: 0px;
-    font-family: Catamaran, sans-serif;
+    font-family: Catamaran, sans-serif !important;
   }
   
   .app-container {
@@ -15,4 +15,7 @@ body {
     align-items: center;
     justify-content: center;
   }
-  
+
+  a:hover {
+    text-decoration: none !important;
+  }

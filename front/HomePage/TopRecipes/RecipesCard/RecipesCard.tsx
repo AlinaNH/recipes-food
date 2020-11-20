@@ -15,7 +15,7 @@ export const RecipesCard: React.FunctionComponent = () => {
     <div
       className="RecipesCard"
       style={{
-        backgroundImage: `url("https://cutt.ly/vheeHB4")`,
+        backgroundImage: `url("https://res.cloudinary.com/foodtactics/image/upload/f_auto,q_auto,w_500,dpr_3.0,c_scale/v1576848986/porridge-bowl-with-chia-pudding-01_al0agi.jpg")`,
       }}
     >
       <div className="RecipesCard_descriptions">

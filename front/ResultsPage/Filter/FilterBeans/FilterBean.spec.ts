@@ -56,24 +56,27 @@ describe('FilterBeans click testing', () => {
 
   beforeAll(() => {
     renderedFilterBeans = [...container.querySelectorAll('.filter-button')];
-    renderedFilterBeans.forEach(e =>
+    renderedFilterBeans.forEach((e) =>
       e.dispatchEvent(new MouseEvent('click', { bubbles: true })),
     );
-    randomFilterBean =
-      renderedFilterBeans[
+    randomFilterBean
+      = renderedFilterBeans[
         Math.floor(Math.random() * renderedFilterBeans.length)
       ];
   });
 
-  it('Click on FilterBean changes its background to the color from FILTER_BEANS_COLORS in order', () => {
-    renderedFilterBeans.forEach((e, i) =>
-      expect(e).toHaveStyle(`background: ${colors[i]}`),
-    );
-  });
+  it(
+    `Click on FilterBean changes its background to the color
+      from FILTER_BEANS_COLORS in order`,
+    () => {
+      renderedFilterBeans.forEach((e, i) =>
+        expect(e).toHaveStyle(`background: ${colors[i]}`),
+      );
+    });
 
   it('All names of clicked filterBeans are saved in FilterStore', () => {
     const filterBeanNames = [];
-    renderedFilterBeans.forEach(e => filterBeanNames.push(e.textContent));
+    renderedFilterBeans.forEach((e) => filterBeanNames.push(e.textContent));
     expect(filterBeanNames).toStrictEqual(filterStore.getFilters);
   });
 
@@ -99,8 +102,11 @@ describe('Render FilterBean more than quantity of FILTER_BEANS_COLORS', () => {
     expect(container.children.length).toBe(filterBeansQuantity + 1);
   });
 
-  it(`Click on the last filter bean changes its background to the first color from FILTER_BEANS_COLORS`, () => {
-    lastFilterBean.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-    expect(lastFilterBean).toHaveStyle(`background: ${colors[0]}`);
-  });
+  it(
+    `Click on the last filter bean changes its background
+      to the first color from FILTER_BEANS_COLORS`,
+    () => {
+      lastFilterBean.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      expect(lastFilterBean).toHaveStyle(`background: ${colors[0]}`);
+    });
 });

@@ -49,6 +49,7 @@ describe('Autocomplete', () => {
       document.querySelector('.MuiAutocomplete-listbox').children.length > 0,
     ).toBe(true);
   });
+
   it('Select option and add tag', () => {
     act(() => {
       render(React.createElement(AutocompleteSearch, { autocompleteStore }), container);
