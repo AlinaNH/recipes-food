@@ -33,6 +33,7 @@ export const App: React.FunctionComponent = () =>{
       <div className="body-container">
         <AnimatePresence exitBeforeEnter>
           <Switch>
+            <Route path='/admin-workspace' component={AdminWorkspace} />
             <Route exact path="/(|signin|signup)" component={HomePage} />
             <Route path="/searchResults" component={ResultsPage} />
             <Route path="/my-account/:sections" component={UserPage} />
