@@ -7,7 +7,8 @@ install:
     - npm run build
     - npm run build:front:prod
     - npm run test
-    - npm run migration
+    - npm run typeorm:generate
+    - npm run typeorm:run
 
 node_js:
   - "12.18.3"

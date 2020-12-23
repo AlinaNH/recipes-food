@@ -5,10 +5,11 @@
   "username": "user",
   "password": "123456",
   "database": "data",
-  "entities": ["dist/src/**/*.entity{.ts,.js}"],
-  "migrations": ["dist/src/migration/*.js"],
+  "synchronize": false,
+  "entities": ["dist/src/dao/entities/*.js"],
+  "migrations": ["dist/src/dao/migrations/*.js"],
   "cli": {
-    "migrationsDir": "src/migration",
-    "entitiesDir": "src"
+    "migrationsDir": "src/dao/migrations",
+    "entitiesDir": "src/dao/entities"
   }
 }
