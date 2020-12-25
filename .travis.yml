@@ -9,6 +9,7 @@ install:
     - npm run test
     - npm run typeorm:generate
     - npm run typeorm:run
+    - npm run test:e2e
 
 node_js:
   - "12.18.3"
