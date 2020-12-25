@@ -7,7 +7,7 @@ import './Carousel.css';
 
 export const Carousel: React.FunctionComponent = () => {
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 800,
     slidesToShow: 4,
@@ -17,7 +17,7 @@ export const Carousel: React.FunctionComponent = () => {
     pauseOnHover: true,
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 1350,
         settings: {
           slidesToShow: 3,
           slidesToScroll: 1,
@@ -26,7 +26,7 @@ export const Carousel: React.FunctionComponent = () => {
         },
       },
       {
-        breakpoint: 600,
+        breakpoint: 950,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
@@ -34,7 +34,7 @@ export const Carousel: React.FunctionComponent = () => {
         },
       },
       {
-        breakpoint: 480,
+        breakpoint: 500,
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
