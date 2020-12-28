@@ -9,10 +9,8 @@ import { HomePage } from './HomePage/HomePage';
 import { Footer } from './Footer/Footer';
 import { ResultsPage } from './ResultsPage/ResultsPage';
 import { UserPage } from './UserPage/UserPage';
-import addData from './../data/addData';
 
 export const App: React.FunctionComponent = () =>{
-  addData();
   return (
     <div className="app-container">
       <Header />

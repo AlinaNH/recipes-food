@@ -16,11 +16,11 @@ config();
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
       synchronize: true,
-      entities: ['dist/src/dao/entities/*.js'],
-      migrations: ['dist/src/dao/migrations/*.js'],
+      entities: ['dist/src/components/**/*entity.js'],
+      migrations: ['dist/src/migrations/*.js'],
       cli: {
-        migrationsDir: 'src/dao/migrations',
-        entitiesDir: 'src/dao/entities'
+        migrationsDir: 'src/migrations/',
+        entitiesDir: 'src/entities/**/'
       }
     }),
   ],
