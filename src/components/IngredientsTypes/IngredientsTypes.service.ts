@@ -5,6 +5,13 @@ import { IngredientsTypes } from './IngredientsTypes.entity';
 @Injectable()
 export class IngredientsTypesService {
   async addIngredientType(ingredientType: string) {
+    if (ingredientType === '') {
+      throw new HttpException(
+        'Ingredient type should not be empty',
+        HttpStatus.BAD_REQUEST
+      );
+    }
+
     if (typeof(ingredientType) === 'string') {
       await getConnection()
         .createQueryBuilder()
@@ -13,11 +20,11 @@ export class IngredientsTypesService {
         .values({ ingredientType: ingredientType })
         .execute();
       return true;
-    } else {
-      throw new HttpException(
-        'Ingredient type should be a string',
-        HttpStatus.BAD_REQUEST
-      );
     }
+
+    throw new HttpException(
+      'Ingredient type should be a string',
+      HttpStatus.BAD_REQUEST
+    );
   }
 }

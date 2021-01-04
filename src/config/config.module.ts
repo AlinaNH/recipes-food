@@ -16,11 +16,15 @@ config();
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
       synchronize: true,
-      entities: ['dist/src/components/**/*entity.js'],
+      keepConnectionAlive: true,
+      entities: [process.env.NODE_ENV === 'test'
+        ? 'src/components/**/*.entity.ts'
+        : 'dist/src/components/**/*.entity.js'
+      ],
       migrations: ['dist/src/migrations/*.js'],
       cli: {
         migrationsDir: 'src/migrations/',
-        entitiesDir: 'src/entities/**/'
+        entitiesDir: 'src/components/**/'
       }
     }),
   ],

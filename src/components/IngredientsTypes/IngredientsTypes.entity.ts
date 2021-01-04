@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { Ingredients } from './../Ingredients/Ingredients.entity';
+import { Ingredients } from '../Ingredients/Ingredients.entity';
 
-@Entity()
+@Entity('ingredients-types')
 export class IngredientsTypes {
   @PrimaryGeneratedColumn()
   ingredientTypeID: number;
