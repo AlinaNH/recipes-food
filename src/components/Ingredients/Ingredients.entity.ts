@@ -4,17 +4,17 @@ import { IngredientsTypes } from '../IngredientsTypes/IngredientsTypes.entity';
 @Entity('ingredients')
 export class Ingredients {
   @PrimaryGeneratedColumn()
-  ingredientID: number;
+  id: number;
 
   @Column()
-  ingredientName: string;
+  name: string;
 
   @Column()
-  ingredientUnit: string;
+  unit: string;
 
   @ManyToOne(
     () => IngredientsTypes,
     (IngredientsTypes) => IngredientsTypes.ingredients,
   )
-  ingredientTypes: IngredientsTypes[];
+  type: IngredientsTypes[];
 }

@@ -1,7 +1,10 @@
 import {
   Controller,
   Post,
-  Body
+  Delete,
+  Get,
+  Body,
+  Param
 } from '@nestjs/common';
 import { IngredientsTypesService } from './IngredientsTypes.service';
 
@@ -9,8 +12,18 @@ import { IngredientsTypesService } from './IngredientsTypes.service';
 export class IngredientsTypesController {
   constructor(private readonly ingredientsTypesService: IngredientsTypesService) {}
 
-  @Post('add-ingredient-type')
-  addIngredientType(@Body() body: {ingredientType: string}): Promise<boolean | Error> {
-    return this.ingredientsTypesService.addIngredientType(body.ingredientType);
+  @Post()
+  addIngredientType(@Body() body: {type: string}) {
+    return this.ingredientsTypesService.addType(body.type);
+  }
+
+  @Delete()
+  deleteIngredientType(@Body() body: {type: string}) {
+    return this.ingredientsTypesService.deleteIngredientType(body.type);
+  }
+
+  @Get(':type')
+  getIngredientType(@Param('type') type: string) {
+    return this.ingredientsTypesService.getIngredientType(type);
   }
 }

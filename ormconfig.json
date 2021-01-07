@@ -5,7 +5,7 @@
   "username": "user",
   "password": "123456",
   "database": "data",
-  "synchronize": false,
+  "synchronize": true,
   "keepConnectionAlive": true,
   "entities": ["dist/src/components/**/*.entity.js"],
   "migrations": ["dist/src/migrations/*.js"],
