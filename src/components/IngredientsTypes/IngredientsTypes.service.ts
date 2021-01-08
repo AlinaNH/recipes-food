@@ -15,9 +15,9 @@ export class IngredientsTypesService {
   }
 
   private checkType(type: string): { message: string } {
-    if (type === '') return { message: 'Ingredient type should not be empty' };
+    if (type === '') return { message: 'Ingredient type must not be empty' };
     else if (typeof(type) !== 'string') {
-      return { message: 'Ingredient type must be a string' };
+      return { message: 'Ingredient type must be sent like { type: string }' };
     } else return { message: 'valid' };
   }
 
@@ -58,7 +58,7 @@ export class IngredientsTypesService {
       return {
         deleted: false,
         message: checked.message === 'valid'
-          ? 'Ingredient type already exists'
+          ? `'${type}' is not found`
           : checked.message
       };
     }
@@ -82,9 +82,7 @@ export class IngredientsTypesService {
     } else {
       return {
         found: false,
-        message: checked.message === 'valid'
-          ? type + ' is not found'
-          : checked.message
+        message: `'${type}' is not found`
       };
     }
   }
