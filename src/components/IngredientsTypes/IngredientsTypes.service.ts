@@ -64,6 +64,15 @@ export class IngredientsTypesService {
     }
   }
 
+  async getIngredientTypes()
+  : Promise<Array<{type: 'string'}>> {
+    return await getConnection()
+      .createQueryBuilder()
+      .select('type')
+      .from(IngredientsTypes, 'ingredients-types')
+      .getRawMany();
+  }
+
   async getIngredientType(type: string)
   : Promise<{ found: string | boolean, message?: string }> {
     const checked = this.checkType(type);

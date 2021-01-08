@@ -22,6 +22,11 @@ export class IngredientsTypesController {
     return this.ingredientsTypesService.deleteIngredientType(body.type);
   }
 
+  @Get()
+  getIngredientTypes() {
+    return this.ingredientsTypesService.getIngredientTypes();
+  }
+
   @Get(':type')
   getIngredientType(@Param('type') type: string) {
     return this.ingredientsTypesService.getIngredientType(type);
