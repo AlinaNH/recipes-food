@@ -4,12 +4,11 @@ install:
     - docker-compose up -d
     - npm install
     - npm run lint
-    - npm run build
-    - npm run build:front:prod
-    - npm run test
     - npm run typeorm:generate
     - npm run typeorm:run
-    - npm run test:e2e
+    - npm run build:front
+    - npm run start
+    - npm run test:cov
 
 node_js:
   - "12.18.3"
