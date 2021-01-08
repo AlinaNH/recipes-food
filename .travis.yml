@@ -4,8 +4,6 @@ install:
     - docker-compose up -d
     - npm install
     - npm run lint
-    - npm run typeorm:generate
-    - npm run typeorm:run
     - npm run build:front
     - npm run start
     - npm run test:cov
