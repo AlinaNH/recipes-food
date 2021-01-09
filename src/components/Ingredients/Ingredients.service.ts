@@ -17,12 +17,12 @@ export class IngredientsService {
     else return { message: 'Ingredient must be sent like ingredient: { name: string, unit: string[], type: string } and must not be empty' };
   }
 
-  private async hasIngredient(ingredient: iIngredient): Promise<boolean> {
+  private async hasIngredient(ingredientName: string): Promise<boolean> {
     const result = await getConnection( )
       .createQueryBuilder()
       .select('name')
       .from(Ingredients, 'ingredients')
-      .where('name = :name', { name: JSON.stringify(ingredient.name) })
+      .where('name = :name', { name: JSON.stringify(ingredientName) })
       .getRawOne();
     return !!result;
   }
@@ -30,8 +30,7 @@ export class IngredientsService {
   async addIngredient(ingredient: iIngredient)
   : Promise<{ added: string | boolean, message?: string }> {
     const checked = this.checkIngredient(ingredient);
-    const exists = await this.hasIngredient(ingredient);
-
+    const exists = await this.hasIngredient(ingredient.name);
     if (checked.message === 'valid' && !exists) {
       const ingredientTypeId = await getConnection()
         .createQueryBuilder()
@@ -58,6 +57,25 @@ export class IngredientsService {
         message: checked.message === 'valid'
           ? 'Ingredient already exists'
           : checked.message
+      };
+    }
+  }
+
+  async deleteIngredient(ingredientName: string)
+  : Promise<{ deleted: string | boolean, message?: string }> {
+    const exists = await this.hasIngredient(ingredientName);
+    if (exists) {
+      await getConnection()
+        .createQueryBuilder()
+        .delete()
+        .from(Ingredients)
+        .where('name = :name', { name: JSON.stringify(ingredientName) })
+        .execute();
+      return { deleted: ingredientName };
+    } else {
+      return {
+        deleted: false,
+        message: `Ingredient \'${ingredientName}' is not found`
       };
     }
   }
