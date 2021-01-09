@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import { Injectable } from '@nestjs/common';
 import { getConnection } from 'typeorm';
 import { Ingredients } from './Ingredients.entity';
@@ -13,8 +12,15 @@ interface iIngredient {
 @Injectable()
 export class IngredientsService {
   private checkIngredient(ingredient: iIngredient): { message: string } {
-    if (ingredient.name !== '' && Array.isArray(ingredient.unit) && ingredient.type !== '') return { message: 'valid' };
-    else return { message: 'Ingredient must be sent like ingredient: { name: string, unit: string[], type: string } and must not be empty' };
+    if (ingredient.name !== ''
+      && Array.isArray(ingredient.unit)
+      && ingredient.type !== '') return { message: 'valid' };
+    else {
+      return { message:
+      // eslint-disable-next-line max-len
+      'Ingredient must be sent like ingredient: { name: string, unit: string[], type: string } and must not be empty'
+      };
+    }
   }
 
   private async hasIngredient(ingredientName: string): Promise<boolean> {
@@ -78,5 +84,41 @@ export class IngredientsService {
         message: `Ingredient \'${ingredientName}' is not found`
       };
     }
+  }
+
+  async getIngredient(ingredientName: string)
+  : Promise<{ found: {
+    id: number,
+    name: string,
+    unit: string,
+    type: number
+  } | boolean, message?: string }> {
+    const exists = await this.hasIngredient(ingredientName);
+    if (exists) {
+      const result = await getConnection()
+        .createQueryBuilder()
+        .select('*')
+        .from(Ingredients, 'ingredients')
+        .where('name = :name', { name: JSON.stringify(ingredientName) })
+        .execute();
+      return { found: result };
+    } else {
+      return {
+        found: false,
+        message: `Ingredient \'${ingredientName}' is not found`
+      };
+    }
+  }
+
+  async getIngredients() {
+    return await getConnection()
+      .createQueryBuilder(Ingredients, 'ingredients')
+      .select(['name', 'unit', '\'ingredients-types\'.type AS type'])
+      .innerJoin(
+        IngredientsTypes,
+        '\'ingredients-types\'',
+        'ingredients.typeId = \'ingredients-types\'.id'
+      )
+      .getRawMany();
   }
 }

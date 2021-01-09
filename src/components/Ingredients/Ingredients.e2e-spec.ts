@@ -55,6 +55,31 @@ describe('Ingredients API', () => {
     });
   });
 
+  describe('get ingredient', () => {
+    it('sending ingredient name by GET /ingredients/test return ingredient object', async () => {
+      const { body } = await request(app.getHttpServer())
+        .get('/ingredients/test')
+        .set('Accept', 'application/json');
+      expect([...body.found].some((e) => JSON.parse(e.name) === 'test')).toBeTruthy();
+    });
+
+    it('sending ingredient name which doesn\'t exist in database by GET /ingredients return an error', async () => {
+      const { body } = await request(app.getHttpServer())
+        .get('/ingredients/123')
+        .set('Accept', 'application/json');
+      expect(body).toEqual({ found: false, message: 'Ingredient \'123\' is not found' });
+    });
+  });
+
+  describe('get all ingredients', () => {
+    it('GET /ingredients return all ingredients', async () => {
+      const { body } = await request(app.getHttpServer())
+        .get('/ingredients')
+        .set('Accept', 'application/json');
+      expect([...body].some((e) => JSON.parse(e.name) === 'test')).toBeTruthy();
+    });
+  });
+
   describe('delete ingredient', () => {
     it('sending ingredient name by DELETE /ingredients return { deleted: \'test\' }', async () => {
       const { body } = await request(app.getHttpServer())
