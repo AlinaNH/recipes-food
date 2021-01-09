@@ -2,8 +2,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import request from 'supertest';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import { getConnection } from 'typeorm';
 
 import { AppModule } from '../../app.module';
+import { IngredientsTypes } from '../IngredientsTypes/IngredientsTypes.entity';
 
 describe('Ingredients API', () => {
   let app: NestExpressApplication;
@@ -15,9 +17,23 @@ describe('Ingredients API', () => {
 
     app = module.createNestApplication();
     await app.init();
+
+    await getConnection()
+      .createQueryBuilder()
+      .insert()
+      .into(IngredientsTypes)
+      .values({ type: 'forTests' })
+      .execute();
   });
 
   afterAll(async () => {
+    getConnection()
+      .createQueryBuilder()
+      .delete()
+      .from(IngredientsTypes)
+      .where('type = :type', { type: 'forTests' })
+      .execute();
+
     await app.close();
   });
 
