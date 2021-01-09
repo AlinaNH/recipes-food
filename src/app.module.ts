@@ -5,11 +5,13 @@ import { ConfigModule } from './config/config.module';
 import {
   IngredientsTypesModule
 } from './components/IngredientsTypes/IngredientsTypes.module';
+import { IngredientsModule } from './components/Ingredients/Ingredients.module';
 
 @Module({
   imports: [
     ConfigModule,
-    IngredientsTypesModule
+    IngredientsTypesModule,
+    IngredientsModule
   ],
   controllers: [AppController],
   providers: [AppService],
