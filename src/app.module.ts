@@ -6,12 +6,16 @@ import {
   IngredientsTypesModule
 } from './components/IngredientsTypes/IngredientsTypes.module';
 import { IngredientsModule } from './components/Ingredients/Ingredients.module';
+import { CuisinesModule } from './components/Cuisines/Cuisines.module';
+import { MealTypesModule } from './components/MealTypes/MealTypes.module';
 
 @Module({
   imports: [
     ConfigModule,
     IngredientsTypesModule,
-    IngredientsModule
+    IngredientsModule,
+    CuisinesModule,
+    MealTypesModule
   ],
   controllers: [AppController],
   providers: [AppService],
