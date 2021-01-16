@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import request from 'supertest';
 import { NestExpressApplication } from '@nestjs/platform-express';
-
 import { AppModule } from '../../app.module';
+import cuisines from './../../data/cuisines';
 
 describe('Cuisines API', () => {
   let app: NestExpressApplication;
@@ -25,34 +25,7 @@ describe('Cuisines API', () => {
       const { body } = await request(app.getHttpServer())
         .get('/cuisines')
         .set('Accept', 'application/json');
-      expect([...body].map((e) => e.cuisine)).toEqual([
-        'African',
-        'American',
-        'British',
-        'Cajun',
-        'Caribbean',
-        'Chinese',
-        'Eastern European',
-        'European',
-        'French',
-        'German',
-        'Greek',
-        'Indian',
-        'Irish',
-        'Italian',
-        'Japanese',
-        'Jewish',
-        'Korean',
-        'Latin American',
-        'Mediterranean',
-        'Mexican',
-        'Middle Eastern',
-        'Nordic',
-        'Southern',
-        'Spanish',
-        'Thai',
-        'Vietnamese'
-      ]);
+      expect([...body].map((e) => e.cuisine)).toEqual(cuisines.data);
     });
   });
 });

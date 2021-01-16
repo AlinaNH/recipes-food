@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import request from 'supertest';
 import { NestExpressApplication } from '@nestjs/platform-express';
-
 import { AppModule } from '../../app.module';
+import mealtypes from '../../data/mealtypes';
 
-describe('Cuisines API', () => {
+describe('Mealtypes API', () => {
   let app: NestExpressApplication;
 
   beforeAll(async () => {
@@ -21,26 +21,11 @@ describe('Cuisines API', () => {
   });
 
   describe('get all meal types', () => {
-    it('GET /meal-types return all meal types', async () => {
+    it('GET /mealtypes return all meal types', async () => {
       const { body } = await request(app.getHttpServer())
-        .get('/meal-types')
+        .get('/mealtypes')
         .set('Accept', 'application/json');
-      expect([...body].map((e) => e.type)).toEqual([
-        'main course',
-        'side dish',
-        'dessert',
-        'appetizer',
-        'salad',
-        'bread',
-        'breakfast',
-        'soup',
-        'beverage',
-        'sauce',
-        'marinade',
-        'fingerfood',
-        'snack',
-        'drink'
-      ]);
+      expect([...body].map((e) => e.type)).toEqual(mealtypes.data);
     });
   });
 });

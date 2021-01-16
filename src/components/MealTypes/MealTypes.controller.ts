@@ -1,12 +1,12 @@
 import { Controller, Get } from '@nestjs/common';
-import { MealTypesService } from './MealTypes.service';
+import { MealtypesService } from './Mealtypes.service';
 
-@Controller('meal-types')
-export class MealTypesController {
-  constructor(private readonly mealTypesService: MealTypesService) {}
+@Controller('mealtypes')
+export class MealtypesController {
+  constructor(private readonly mealtypesService: MealtypesService) {}
 
   @Get()
   getIngredientTypes() {
-    return this.mealTypesService.getMealTypes();
+    return this.mealtypesService.getMealtypes();
   }
 }

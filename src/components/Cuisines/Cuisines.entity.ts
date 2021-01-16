@@ -1,10 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { RecipesEntity } from './../Recipes/Recipes.entity';
 
 @Entity('cuisines')
-export class Cuisines {
+export class CuisinesEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
   cuisine: string;
+
+  @OneToMany(() => RecipesEntity, (recipes) => recipes.cuisines)
+  recipe: RecipesEntity;
 }
