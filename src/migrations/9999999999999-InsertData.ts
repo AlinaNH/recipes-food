@@ -4,6 +4,7 @@ import cuisines from '../data/cuisines';
 import mealtypes from '../data/mealtypes';
 import aisles from '../data/aisles';
 import products from '../data/products';
+import units from './../data/units';
 
 export class InsertData9999999999999 implements MigrationInterface {
   name = 'InsertData9999999999999'
@@ -33,9 +34,14 @@ export class InsertData9999999999999 implements MigrationInterface {
         )`);
       });
     });
+
+    units.data.forEach(async (unit) => {
+      await queryRunner.query(`INSERT INTO "units" ("unit") VALUES ('${unit}')`);
+    });
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`DELETE FROM "units"`);
     await queryRunner.query(`DELETE FROM "products_aisles_aisles"`);
     await queryRunner.query(`DELETE FROM "products"`);
     await queryRunner.query(`DELETE FROM "aisles"`);

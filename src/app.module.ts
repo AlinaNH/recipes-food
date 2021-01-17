@@ -6,6 +6,7 @@ import { AislesModule } from './components/Aisles/Aisles.module';
 import { CuisinesModule } from './components/Cuisines/Cuisines.module';
 import { MealtypesModule } from './components/Mealtypes/Mealtypes.module';
 import { ProductsModule } from './components/Products/Products.module';
+import { UnitsModule } from './components/Units/Units.module';
 
 @Module({
   imports: [
@@ -13,7 +14,8 @@ import { ProductsModule } from './components/Products/Products.module';
     AislesModule,
     CuisinesModule,
     MealtypesModule,
-    ProductsModule
+    ProductsModule,
+    UnitsModule
   ],
   controllers: [AppController],
   providers: [AppService],
