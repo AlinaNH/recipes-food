@@ -2,9 +2,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 import request from 'supertest';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from '../../app.module';
-import mealtypes from '../../data/mealtypes';
+import units from './../../data/units';
 
-describe('Mealtypes API', () => {
+describe('Units API', () => {
   let app: NestExpressApplication;
 
   beforeAll(async () => {
@@ -20,12 +20,12 @@ describe('Mealtypes API', () => {
     await app.close();
   });
 
-  describe('get all meal types', () => {
-    it('GET /mealtypes return all meal typesa', async () => {
+  describe('get all units', () => {
+    it('GET /units return all units', async () => {
       const { body } = await request(app.getHttpServer())
-        .get('/mealtypes')
+        .get('/units')
         .set('Accept', 'application/json');
-      expect([...body].map((e) => e.mealtype)).toEqual(mealtypes.data);
+      expect([...body].map((e) => e.unit)).toEqual(units.data);
     });
   });
 });

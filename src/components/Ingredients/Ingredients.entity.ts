@@ -1,20 +1,28 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { IngredientsTypes } from '../IngredientsTypes/IngredientsTypes.entity';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, ManyToMany } from 'typeorm';
+import { ProductsEntity } from '../Products/Products.entity';
+import { UnitsEntity } from '../Units/Units.entity';
+import { RecipesEntity } from '../Recipes/Recipes.entity';
 
 @Entity('ingredients')
-export class Ingredients {
+export class IngredientsEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  name: string;
-
-  @Column()
-  unit: string;
+  quantity: number;
 
   @ManyToOne(
-    () => IngredientsTypes,
-    (IngredientsTypes) => IngredientsTypes.ingredients,
+    () => ProductsEntity,
+    (products) => products.product,
   )
-  type: IngredientsTypes[];
+  product: ProductsEntity;
+
+  @ManyToOne(
+    () => UnitsEntity,
+    (Units) => Units.unit,
+  )
+  unit: UnitsEntity;
+
+  @ManyToMany((type) => RecipesEntity, (recipes) => recipes.ingredients)
+  recipes: RecipesEntity[];
 }

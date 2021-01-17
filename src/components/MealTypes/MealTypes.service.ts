@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { getConnection } from 'typeorm';
-import { MealTypes } from './MealTypes.entity';
+import { MealtypesEntity } from './Mealtypes.entity';
 
 @Injectable()
-export class MealTypesService {
-  async getMealTypes(): Promise<Array<{id: number, mealType: string}>> {
+export class MealtypesService {
+  async getMealtypes(): Promise<Array<{ mealtype: string }>> {
     return await getConnection( )
       .createQueryBuilder()
-      .select('type')
-      .from(MealTypes, 'meal-types')
+      .select('mealtype')
+      .from(MealtypesEntity, 'mealtypes')
       .getRawMany();
   }
 }

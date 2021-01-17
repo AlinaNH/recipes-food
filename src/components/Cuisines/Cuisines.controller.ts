@@ -6,7 +6,7 @@ export class CuisinesController {
   constructor(private readonly cuisinesService: СuisinesService) {}
 
   @Get()
-  getIngredientTypes() {
+  getCuisines() {
     return this.cuisinesService.getCuisines();
   }
 }
