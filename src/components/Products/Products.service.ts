@@ -143,7 +143,7 @@ export class ProductsService {
         .leftJoinAndSelect('products.aisles', 'aisles')
         .getMany();
       const result = productsData
-        .filter((data) => data.id = productId.id)
+        .filter((data) => data.id === productId.id)
         .map((data) => {
           return {
             product: data.product,

@@ -2,7 +2,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import request from 'supertest';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { getConnection } from 'typeorm';
 
 import { AppModule } from '../../app.module';
 
@@ -23,19 +22,11 @@ describe('Products API', () => {
   });
 
   describe('add product', () => {
-    it('sending correct product object by POST /products return { added: \'test\' }', async () => {
-      const { body } = await request(app.getHttpServer())
-        .post('/products')
-        .set('Accept', 'application/json')
-        .send({ product: { name: 'test', aisles: ['forTests'] } });
-      expect(body).toEqual({ added: 'test' });
-    });
-
     it('sending incorrect product object by POST /products return an error', async () => {
       const { body } = await request(app.getHttpServer())
         .post('/products')
         .set('Accept', 'application/json')
-        .send({ product: { name: 'test1', aisles: 'forTests' } });
+        .send({ name: 'another product', aisles: ['Other'] });
       expect(body).toEqual({ added: false, message: 'Product must be sent like product: { name: string, aisles: string[] }' });
     });
 
@@ -43,7 +34,7 @@ describe('Products API', () => {
       const { body } = await request(app.getHttpServer())
         .post('/products')
         .set('Accept', 'application/json')
-        .send({ product: { name: 1234, aisles: ['forTests'] } });
+        .send({ product: { name: 1234, aisles: ['Other'] } });
       expect(body).toEqual({ added: false, message: 'Product name must be a string' });
     });
 
@@ -51,7 +42,7 @@ describe('Products API', () => {
       const { body } = await request(app.getHttpServer())
         .post('/products')
         .set('Accept', 'application/json')
-        .send({ product: { name: '', aisles: ['forTests'] } });
+        .send({ product: { name: '', aisles: ['Other'] } });
       expect(body).toEqual({ added: false, message: 'Product name must not be empty' });
     });
 
@@ -59,7 +50,7 @@ describe('Products API', () => {
       const { body } = await request(app.getHttpServer())
         .post('/products')
         .set('Accept', 'application/json')
-        .send({ product: { name: 'test', aisles: 'forTests' } });
+        .send({ product: { name: 'test', aisles: 'Other' } });
       expect(body).toEqual({ added: false, message: 'Product must be sent like product: { name: string, aisles: string[] }' });
     });
 
@@ -79,20 +70,28 @@ describe('Products API', () => {
       expect(body).toEqual({ added: false, message: 'Product must have at least one aisle' });
     });
 
-    it('sending product which already exists in database by POST /products return an error', async () => {
-      const { body } = await request(app.getHttpServer())
-        .post('/products')
-        .set('Accept', 'application/json')
-        .send({ product: { name: 'test', aisles: ['forTests'] } });
-      expect(body).toEqual({ added: false, message: 'Product \'test\' already exists in database' });
-    });
-
     it('sending aisle which doesn\'t exist in database by POST /products return an error', async () => {
       const { body } = await request(app.getHttpServer())
         .post('/products')
         .set('Accept', 'application/json')
         .send({ product: { name: 'test1', aisles: ['notExists'] } });
       expect(body).toEqual({ added: false, message: 'Aisle(s) \'notExists\' not exist in database' });
+    });
+
+    it('sending correct product object by POST /products return { added: \'test\' }', async () => {
+      const { body } = await request(app.getHttpServer())
+        .post('/products')
+        .set('Accept', 'application/json')
+        .send({ product: { name: 'test', aisles: ['Other'] } });
+      expect(body).toEqual({ added: 'test' });
+    });
+
+    it('sending product which already exists in database by POST /products return an error', async () => {
+      const { body } = await request(app.getHttpServer())
+        .post('/products')
+        .set('Accept', 'application/json')
+        .send({ product: { name: 'test', aisles: ['Other'] } });
+      expect(body).toEqual({ added: false, message: 'Product \'test\' already exists in database' });
     });
   });
 
@@ -101,7 +100,7 @@ describe('Products API', () => {
       const { body } = await request(app.getHttpServer())
         .get('/products/test')
         .set('Accept', 'application/json');
-      expect(body).toEqual({ found: { product: 'test', aisles: ['forTests'] } });
+      expect(body).toEqual({ found: { product: 'test', aisles: ['Other'] } });
     });
 
     it('sending product name which doesn\'t exist in database by GET /product return an error', async () => {
@@ -122,14 +121,6 @@ describe('Products API', () => {
   });
 
   describe('delete product', () => {
-    it('sending product name by DELETE /products return { deleted: \'test\' }', async () => {
-      const { body } = await request(app.getHttpServer())
-        .delete('/products')
-        .set('Accept', 'application/json')
-        .send({ productName: 'test' });
-      expect(body).toEqual({ deleted: 'test' });
-    });
-
     it('sending incorrect product name by DELETE /products return an error', async () => {
       const { body } = await request(app.getHttpServer())
         .delete('/products')
@@ -144,6 +135,14 @@ describe('Products API', () => {
         .set('Accept', 'application/json')
         .send({ productName: '' });
       expect(body).toEqual({ deleted: false, message: 'Product \'\' is not found' });
+    });
+
+    it('sending product name by DELETE /products return { deleted: \'test\' }', async () => {
+      const { body } = await request(app.getHttpServer())
+        .delete('/products')
+        .set('Accept', 'application/json')
+        .send({ productName: 'test' });
+      expect(body).toEqual({ deleted: 'test' });
     });
 
     it('sending product name which doesn\'t exist in database by DELETE /products return an error', async () => {

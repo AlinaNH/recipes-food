@@ -21,11 +21,11 @@ describe('Mealtypes API', () => {
   });
 
   describe('get all meal types', () => {
-    it('GET /mealtypes return all meal types', async () => {
+    it('GET /mealtypes return all meal typesa', async () => {
       const { body } = await request(app.getHttpServer())
         .get('/mealtypes')
         .set('Accept', 'application/json');
-      expect([...body].map((e) => e.type)).toEqual(mealtypes.data);
+      expect([...body].map((e) => e.mealtype)).toEqual(mealtypes.data);
     });
   });
 });
