@@ -1,11 +1,9 @@
 /* eslint-disable max-len */
-import { getConnection, MigrationInterface, QueryRunner } from 'typeorm';
+import { MigrationInterface, QueryRunner } from 'typeorm';
 import cuisines from '../data/cuisines';
 import mealtypes from '../data/mealtypes';
 import aisles from '../data/aisles';
 import products from '../data/products';
-import { ProductsEntity } from 'src/components/Products/Products.entity';
-import { AislesEntity } from 'src/components/Aisles/Aisles.entity';
 
 export class InsertData9999999999999 implements MigrationInterface {
   name = 'InsertData9999999999999'
@@ -27,27 +25,12 @@ export class InsertData9999999999999 implements MigrationInterface {
       await queryRunner.query(`INSERT INTO "products" ("product") VALUES ('${product.name}')`);
     });
 
-    const productsData = await getConnection()
-      .createQueryBuilder()
-      .select('*')
-      .from(ProductsEntity, 'products')
-      .execute();
-
-    const aislesData = await getConnection()
-      .createQueryBuilder()
-      .select('*')
-      .from(AislesEntity, 'aisles')
-      .execute();
-
     products.data.forEach(async (product) => {
-      const productId = productsData.filter((data) => data.name === product.name);
       product.type.split(';').forEach(async (aisle) => {
-        const aisleId = aislesData.filter((data) => data.aisle === aisle);
-        await getConnection()
-          .createQueryBuilder()
-          .relation(ProductsEntity, 'products')
-          .of(productId.id)
-          .add(aisleId.id);
+        await queryRunner.query(`INSERT INTO "products_aisles_aisles" ("productsId", "aislesId") VALUES (
+          (SELECT id FROM "products" WHERE product='${product.name}'),
+          (SELECT id FROM "aisles" WHERE aisle='${aisle}')
+        )`);
       });
     });
   }
