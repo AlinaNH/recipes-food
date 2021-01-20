@@ -9,6 +9,6 @@ export class CuisinesEntity {
   @Column()
   cuisine: string;
 
-  @OneToMany(() => RecipesEntity, (recipes) => recipes.cuisines)
+  @OneToMany(() => RecipesEntity, (recipes) => recipes.cuisine)
   recipe: RecipesEntity;
 }
