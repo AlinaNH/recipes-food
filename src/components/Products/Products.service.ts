@@ -69,6 +69,7 @@ export class ProductsService {
         .insert()
         .into('products')
         .values({ product: product.name })
+        .orIgnore()
         .execute();
 
       const productId = await this.getProductId(product.name);
@@ -82,6 +83,7 @@ export class ProductsService {
           productsId: productId.id,
           aislesId: aislesId[0].id
         })
+        .orIgnore()
         .execute();
 
       aislesId.forEach(async (aisleId) => {
@@ -93,6 +95,7 @@ export class ProductsService {
             productsId: productId.id,
             aislesId: aisleId.id
           })
+          .orIgnore()
           .execute();
       });
 

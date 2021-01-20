@@ -16,7 +16,7 @@ config();
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
       synchronize: true,
-      keepConnectionAlive: true,
+      keepConnectionAlive: false,
       entities: [process.env.NODE_ENV === 'test'
         ? 'src/components/**/*.entity.ts'
         : 'dist/src/components/**/*.entity.js'

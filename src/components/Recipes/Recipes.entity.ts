@@ -35,9 +35,9 @@ export class RecipesEntity {
 
   @ManyToOne(
     () => CuisinesEntity,
-    (Cuisines) => Cuisines.cuisine,
+    (Cuisines) => Cuisines.cuisine
   )
-  cuisines: CuisinesEntity[];
+  cuisine: CuisinesEntity[];
 
   @ManyToMany((type) => MealtypesEntity, (mealtypes) => mealtypes.recipes, {
     cascade: true
