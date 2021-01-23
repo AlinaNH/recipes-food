@@ -15,31 +15,27 @@ import { Snackbar } from '@material-ui/core';
 import { FaPlus, FaTrash } from 'react-icons/fa';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './IngredientsTable.css';
+import './ProductsTable.css';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
-interface IngredientsTableProps {
-  ingredientsStore?: any;
+interface ProductsTableProps {
+  productsStore?: any;
 }
 
-const IngredientsTable: React.FunctionComponent<IngredientsTableProps> = (
-  { ingredientsStore }
+const ProductsTable: React.FunctionComponent<ProductsTableProps> = (
+  { productsStore }
 ) => {
   const { SearchBar } = Search;
 
   const columnsData = [
     {
-      dataField: 'name',
-      text: 'Name',
+      dataField: 'product',
+      text: 'Product',
       sort: true
     },
     {
-      dataField: 'type',
-      text: 'Type',
-      sort: true
-    },
-    {
-      dataField: 'unit',
-      text: 'Unit',
+      dataField: 'aisles',
+      text: 'Aisles',
       sort: true
     }
   ];
@@ -54,44 +50,44 @@ const IngredientsTable: React.FunctionComponent<IngredientsTableProps> = (
   const [openAlert, setOpenAlert] = React.useState(false);
 
   function addRow() {
-    const [name, type, unit] = [
-      (document.querySelector('#nameInput') as HTMLInputElement).value,
-      (document.querySelector('#typeInput') as HTMLInputElement).value,
-      (document.querySelector('#unitInput') as HTMLInputElement).value
-    ];
+    console.log(window.location.href.split('#')[0] + 'aisles');
+    // const [name, type, unit] = [
+    //   (document.querySelector('#nameInput') as HTMLInputElement).value,
+    //   (document.querySelector('#typeInput') as HTMLInputElement).value,
+    //   (document.querySelector('#unitInput') as HTMLInputElement).value
+    // ];
 
-    if (
-      name && type && unit
-      && isNaN(+name) && isNaN(+type) && isNaN(+unit)
-      && !ingredientsStore.hasIngredient(name)
-    ) {
-      ingredientsStore.setIngredient({
-        name: name,
-        type: type,
-        unit: unit
-      });
-      setOpenModal(false);
-    } else {
-      setOpenAlert(true);
-    }
+    // if (
+    //   name && type && unit
+    //   && isNaN(+name) && isNaN(+type) && isNaN(+unit)
+    //   && !ingredientsStore.hasIngredient(name)
+    // ) {
+    //   ingredientsStore.setIngredient({
+    //     name: name,
+    //     type: type,
+    //     unit: unit
+    //   });
+    //   setOpenModal(false);
+    // } else {
+    //   setOpenAlert(true);
+    // }
   }
 
   function deleteRow() {
-    const checkboxesToDelete = document.querySelectorAll(
-      'input[type=\'checkbox\']:checked'
-    );
-    [].forEach.call(checkboxesToDelete, (checkbox) => {
-      const ingredientToDelete = checkbox.parentNode.nextSibling.textContent;
-      ingredientsStore.deleteIngredient(ingredientToDelete);
-    });
+    // const checkboxesToDelete = document.querySelectorAll(
+    //   'input[type=\'checkbox\']:checked'
+    // );
+    // [].forEach.call(checkboxesToDelete, (checkbox) => {
+    //   const ingredientToDelete = checkbox.parentNode.nextSibling.textContent;
+    //   ingredientsStore.deleteIngredient(ingredientToDelete);
+    // });
   }
-
   return (
-    <div className='ingredients-table-container'>
-      <h2 className='ingredients-table-header'>Ingredients Table</h2>
+    <div className='products-table-container'>
+      <h2 className='products-table-header'>Products Table</h2>
       <ToolkitProvider
-        keyField='name'
-        data={ ingredientsStore.getIngredients }
+        keyField='product'
+        data={ productsStore.getProducts }
         columns={ columnsData }
         search
         bootstrap4
@@ -100,35 +96,39 @@ const IngredientsTable: React.FunctionComponent<IngredientsTableProps> = (
           (props) => (
             <div>
               <SearchBar { ...props.searchProps } />
-              <div className='ingredients-table-button-container'>
+              <div className='products-table-button-container'>
                 <Dialog
                   open={openModal}
                   aria-labelledby='alert-dialog-title'
                   aria-describedby='alert-dialog-description'
                 >
                   <DialogTitle>
-                    {'Add New Ingredient'}
+                    {'Add New Product'}
                     <hr />
                   </DialogTitle>
                   <DialogContent>
                     <DialogContentText component={'span'}>
                       <TextField
-                        id='nameInput'
-                        label='Name'
+                        id='productInput'
+                        className='product-table-input'
+                        label='Product'
                         inputProps={{ pattern: '[A-Za-z]+' }}
                         required
                       />
-                      <TextField
-                        id='typeInput'
-                        label='Type'
-                        inputProps={{ pattern: '[A-Za-z]+' }}
-                        required
-                      />
-                      <TextField
-                        id='unitInput'
-                        label='Unit'
-                        inputProps={{ pattern: '[A-Za-z]+' }}
-                        required
+                      <Autocomplete
+                        multiple
+                        id='tags-standard'
+                        className='product-table-input'
+                        options={['a', 'b', 'c']}
+                        getOptionLabel={(option) => option}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            variant='standard'
+                            label='Multiple values'
+                            placeholder='Aisles'
+                          />
+                        )}
                       />
                     </DialogContentText>
                   </DialogContent>
@@ -153,7 +153,7 @@ const IngredientsTable: React.FunctionComponent<IngredientsTableProps> = (
                 <Button
                   variant='contained'
                   color='primary'
-                  className='ingredients-table-button'
+                  className='products-table-button'
                   id='addIngredientButton'
                   onClick={() => setOpenModal(true)}
                 >
@@ -162,7 +162,7 @@ const IngredientsTable: React.FunctionComponent<IngredientsTableProps> = (
                 <Button
                   variant='contained'
                   color='secondary'
-                  className='ingredients-table-button'
+                  className='products-table-button'
                   id='deleteIngredientButton'
                   onClick={deleteRow}
                 >
@@ -179,7 +179,7 @@ const IngredientsTable: React.FunctionComponent<IngredientsTableProps> = (
                 autoHideDuration={3000}
                 onClose={() => setOpenAlert(false) }
               >
-                <Alert onClose={() => setOpenAlert(false) } severity="error">
+                <Alert onClose={() => setOpenAlert(false) } severity='error'>
                   Ingredients data must be not empty, numbers, duplicate.
                 </Alert>
               </Snackbar>
@@ -191,5 +191,5 @@ const IngredientsTable: React.FunctionComponent<IngredientsTableProps> = (
   );
 };
 
-export default inject('ingredientsStore')(observer(IngredientsTable));
+export default inject('productsStore')(observer(ProductsTable));
 

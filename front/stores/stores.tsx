@@ -1,12 +1,12 @@
 import FilterStore from './FilterStore';
 import AutocompleteStore from './storeAutocomplete';
 import UserPageNavigationStore from './UserPageNavigationStore';
-import IngredientsStore from './IngredientsStore';
+import ProductsStore from './ProductsStore';
 
 
 export const stores = {
   filterStore: new FilterStore(),
   autocompleteStore: new AutocompleteStore(),
   userPageNavStore: new UserPageNavigationStore(),
-  ingredientsStore: new IngredientsStore()
+  productsStore: new ProductsStore()
 };
