@@ -32,7 +32,7 @@
     outline: none;
 }
 
-.product-table-input {
+.product-table-input, .MuiAutocomplete-popper > .MuiPaper-root {
     width: 320px;
     margin: 15px 0;
 }

@@ -80,10 +80,11 @@ export class AislesService {
 
   async getAisles()
   : Promise<Array<{aisle: 'string'}>> {
-    return await getConnection()
+    const result = await getConnection()
       .createQueryBuilder()
       .select('aisle')
       .from(AislesEntity, 'aisles')
       .getRawMany();
+    return result.map((e) => e.aisle);
   }
 }

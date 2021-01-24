@@ -20,10 +20,11 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 
 interface ProductsTableProps {
   productsStore?: any;
+  aislesStore?: any;
 }
 
 const ProductsTable: React.FunctionComponent<ProductsTableProps> = (
-  { productsStore }
+  { productsStore, aislesStore }
 ) => {
   const { SearchBar } = Search;
 
@@ -47,30 +48,40 @@ const ProductsTable: React.FunctionComponent<ProductsTableProps> = (
   };
 
   const [openModal, setOpenModal] = React.useState(false);
-  const [openAlert, setOpenAlert] = React.useState(false);
+  const [openErrorAlert, setOpenErrorAlert] = React.useState(false);
+  const [openSuccessAlert, setOpenSuccessAlert] = React.useState(false);
+  const [aisles, setAisles] = React.useState([]);
 
-  function addRow() {
-    console.log(window.location.href.split('#')[0] + 'aisles');
-    // const [name, type, unit] = [
-    //   (document.querySelector('#nameInput') as HTMLInputElement).value,
-    //   (document.querySelector('#typeInput') as HTMLInputElement).value,
-    //   (document.querySelector('#unitInput') as HTMLInputElement).value
-    // ];
 
-    // if (
-    //   name && type && unit
-    //   && isNaN(+name) && isNaN(+type) && isNaN(+unit)
-    //   && !ingredientsStore.hasIngredient(name)
-    // ) {
-    //   ingredientsStore.setIngredient({
-    //     name: name,
-    //     type: type,
-    //     unit: unit
-    //   });
-    //   setOpenModal(false);
-    // } else {
-    //   setOpenAlert(true);
-    // }
+  async function addRow() {
+    const product = (document.querySelector('#productInput') as HTMLInputElement).value;
+
+    if (
+      product && aisles
+      && isNaN(+product) && isNaN(+aisles)
+      && !productsStore.hasProduct(product)
+    ) {
+      const productData = {
+        product: {
+          name: product,
+          aisles: aisles
+        }
+      };
+      await fetch(window.location.href.split('#')[0] + 'products', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(productData)
+      });
+      setOpenSuccessAlert(true);
+      setTimeout(() => {
+        setOpenModal(false);
+        setOpenSuccessAlert(true);
+      }, 3000);
+    } else {
+      setOpenErrorAlert(true);
+    }
   }
 
   function deleteRow() {
@@ -117,16 +128,19 @@ const ProductsTable: React.FunctionComponent<ProductsTableProps> = (
                       />
                       <Autocomplete
                         multiple
+                        limitTags={1}
                         id='tags-standard'
                         className='product-table-input'
-                        options={['a', 'b', 'c']}
-                        getOptionLabel={(option) => option}
+                        options={ aislesStore.getAisles }
+                        getOptionLabel={ (option) => option.toString() }
+                        onChange={(event, value) => setAisles(value)}
                         renderInput={(params) => (
                           <TextField
                             {...params}
                             variant='standard'
                             label='Multiple values'
                             placeholder='Aisles'
+                            required
                           />
                         )}
                       />
@@ -175,12 +189,21 @@ const ProductsTable: React.FunctionComponent<ProductsTableProps> = (
                 { ...props.baseProps }
               />
               <Snackbar
-                open={openAlert}
+                open={openErrorAlert}
                 autoHideDuration={3000}
-                onClose={() => setOpenAlert(false) }
+                onClose={() => setOpenErrorAlert(false) }
               >
-                <Alert onClose={() => setOpenAlert(false) } severity='error'>
-                  Ingredients data must be not empty, numbers, duplicate.
+                <Alert onClose={() => setOpenErrorAlert(false) } severity='error'>
+                  Products data must be not empty, numbers, duplicate.
+                </Alert>
+              </Snackbar>
+              <Snackbar
+                open={openSuccessAlert}
+                autoHideDuration={3000}
+                onClose={() => setOpenSuccessAlert(false) }
+              >
+                <Alert onClose={() => setOpenSuccessAlert(false) } severity='success'>
+                  Product has been saved!
                 </Alert>
               </Snackbar>
             </div>
@@ -191,5 +214,5 @@ const ProductsTable: React.FunctionComponent<ProductsTableProps> = (
   );
 };
 
-export default inject('productsStore')(observer(ProductsTable));
+export default inject('productsStore', 'aislesStore')(observer(ProductsTable));
 

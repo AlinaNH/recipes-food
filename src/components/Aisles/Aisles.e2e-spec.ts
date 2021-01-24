@@ -75,7 +75,7 @@ describe('Aisles API', () => {
       const { body } = await request(app.getHttpServer())
         .get('/aisles')
         .set('Accept', 'application/json');
-      expect([...body].some((e) => e.aisle === 'test')).toBeTruthy();
+      expect([...body].some((e) => e === 'test')).toBeTruthy();
     });
   });
 
