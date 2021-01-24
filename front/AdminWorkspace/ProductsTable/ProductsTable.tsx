@@ -85,14 +85,19 @@ const ProductsTable: React.FunctionComponent<ProductsTableProps> = (
   }
 
   function deleteRow() {
-
-    // const checkboxesToDelete = document.querySelectorAll(
-    //   'input[type=\'checkbox\']:checked'
-    // );
-    // [].forEach.call(checkboxesToDelete, (checkbox) => {
-    //   const ingredientToDelete = checkbox.parentNode.nextSibling.textContent;
-    //   ingredientsStore.deleteIngredient(ingredientToDelete);
-    // });
+    const checkboxesToDelete = document.querySelectorAll(
+      'input[type=\'checkbox\']:checked'
+    );
+    [].forEach.call(checkboxesToDelete, async (checkbox) => {
+      const ingredientToDelete = checkbox.parentNode.nextSibling.textContent;
+      await fetch(window.location.href.split('#')[0] + 'products', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify({ productName: ingredientToDelete })
+      });
+    });
   }
   return (
     <div className='products-table-container'>
