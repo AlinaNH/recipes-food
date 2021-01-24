@@ -85,6 +85,7 @@ const ProductsTable: React.FunctionComponent<ProductsTableProps> = (
   }
 
   function deleteRow() {
+
     // const checkboxesToDelete = document.querySelectorAll(
     //   'input[type=\'checkbox\']:checked'
     // );
