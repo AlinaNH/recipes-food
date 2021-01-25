@@ -1,4 +1,4 @@
-.ingredients-table-container {
+.products-table-container {
     width: 70%;
     min-height: 90%;
     margin: auto;
@@ -8,15 +8,15 @@
     box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
 }
 
-.ingredients-table-header {
+.products-table-header {
     margin-bottom: 30px;
 }
 
-.ingredients-table-button-container {
+.products-table-button-container {
     float: right;
 }
 
-.ingredients-table-button {
+.products-table-button {
     margin: 0 3px !important;
     padding: 12px 7px !important;
 }
@@ -26,10 +26,19 @@
     float: left;
 }
 
-.ingredients-table-container th:focus,
-.ingredients-table-button:focus,
+.products-table-container th:focus,
+.products-table-button:focus,
 .MuiButtonBase-root:focus {
     outline: none;
+}
+
+.product-table-input, .MuiAutocomplete-popper > .MuiPaper-root {
+    width: 320px;
+    margin: 15px 0;
+}
+
+.product-table-input .MuiFormControl-root {
+    margin: 0 !important;
 }
 
 .MuiPaper-root {
