@@ -144,6 +144,7 @@ const ProductsTable: React.FunctionComponent<ProductsTableProps> = (
                           <TextField
                             {...params}
                             variant='standard'
+                            id='aislesInput'
                             label='Multiple values'
                             placeholder='Aisles'
                             required
@@ -162,7 +163,7 @@ const ProductsTable: React.FunctionComponent<ProductsTableProps> = (
                     </Button>
                     <Button
                       onClick={addRow}
-                      id='saveIngredientButton'
+                      id='saveProductButton'
                       color='primary'
                       autoFocus
                     >
@@ -174,7 +175,7 @@ const ProductsTable: React.FunctionComponent<ProductsTableProps> = (
                   variant='contained'
                   color='primary'
                   className='products-table-button'
-                  id='addIngredientButton'
+                  id='addProductButton'
                   onClick={() => setOpenModal(true)}
                 >
                   <FaPlus />
@@ -183,7 +184,7 @@ const ProductsTable: React.FunctionComponent<ProductsTableProps> = (
                   variant='contained'
                   color='secondary'
                   className='products-table-button'
-                  id='deleteIngredientButton'
+                  id='deleteProductButton'
                   onClick={deleteRow}
                 >
                   <FaTrash />
