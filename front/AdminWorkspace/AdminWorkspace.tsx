@@ -9,6 +9,7 @@ import {
 import { HiLogout } from 'react-icons/hi';
 import { Link, Route, Switch } from 'react-router-dom';
 import ProductsTable from './ProductsTable/ProductsTable';
+import RecipesTable from './RecipesTable/RecipesTable';
 import './AdminWorkspace.css';
 
 export const AdminWorkspace: React.FunctionComponent = () => {
@@ -22,13 +23,9 @@ export const AdminWorkspace: React.FunctionComponent = () => {
           <ListItemIcon>
             <BsFillGridFill />
           </ListItemIcon>
-          <ListItemText primary='All Recipes' />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <BsFileEarmarkPlus />
-          </ListItemIcon>
-          <ListItemText primary='Add New Recipe' />
+          <Link to="/admin-workspace/recipes-table" className='admin-workspace-link'>
+            <ListItemText primary='Recipes Table' />
+          </Link>
         </ListItem>
         <ListItem button>
           <ListItemIcon>
@@ -53,6 +50,7 @@ export const AdminWorkspace: React.FunctionComponent = () => {
       </List>
       <Switch>
         <Route path='/admin-workspace/products-table' component={ProductsTable} />
+        <Route path='/admin-workspace/recipes-table' component={RecipesTable} />
       </Switch>
     </div>
   );
