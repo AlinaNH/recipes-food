@@ -19,6 +19,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './RecipesTable.css';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { GoPlus } from 'react-icons/go';
+import Chip from '@material-ui/core/Chip/Chip';
 
 interface RecipesTableProps {
   productsStore?: any;
@@ -76,7 +77,7 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
         label='Product'
         variant='outlined'
         size='small'
-        className='ingredients-input'
+        className='ingredients-input recipe-product'
       />
       <TextField
         required
@@ -85,14 +86,14 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
         type='number'
         InputProps={{ inputProps: { min: 1 } }}
         size='small'
-        className='ingredients-input'
+        className='ingredients-input recipe-quantity'
       />
       <TextField
         required
         label='Unit'
         variant='outlined'
         size='small'
-        className='ingredients-input'
+        className='ingredients-input recipe-unit'
       />
       <Fab
         color='primary'
@@ -123,7 +124,7 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
 
   React.useEffect(() => console.log(ingredientInputs), [ingredientInputs]);
 
-  async function addRow() {
+  async function addRecipe() {
     // const product =
     // (document.querySelector('#productInput') as HTMLInputElement).value;
 
@@ -155,7 +156,7 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
     // }
   }
 
-  function deleteRow() {
+  function deleteRecipe() {
     // const checkboxesToDelete = document.querySelectorAll(
     //   'input[type=\'checkbox\']:checked'
     // );
@@ -192,174 +193,181 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
                   aria-describedby='alert-dialog-description'
                   className='add-recipe-modal'
                 >
-                  <DialogTitle className='rt-title'>
-                    <Typography variant='h6'>Add New Recipe</Typography>
-                  </DialogTitle>
-                  <DialogContent>
-                    <DialogContentText component={'span'} className='add-recipe-container'>
-                      <div>
-                        <TextField
-                          id='recipe-title'
-                          className='recipe-table-input'
-                          label='Title'
-                          inputProps={{ pattern: '[A-Za-z]+' }}
-                          required
-                        />
-                        <div className='rt-container'>
-                          <RadioGroup aria-label='servings' name='servings' className='rt-part-input-container'/* value={value} onChange={handleChange} */>
-                            <FormLabel component='legend'>Servings</FormLabel>
-                            <FormControlLabel
-                              value='2'
-                              control={<Radio color='primary' />}
-                              label='2'
-                              labelPlacement='top'
-                            />
-                            <FormControlLabel
-                              value='4'
-                              control={<Radio color='primary' />}
-                              label='4'
-                              labelPlacement='top'
-                            />
-                            <FormControlLabel
-                              value='6'
-                              control={<Radio color='primary' />}
-                              label='6'
-                              labelPlacement='top'
-                            />
-                            <FormControlLabel
-                              value='8'
-                              control={<Radio color='primary' />}
-                              label='8'
-                              labelPlacement='top'
-                            />
-                            <FormControlLabel
-                              value='10'
-                              control={<Radio color='primary' />}
-                              label='10'
-                              labelPlacement='top'
-                            />
-                          </RadioGroup>
-                          <RadioGroup aria-label='servings' name='servings' className='rt-part-input-container'/* value={value} onChange={handleChange} */>
-                            <FormLabel component='legend'>Minutes</FormLabel>
-                            <FormControlLabel
-                              value='15'
-                              control={<Radio color='secondary' />}
-                              label='15'
-                              labelPlacement='top'
-                            />
-                            <FormControlLabel
-                              value='25'
-                              control={<Radio color='secondary' />}
-                              label='25'
-                              labelPlacement='top'
-                            />
-                            <FormControlLabel
-                              value='40'
-                              control={<Radio color='secondary' />}
-                              label='40'
-                              labelPlacement='top'
-                            />
-                            <FormControlLabel
-                              value='60'
-                              control={<Radio color='secondary' />}
-                              label='60'
-                              labelPlacement='top'
-                            />
-                            <FormControlLabel
-                              value='120'
-                              control={<Radio color='secondary' />}
-                              label='120'
-                              labelPlacement='top'
-                            />
-                          </RadioGroup>
-                        </div>
-                        <TextField
-                          id='recipe-image'
-                          className='recipe-table-input'
-                          label='Image URL'
-                          inputProps={{ pattern: '[A-Za-z]+' }}
-                          required
-                        />
-                        <TextField
-                          id='recipe-source'
-                          className='recipe-table-input'
-                          label='Source URL'
-                          inputProps={{ pattern: '[0-9]+' }}
-                          required
-                        />
-                        <Autocomplete
-                          limitTags={1}
-                          id='tags-standard'
-                          className='recipe-table-input'
-                          options={ aislesStore.getAisles }
-                          // getOptionLabel={ (option) => option.toString() }
-                          // onChange={(event, value) => setAisles(value)}
-                          renderInput={(params) => (
-                            <TextField
-                              {...params}
-                              id='recipe-cuisine'
-                              label='Cuisine'
-                              placeholder='Cuisine'
-                              variant='filled'
-                              required
-                            />
-                          )}
-                        />
-                        <Autocomplete
-                          multiple
-                          limitTags={1}
-                          id='tags-standard'
-                          className='recipe-table-input'
-                          options={ aislesStore.getAisles }
-                          // getOptionLabel={ (option) => option.toString() }
-                          // onChange={(event, value) => setAisles(value)}
-                          renderInput={(params) => (
-                            <TextField
-                              {...params}
-                              id='recipe-mealtypes'
-                              label='Mealtypes'
-                              placeholder='Mealtypes'
-                              variant='filled'
-                              required
-                            />
-                          )}
-                        />
-                      </div>
-                      <div>
-                        <Paper variant='outlined' className='ingredients-container'>
-                          <Typography variant='h6'>Add Ingredients</Typography>
-                          <div className='ingredients-inputs-container'>
-                            { ingredientInputs }
+                  <form onSubmit={addRecipe}>
+                    <DialogTitle className='rt-title'>
+                      <Typography variant='h6'>Add New Recipe</Typography>
+                    </DialogTitle>
+                    <DialogContent>
+                      <DialogContentText component={'span'} className='add-recipe-container'>
+                        <div>
+                          <TextField
+                            id='recipe-title'
+                            className='recipe-table-input'
+                            label='Title'
+                            required
+                          />
+                          <div className='rt-container'>
+                            <RadioGroup aria-label='servings' defaultValue='2' name='servings' className='rt-part-input-container'/* value={value} onChange={handleChange} */>
+                              <FormLabel component='legend'>Servings</FormLabel>
+                              <FormControlLabel
+                                value='2'
+                                control={<Radio color='primary' />}
+                                label='2'
+                                labelPlacement='top'
+                              />
+                              <FormControlLabel
+                                value='4'
+                                control={<Radio color='primary' />}
+                                label='4'
+                                labelPlacement='top'
+                              />
+                              <FormControlLabel
+                                value='6'
+                                control={<Radio color='primary' />}
+                                label='6'
+                                labelPlacement='top'
+                              />
+                              <FormControlLabel
+                                value='8'
+                                control={<Radio color='primary' />}
+                                label='8'
+                                labelPlacement='top'
+                              />
+                              <FormControlLabel
+                                value='10'
+                                control={<Radio color='primary' />}
+                                label='10'
+                                labelPlacement='top'
+                              />
+                            </RadioGroup>
+                            <RadioGroup aria-label='servings' defaultValue='15' name='servings' className='rt-part-input-container'/* value={value} onChange={handleChange} */>
+                              <FormLabel component='legend'>Minutes</FormLabel>
+                              <FormControlLabel
+                                value='15'
+                                control={<Radio color='secondary' />}
+                                label='15'
+                                labelPlacement='top'
+                              />
+                              <FormControlLabel
+                                value='25'
+                                control={<Radio color='secondary' />}
+                                label='25'
+                                labelPlacement='top'
+                              />
+                              <FormControlLabel
+                                value='40'
+                                control={<Radio color='secondary' />}
+                                label='40'
+                                labelPlacement='top'
+                              />
+                              <FormControlLabel
+                                value='60'
+                                control={<Radio color='secondary' />}
+                                label='60'
+                                labelPlacement='top'
+                              />
+                              <FormControlLabel
+                                value='120'
+                                control={<Radio color='secondary' />}
+                                label='120'
+                                labelPlacement='top'
+                              />
+                            </RadioGroup>
                           </div>
-                        </Paper>
-                        <TextField
-                          label='Description'
-                          multiline
-                          rows={10}
-                          variant='outlined'
-                          className='rt-description'
-                        />
-                      </div>
-                    </DialogContentText>
-                  </DialogContent>
-                  <DialogActions className='rt-buttons'>
-                    <Button
-                      onClick={() => setOpenModal(false)}
-                      id='closeModalButton'
-                      variant='contained'
-                    >
+                          <TextField
+                            id='recipe-image'
+                            className='recipe-table-input'
+                            label='Image URL'
+                            required
+                          />
+                          <TextField
+                            id='recipe-source'
+                            className='recipe-table-input'
+                            label='Source URL'
+                            required
+                          />
+                          <Autocomplete
+                            limitTags={1}
+                            className='recipe-table-input'
+                            options={ aislesStore.getAisles }
+                            // getOptionLabel={ (option) => option.toString() }
+                            // onChange={(event, value) => setAisles(value)}
+                            renderInput={(params) => (
+                              <TextField
+                                {...params}
+                                id='recipe-cuisine'
+                                label='Cuisine'
+                                placeholder='Cuisine'
+                                variant='filled'
+                                required
+                              />
+                            )}
+                          />
+                          <Autocomplete
+                            multiple
+                            limitTags={1}
+                            className='recipe-table-input'
+                            options={ aislesStore.getAisles }
+                            // getOptionLabel={ (option) => option.toString() }
+                            onChange={(event, value) => setAisles(value)}
+                            renderTags={(value: string[], getTagProps) =>
+                              value.map((option: string, index: number) => (
+                                <Chip variant="outlined" label={option} {...getTagProps({ index })} />
+                              ))
+                            }
+                            renderInput={(params) => (
+                              <TextField
+                                {...params}
+                                id='recipe-mealtypes'
+                                label='Mealtypes'
+                                placeholder='Mealtypes'
+                                variant='filled'
+                                inputProps={{
+                                  ...params.inputProps,
+                                  required: aisles.length === 0
+                                }}
+                              />
+                            )}
+                          />
+                        </div>
+                        <div>
+                          <Paper variant='outlined' className='ingredients-container'>
+                            <Typography variant='h6'>Add Ingredients</Typography>
+                            <div className='ingredients-inputs-container'>
+                              { ingredientInputs }
+                            </div>
+                          </Paper>
+                          <TextField
+                            label='Description'
+                            id='recipe-description'
+                            multiline
+                            rows={10}
+                            variant='outlined'
+                            className='rt-description'
+                            required
+                          />
+                        </div>
+                      </DialogContentText>
+                    </DialogContent>
+                    <DialogActions className='rt-buttons'>
+                      <Button
+                        onClick={() => setOpenModal(false)}
+                        id='closeModalButton'
+                        variant='contained'
+                      >
                       Cancel
-                    </Button>
-                    <Button
-                      onClick={addRow}
-                      id='saveRecipeButton'
-                      variant='contained'
-                      color='primary'
-                      autoFocus
-                    >
+                      </Button>
+                      <Button
+                        id='saveRecipeButton'
+                        variant='contained'
+                        color='primary'
+                        type='submit'
+                        autoFocus
+                      >
                       Save
-                    </Button>
-                  </DialogActions>
+                      </Button>
+                    </DialogActions>
+                  </form>
                 </Dialog>
                 <Button
                   variant='contained'
@@ -375,7 +383,7 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
                   color='secondary'
                   className='recipe-table-button'
                   id='deleteRecipeButton'
-                  onClick={deleteRow}
+                  onClick={deleteRecipe}
                 >
                   <FaTrash />
                 </Button>
@@ -385,15 +393,6 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
                 pagination={ paginationFactory({}) }
                 { ...props.baseProps }
               />
-              <Snackbar
-                open={openErrorAlert}
-                autoHideDuration={3000}
-                onClose={() => setOpenErrorAlert(false) }
-              >
-                <Alert onClose={() => setOpenErrorAlert(false) } severity='error'>
-                  Products data must be not empty, numbers, duplicate.
-                </Alert>
-              </Snackbar>
               <Snackbar
                 open={openSuccessAlert}
                 autoHideDuration={3000}
