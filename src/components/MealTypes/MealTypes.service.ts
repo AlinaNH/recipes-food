@@ -5,10 +5,11 @@ import { MealtypesEntity } from './Mealtypes.entity';
 @Injectable()
 export class MealtypesService {
   async getMealtypes(): Promise<Array<{ mealtype: string }>> {
-    return await getConnection( )
+    const result = await getConnection( )
       .createQueryBuilder()
       .select('mealtype')
       .from(MealtypesEntity, 'mealtypes')
       .getRawMany();
+    return result.map((e) => e.mealtype);
   }
 }

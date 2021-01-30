@@ -3,6 +3,9 @@ import AutocompleteStore from './storeAutocomplete';
 import UserPageNavigationStore from './UserPageNavigationStore';
 import ProductsStore from './ProductsStore';
 import AislesStore from './AislesStore';
+import CuisinesStore from './CuisinesStore';
+import MealtypesStore from './MealtypesStore';
+import UnitsStore from './UnitsStore';
 
 
 export const stores = {
@@ -10,5 +13,8 @@ export const stores = {
   autocompleteStore: new AutocompleteStore(),
   userPageNavStore: new UserPageNavigationStore(),
   productsStore: new ProductsStore(),
-  aislesStore: new AislesStore
+  aislesStore: new AislesStore(),
+  cuisinesStore: new CuisinesStore(),
+  mealtypesStore: new MealtypesStore(),
+  unitsStore: new UnitsStore()
 };

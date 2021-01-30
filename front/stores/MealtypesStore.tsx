@@ -1,24 +1,24 @@
 import { decorate, observable, computed, toJS } from 'mobx';
 
-type aislesType = {
+type mealtypesType = {
     id: string
-    aisle: string
+    mealtype: string
 }
 
-class AislesStore {
-  aisles = [];
+class MealtypesStore {
+  mealtypes = [];
 
   constructor() {
     this.fulfillStore();
   }
 
   private async fulfillStore() {
-    this.aisles = await fetch(window.location.href.split('#')[0] + 'aisles')
+    this.mealtypes = await fetch(window.location.href.split('#')[0] + 'mealtypes')
       .then((response) => response.json());
   }
 
-  get getAisles(): aislesType[] {
-    return toJS(this.aisles);
+  get getMealtypes(): mealtypesType[] {
+    return toJS(this.mealtypes);
   }
 
   _generateId(): string {
@@ -28,9 +28,9 @@ class AislesStore {
   }
 }
 
-decorate(AislesStore, {
-  aisles: observable,
-  getAisles: computed
+decorate(MealtypesStore, {
+  mealtypes: observable,
+  getMealtypes: computed
 });
 
-export default AislesStore;
+export default MealtypesStore;

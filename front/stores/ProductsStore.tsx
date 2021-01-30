@@ -8,15 +8,30 @@ type productsType = {
 
 class ProductsStore {
   products = [];
+  productsNames = [];
 
-  private async fulfillStore() {
+  constructor() {
+    this.loadProducts();
+    this.loadProductsNames();
+  }
+
+  private async loadProducts() {
     this.products = await fetch(window.location.href.split('#')[0] + 'products')
       .then((response) => response.json());
   }
 
+  private async loadProductsNames() {
+    this.productsNames
+      = await fetch(window.location.href.split('#')[0] + 'products/names')
+        .then((response) => response.json());
+  }
+
   get getProducts(): productsType[] {
-    this.fulfillStore();
     return toJS(this.products);
+  }
+
+  get getProductsNames(): string[] {
+    return toJS(this.productsNames);
   }
 
   setProduct(product: productsType): void {

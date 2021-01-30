@@ -18,16 +18,18 @@ import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './RecipesTable.css';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { GoPlus } from 'react-icons/go';
+import { GoPlus, GoX } from 'react-icons/go';
 import Chip from '@material-ui/core/Chip/Chip';
 
 interface RecipesTableProps {
+  cuisinesStore?: any;
+  mealtypesStore?: any;
   productsStore?: any;
-  aislesStore?: any;
+  unitsStore?: any
 }
 
 const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
-  { productsStore, aislesStore }
+  { cuisinesStore, mealtypesStore, productsStore, unitsStore }
 ) => {
   const { SearchBar } = Search;
 
@@ -70,59 +72,56 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
     style: { backgroundColor: 'rgba(0, 123, 255, 0.2)' }
   };
 
-  const ingredientInputsElement = (
-    <div className='ingredient'>
-      <TextField
-        required
-        label='Product'
-        variant='outlined'
-        size='small'
-        className='ingredients-input recipe-product'
-      />
-      <TextField
-        required
-        label='Quantity'
-        variant='outlined'
-        type='number'
-        InputProps={{ inputProps: { min: 1 } }}
-        size='small'
-        className='ingredients-input recipe-quantity'
-      />
-      <TextField
-        required
-        label='Unit'
-        variant='outlined'
-        size='small'
-        className='ingredients-input recipe-unit'
-      />
-      <Fab
-        color='primary'
-        size='small'
-        className='add-ingredient-button'
-        onClick={() => addNewIngredient()}
-      >
-        <GoPlus />
-      </Fab>
-    </div>
-  );
-
   const [openModal, setOpenModal] = React.useState(false);
   const [openErrorAlert, setOpenErrorAlert] = React.useState(false);
   const [openSuccessAlert, setOpenSuccessAlert] = React.useState(false);
-  const [ingredientInputs, setIngredientInput] = React.useState([ingredientInputsElement]);
-  const [aisles, setAisles] = React.useState([]);
+  const [cuisine, setCuisine] = React.useState('');
+  const [mealtypes, setMealtypes] = React.useState([]);
+  const [product, setProduct] = React.useState('ale');
+  const [quantity, setQuantity] = React.useState(1);
+  const [unit, setUnit] = React.useState('can');
+  const [ingredientsInputs, setIngredientsInputs] = React.useState([]);
 
   function addNewIngredient() {
-    const ingredients = document.querySelectorAll('.ingredient');
-    const result = [ingredientInputsElement];
-    ingredients.forEach((e) => result.push(ingredientInputsElement));
-    console.log(result);
-    setIngredientInput(result);
-    const buttons = document.querySelectorAll('.add-ingredient-button');
-    buttons[buttons.length - 1].remove();
+    const result = [(
+      <div className='ingredient ingredient-data'>
+        <TextField
+          disabled
+          label='Product'
+          variant='outlined'
+          size='small'
+          defaultValue={product}
+          className='recipe-quantity recipe-product-data'
+          InputProps={{
+            readOnly: true,
+          }}
+        />
+        <TextField
+          disabled
+          label='Quantity'
+          variant='outlined'
+          size='small'
+          defaultValue={quantity}
+          className='recipe-quantity recipe-quantity-data'
+          InputProps={{
+            readOnly: true,
+          }}
+        />
+        <TextField
+          disabled
+          label='Unit'
+          variant='outlined'
+          size='small'
+          defaultValue={unit}
+          className='recipe-quantity recipe-unit-data'
+          InputProps={{
+            readOnly: true,
+          }}
+        />
+      </div>
+    )];
+    setIngredientsInputs([...ingredientsInputs, result]);
   }
-
-  React.useEffect(() => console.log(ingredientInputs), [ingredientInputs]);
 
   async function addRecipe() {
     // const product =
@@ -289,9 +288,9 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
                           <Autocomplete
                             limitTags={1}
                             className='recipe-table-input'
-                            options={ aislesStore.getAisles }
-                            // getOptionLabel={ (option) => option.toString() }
-                            // onChange={(event, value) => setAisles(value)}
+                            options={ cuisinesStore.getCuisines }
+                            getOptionLabel={ (option) => option.toString() }
+                            onChange={(event, value) => setCuisine(value.toString())}
                             renderInput={(params) => (
                               <TextField
                                 {...params}
@@ -307,9 +306,9 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
                             multiple
                             limitTags={1}
                             className='recipe-table-input'
-                            options={ aislesStore.getAisles }
-                            // getOptionLabel={ (option) => option.toString() }
-                            onChange={(event, value) => setAisles(value)}
+                            options={ mealtypesStore.getMealtypes }
+                            getOptionLabel={ (option) => option.toString() }
+                            onChange={(event, value) => setMealtypes([...mealtypes, value])}
                             renderTags={(value: string[], getTagProps) =>
                               value.map((option: string, index: number) => (
                                 <Chip variant="outlined" label={option} {...getTagProps({ index })} />
@@ -324,7 +323,7 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
                                 variant='filled'
                                 inputProps={{
                                   ...params.inputProps,
-                                  required: aisles.length === 0
+                                  required: mealtypes.length === 0
                                 }}
                               />
                             )}
@@ -334,7 +333,57 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
                           <Paper variant='outlined' className='ingredients-container'>
                             <Typography variant='h6'>Add Ingredients</Typography>
                             <div className='ingredients-inputs-container'>
-                              { ingredientInputs }
+                              <div className='ingredient'>
+                                <Autocomplete
+                                  size='small'
+                                  options={ productsStore.getProductsNames }
+                                  getOptionLabel={ (option) => option.toString() }
+                                  onChange={(event, value) => setProduct(value.toString())}
+                                  renderInput={(params) => (
+                                    <TextField
+                                      {...params}
+                                      variant='outlined'
+                                      label='Product'
+                                      className='recipe-product'
+                                      required
+                                    />
+                                  )}
+                                />
+                                <TextField
+                                  required
+                                  label='Quantity'
+                                  variant='outlined'
+                                  type='number'
+                                  InputProps={{ inputProps: { min: 1 } }}
+                                  size='small'
+                                  className='recipe-quantity'
+                                  onChange={(event) => setQuantity(+event.target.value)}
+                                />
+                                <Autocomplete
+                                  size='small'
+                                  options={ unitsStore.getUnits }
+                                  getOptionLabel={ (option) => option.toString() }
+                                  onChange={(event, value) => setUnit(value.toString())}
+                                  renderInput={(params) => (
+                                    <TextField
+                                      {...params}
+                                      className='recipe-unit'
+                                      label='Unit'
+                                      variant='outlined'
+                                      required
+                                    />
+                                  )}
+                                />
+                                <Fab
+                                  color='primary'
+                                  size='small'
+                                  className='add-ingredient-button'
+                                  onClick={() => addNewIngredient()}
+                                >
+                                  <GoPlus />
+                                </Fab>
+                              </div>
+                              { ingredientsInputs }
                             </div>
                           </Paper>
                           <TextField
@@ -410,4 +459,9 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
   );
 };
 
-export default inject('productsStore', 'aislesStore')(observer(RecipesTable));
+export default inject(
+  'cuisinesStore',
+  'mealtypesStore',
+  'productsStore',
+  'unitsStore'
+)(observer(RecipesTable));

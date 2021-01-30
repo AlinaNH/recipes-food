@@ -25,7 +25,7 @@ describe('Units API', () => {
       const { body } = await request(app.getHttpServer())
         .get('/units')
         .set('Accept', 'application/json');
-      expect([...body].map((e) => e.unit)).toEqual(units.data);
+      expect([...body].map((e) => e)).toEqual(units.data);
     });
   });
 });
