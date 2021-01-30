@@ -75,11 +75,13 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
   const [openModal, setOpenModal] = React.useState(false);
   const [openErrorAlert, setOpenErrorAlert] = React.useState(false);
   const [openSuccessAlert, setOpenSuccessAlert] = React.useState(false);
+  const [servings, setServings] = React.useState(2);
+  const [minutes, setMinutes] = React.useState(15);
   const [cuisine, setCuisine] = React.useState('');
   const [mealtypes, setMealtypes] = React.useState([]);
-  const [product, setProduct] = React.useState('ale');
-  const [quantity, setQuantity] = React.useState(1);
-  const [unit, setUnit] = React.useState('can');
+  const [products, setProduct] = React.useState([]);
+  const [quantities, setQuantity] = React.useState([]);
+  const [units, setUnit] = React.useState([]);
   const [ingredientsInputs, setIngredientsInputs] = React.useState([]);
 
   function addNewIngredient() {
@@ -90,7 +92,7 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
           label='Product'
           variant='outlined'
           size='small'
-          defaultValue={product}
+          defaultValue={'ale'}
           className='recipe-quantity recipe-product-data'
           InputProps={{
             readOnly: true,
@@ -101,7 +103,7 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
           label='Quantity'
           variant='outlined'
           size='small'
-          defaultValue={quantity}
+          defaultValue={1}
           className='recipe-quantity recipe-quantity-data'
           InputProps={{
             readOnly: true,
@@ -112,7 +114,7 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
           label='Unit'
           variant='outlined'
           size='small'
-          defaultValue={unit}
+          defaultValue={'can'}
           className='recipe-quantity recipe-unit-data'
           InputProps={{
             readOnly: true,
@@ -123,36 +125,46 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
     setIngredientsInputs([...ingredientsInputs, result]);
   }
 
-  async function addRecipe() {
-    // const product =
-    // (document.querySelector('#productInput') as HTMLInputElement).value;
+  async function addRecipe(e) {
+    e.preventDefault();
+    const recipe = {
+      title: (document.querySelector('#recipe-title') as HTMLInputElement).value,
+      servings: servings,
+      minutes: minutes,
+      image: (document.querySelector('#recipe-image') as HTMLInputElement).value,
+      source: (document.querySelector('#recipe-source') as HTMLInputElement).value,
+      cuisine: cuisine,
+      mealtypes: mealtypes,
+      instruction: (document.querySelector('#recipe-description') as HTMLInputElement).value,
+      ingredients: []
+    };
 
-    // if (
-    //   product && aisles
-    //   && isNaN(+product) && isNaN(+aisles)
-    //   && !productsStore.hasProduct(product)
-    // ) {
-    //   const productData = {
-    //     product: {
-    //       name: product,
-    //       aisles: aisles
-    //     }
-    //   };
-    //   await fetch(window.location.href.split('#')[0] + 'products', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json;charset=utf-8'
-    //     },
-    //     body: JSON.stringify(productData)
-    //   });
-    //   setOpenSuccessAlert(true);
-    //   setTimeout(() => {
-    //     setOpenModal(false);
-    //     setOpenSuccessAlert(true);
-    //   }, 3000);
-    // } else {
-    //   setOpenErrorAlert(true);
-    // }
+    products.forEach((e, i) => {
+      recipe.ingredients.push({
+        product: products[i],
+        quantity: quantities[i],
+        unit: units[i]
+      });
+    });
+    console.log(recipe);
+    if (recipe) {
+      await fetch(window.location.href.split('#')[0] + 'recipes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify({ recipe: recipe })
+      })
+        .then((response) => response.json())
+        .then((result) => console.log(result));
+      setOpenSuccessAlert(true);
+      setTimeout(() => {
+        setOpenModal(false);
+        setOpenSuccessAlert(true);
+      }, 3000);
+    } else {
+      setOpenErrorAlert(true);
+    }
   }
 
   function deleteRecipe() {
@@ -192,7 +204,7 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
                   aria-describedby='alert-dialog-description'
                   className='add-recipe-modal'
                 >
-                  <form onSubmit={addRecipe}>
+                  <form onSubmit={(e) => addRecipe(e)}>
                     <DialogTitle className='rt-title'>
                       <Typography variant='h6'>Add New Recipe</Typography>
                     </DialogTitle>
@@ -206,7 +218,12 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
                             required
                           />
                           <div className='rt-container'>
-                            <RadioGroup aria-label='servings' defaultValue='2' name='servings' className='rt-part-input-container'/* value={value} onChange={handleChange} */>
+                            <RadioGroup
+                              aria-label='servings'
+                              defaultValue='2'
+                              className='rt-part-input-container'
+                              onChange={(e) => setServings(+(e.target as HTMLInputElement).value)}
+                            >
                               <FormLabel component='legend'>Servings</FormLabel>
                               <FormControlLabel
                                 value='2'
@@ -239,7 +256,11 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
                                 labelPlacement='top'
                               />
                             </RadioGroup>
-                            <RadioGroup aria-label='servings' defaultValue='15' name='servings' className='rt-part-input-container'/* value={value} onChange={handleChange} */>
+                            <RadioGroup
+                              aria-label='Minutes'
+                              defaultValue='15'
+                              className='rt-part-input-container'
+                              onChange={(e) => setMinutes(+(e.target as HTMLInputElement).value)}>
                               <FormLabel component='legend'>Minutes</FormLabel>
                               <FormControlLabel
                                 value='15'
@@ -308,7 +329,7 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
                             className='recipe-table-input'
                             options={ mealtypesStore.getMealtypes }
                             getOptionLabel={ (option) => option.toString() }
-                            onChange={(event, value) => setMealtypes([...mealtypes, value])}
+                            onChange={(event, value) => setMealtypes([...mealtypes, value.toString()])}
                             renderTags={(value: string[], getTagProps) =>
                               value.map((option: string, index: number) => (
                                 <Chip variant="outlined" label={option} {...getTagProps({ index })} />
@@ -338,7 +359,7 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
                                   size='small'
                                   options={ productsStore.getProductsNames }
                                   getOptionLabel={ (option) => option.toString() }
-                                  onChange={(event, value) => setProduct(value.toString())}
+                                  onChange={(event, value) => setProduct([...products, value.toString()])}
                                   renderInput={(params) => (
                                     <TextField
                                       {...params}
@@ -357,13 +378,13 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
                                   InputProps={{ inputProps: { min: 1 } }}
                                   size='small'
                                   className='recipe-quantity'
-                                  onChange={(event) => setQuantity(+event.target.value)}
+                                  onChange={(event) => setQuantity([...quantities, +event.target.value])}
                                 />
                                 <Autocomplete
                                   size='small'
                                   options={ unitsStore.getUnits }
                                   getOptionLabel={ (option) => option.toString() }
-                                  onChange={(event, value) => setUnit(value.toString())}
+                                  onChange={(event, value) => setUnit([...units, value.toString()])}
                                   renderInput={(params) => (
                                     <TextField
                                       {...params}
@@ -442,6 +463,15 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
                 pagination={ paginationFactory({}) }
                 { ...props.baseProps }
               />
+              <Snackbar
+                open={openErrorAlert}
+                autoHideDuration={3000}
+                onClose={() => setOpenErrorAlert(false) }
+              >
+                <Alert onClose={() => setOpenErrorAlert(false) } severity='error'>
+                  Error occured. Please, try again.
+                </Alert>
+              </Snackbar>
               <Snackbar
                 open={openSuccessAlert}
                 autoHideDuration={3000}
