@@ -15,12 +15,12 @@ class ProductsStore {
     this.loadProductsNames();
   }
 
-  private async loadProducts() {
+  async loadProducts() {
     this.products = await fetch(window.location.href.split('#')[0] + 'products')
       .then((response) => response.json());
   }
 
-  private async loadProductsNames() {
+  async loadProductsNames() {
     this.productsNames
       = await fetch(window.location.href.split('#')[0] + 'products/names')
         .then((response) => response.json());

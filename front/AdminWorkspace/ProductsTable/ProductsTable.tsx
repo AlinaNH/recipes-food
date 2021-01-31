@@ -51,6 +51,7 @@ const ProductsTable: React.FunctionComponent<ProductsTableProps> = (
   const [openErrorAlert, setOpenErrorAlert] = React.useState(false);
   const [openSuccessAlert, setOpenSuccessAlert] = React.useState(false);
   const [aisles, setAisles] = React.useState([]);
+  const [ignored, forceUpdate] = React.useReducer((x) => x + 1, 0);
 
 
   async function addRow() {
@@ -79,6 +80,8 @@ const ProductsTable: React.FunctionComponent<ProductsTableProps> = (
         setOpenModal(false);
         setOpenSuccessAlert(true);
       }, 3000);
+      productsStore.loadProducts();
+      forceUpdate();
     } else {
       setOpenErrorAlert(true);
     }
@@ -98,7 +101,10 @@ const ProductsTable: React.FunctionComponent<ProductsTableProps> = (
         body: JSON.stringify({ productName: ingredientToDelete })
       });
     });
+    productsStore.loadProducts();
+    forceUpdate();
   }
+
   return (
     <div className='products-table-container'>
       <h2 className='products-table-header'>Products Table</h2>

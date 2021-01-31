@@ -25,11 +25,12 @@ interface RecipesTableProps {
   cuisinesStore?: any;
   mealtypesStore?: any;
   productsStore?: any;
-  unitsStore?: any
+  unitsStore?: any;
+  recipesStore?: any;
 }
 
 const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
-  { cuisinesStore, mealtypesStore, productsStore, unitsStore }
+  { cuisinesStore, mealtypesStore, productsStore, unitsStore, recipesStore }
 ) => {
   const { SearchBar } = Search;
 
@@ -40,13 +41,13 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
       sort: true
     },
     {
-      dataField: 'title',
-      text: 'Cuisine',
+      dataField: 'servings',
+      text: 'Servings',
       sort: true
     },
     {
-      dataField: 'mealtype',
-      text: 'Mealtype',
+      dataField: 'minutes',
+      text: 'Minutes',
       sort: true
     },
     {
@@ -55,13 +56,8 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
       sort: true
     },
     {
-      dataField: 'servings',
-      text: 'Servings',
-      sort: true
-    },
-    {
-      dataField: 'minutes',
-      text: 'Minutes',
+      dataField: 'mealtypes',
+      text: 'Mealtypes',
       sort: true
     }
   ];
@@ -83,6 +79,7 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
   const [quantities, setQuantity] = React.useState([]);
   const [units, setUnit] = React.useState([]);
   const [ingredientsInputs, setIngredientsInputs] = React.useState([]);
+  const [ignored, forceUpdate] = React.useReducer((x) => x + 1, 0);
 
   function addNewIngredient() {
     const result = [(
@@ -162,6 +159,9 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
         setOpenModal(false);
         setOpenSuccessAlert(true);
       }, 3000);
+      recipesStore.loadRecipes();
+      recipesStore.loadRecipesShortData();
+      forceUpdate();
     } else {
       setOpenErrorAlert(true);
     }
@@ -182,12 +182,13 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
     //   });
     // });
   }
+
   return (
     <div className='recipe-table-container'>
       <h2 className='recipe-table-header'>Recipes Table</h2>
       <ToolkitProvider
         keyField='recipe'
-        data={ [] /* productsStore.getProducts */ }
+        data={ recipesStore.getRecipesShortData }
         columns={ columnsData }
         search
         bootstrap4
@@ -493,5 +494,6 @@ export default inject(
   'cuisinesStore',
   'mealtypesStore',
   'productsStore',
-  'unitsStore'
+  'unitsStore',
+  'recipesStore'
 )(observer(RecipesTable));

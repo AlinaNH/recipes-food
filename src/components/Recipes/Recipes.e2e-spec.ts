@@ -292,6 +292,15 @@ describe('Recipes API', () => {
     });
   });
 
+  describe('get short recipes data', () => {
+    it('GET /recipes/short returns all recipes short data', async () => {
+      const { body } = await request(app.getHttpServer())
+        .get('/recipes/short')
+        .set('Accept', 'application/json');
+      expect([...body].some((e) => e.title === 'test')).toBeTruthy();
+    });
+  });
+
   describe('delete recipe', () => {
     it('sending recipe title DELETE /recipes return {deleted: \'test\'}', async () => {
       const { body } = await request(app.getHttpServer())

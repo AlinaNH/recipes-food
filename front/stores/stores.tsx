@@ -6,7 +6,7 @@ import AislesStore from './AislesStore';
 import CuisinesStore from './CuisinesStore';
 import MealtypesStore from './MealtypesStore';
 import UnitsStore from './UnitsStore';
-
+import RecipesStore from './RecipesStore';
 
 export const stores = {
   filterStore: new FilterStore(),
@@ -16,5 +16,6 @@ export const stores = {
   aislesStore: new AislesStore(),
   cuisinesStore: new CuisinesStore(),
   mealtypesStore: new MealtypesStore(),
-  unitsStore: new UnitsStore()
+  unitsStore: new UnitsStore(),
+  recipesStore: new RecipesStore()
 };
