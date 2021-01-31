@@ -177,19 +177,22 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
   }
 
   function deleteRecipe() {
-    // const checkboxesToDelete = document.querySelectorAll(
-    //   'input[type=\'checkbox\']:checked'
-    // );
-    // [].forEach.call(checkboxesToDelete, async (checkbox) => {
-    //   const ingredientToDelete = checkbox.parentNode.nextSibling.textContent;
-    //   await fetch(window.location.href.split('#')[0] + 'products', {
-    //     method: 'DELETE',
-    //     headers: {
-    //       'Content-Type': 'application/json;charset=utf-8'
-    //     },
-    //     body: JSON.stringify({ productName: ingredientToDelete })
-    //   });
-    // });
+    const checkboxesToDelete = document.querySelectorAll(
+      'input[type=\'checkbox\']:checked'
+    );
+    [].forEach.call(checkboxesToDelete, async (checkbox) => {
+      const recipeToDelete = checkbox.parentNode.nextSibling.textContent;
+      await fetch(window.location.href.split('#')[0] + 'recipes', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify({ recipeTitle: recipeToDelete })
+      });
+    });
+    recipesStore.loadRecipesData();
+    recipesStore.loadRecipesShortData();
+    forceUpdate();
   }
 
   return (
@@ -197,7 +200,7 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
       <form id='ingredients-form' onSubmit={(e) => addNewIngredient(e)}></form>
       <h2 className='recipe-table-header'>Recipes Table</h2>
       <ToolkitProvider
-        keyField='recipe'
+        keyField='title'
         data={ recipesStore.getRecipesShortData }
         columns={ columnsData }
         search
