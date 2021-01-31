@@ -25,7 +25,7 @@ describe('Cuisines API', () => {
       const { body } = await request(app.getHttpServer())
         .get('/cuisines')
         .set('Accept', 'application/json');
-      expect([...body].map((e) => e.cuisine)).toEqual(cuisines.data);
+      expect([...body].map((e) => e)).toEqual(cuisines.data);
     });
   });
 });

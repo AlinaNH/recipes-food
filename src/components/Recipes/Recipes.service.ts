@@ -334,4 +334,20 @@ export class RecipesService {
     });
     return recipes;
   }
+
+  async getShortRecipesData() {
+    const recipes = await getConnection()
+      .getRepository(RecipesEntity)
+      .createQueryBuilder('recipes')
+      .leftJoinAndSelect('recipes.cuisine', 'cuisine')
+      .leftJoinAndSelect('recipes.mealtypes', 'mealtypes')
+      .getMany();
+
+    recipes.forEach((e: any) => {
+      delete e.id; delete e.image; delete e.source, delete e.instruction;
+      e.cuisine = e.cuisine.cuisine;
+      e.mealtypes = e.mealtypes.map((m) => m.mealtype);
+    });
+    return recipes;
+  }
 }

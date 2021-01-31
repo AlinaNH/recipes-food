@@ -6,7 +6,7 @@ export class UnitsController {
   constructor(private readonly unitsService: UnitsService) {}
 
   @Get()
-  getCuisines() {
+  getUnits() {
     return this.unitsService.getUnits();
   }
 }

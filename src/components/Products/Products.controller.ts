@@ -27,6 +27,11 @@ export class ProductsController {
     return this.productsService.getProducts();
   }
 
+  @Get('/names')
+  getProductsNames(@Param('names') names: 'names') {
+    return this.productsService.getProductsNames();
+  }
+
   @Get(':productName')
   getProduct(@Param('productName') productName: string) {
     return this.productsService.getProduct(productName);

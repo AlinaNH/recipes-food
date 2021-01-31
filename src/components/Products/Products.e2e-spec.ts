@@ -4,6 +4,7 @@ import request from 'supertest';
 import { NestExpressApplication } from '@nestjs/platform-express';
 
 import { AppModule } from '../../app.module';
+import products from '../../data/products';
 
 describe('Products API', () => {
   let app: NestExpressApplication;
@@ -151,6 +152,15 @@ describe('Products API', () => {
         .set('Accept', 'application/json')
         .send({ productName: 'test' });
       expect(body).toEqual({ deleted: false, message: 'Product \'test\' is not found' });
+    });
+  });
+
+  describe('get all products names', () => {
+    it('GET /products/names return all product names', async () => {
+      const { body } = await request(app.getHttpServer())
+        .get('/products/names')
+        .set('Accept', 'application/json');
+      expect([...body].map((e) => e)).toEqual(products.data.map((e) => e.name));
     });
   });
 });

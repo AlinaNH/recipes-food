@@ -176,4 +176,14 @@ export class ProductsService {
       };
     });
   };
+
+  async getProductsNames()
+  : Promise<string[]> {
+    const productsData = await getConnection()
+      .createQueryBuilder()
+      .select('product')
+      .from(ProductsEntity, 'products')
+      .getRawMany();
+    return productsData.map((data) => data.product);
+  }
 }

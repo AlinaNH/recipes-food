@@ -25,7 +25,7 @@ describe('Mealtypes API', () => {
       const { body } = await request(app.getHttpServer())
         .get('/mealtypes')
         .set('Accept', 'application/json');
-      expect([...body].map((e) => e.mealtype)).toEqual(mealtypes.data);
+      expect([...body].map((e) => e)).toEqual(mealtypes.data);
     });
   });
 });
