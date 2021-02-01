@@ -20,6 +20,7 @@ import './RecipesTable.css';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { GoPlus, GoX } from 'react-icons/go';
 import Chip from '@material-ui/core/Chip/Chip';
+import { useHistory } from 'react-router-dom';
 
 interface RecipesTableProps {
   cuisinesStore?: any;
@@ -33,12 +34,22 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
   { cuisinesStore, mealtypesStore, productsStore, unitsStore, recipesStore }
 ) => {
   const { SearchBar } = Search;
+  const history = useHistory();
+
+  function renderRecipePage(title: string) {
+    recipesStore.setSearchedTitle(title);
+    history.push('/recipe-page');
+  }
 
   const columnsData = [
     {
       dataField: 'title',
       text: 'Title',
-      sort: true
+      sort: true,
+      style: { 'color': 'blue', 'text-decoration-style': 'solid', 'cursor': 'pointer' },
+      events: {
+        onClick: (e, column, columnIndex, row, rowIndex) => renderRecipePage(row.title)
+      }
     },
     {
       dataField: 'servings',
@@ -187,8 +198,6 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
     recipesStore.loadRecipesShortData();
     forceUpdate();
   }
-
-  React.useEffect(() => console.log(ingredients), [ingredients]);
 
   return (
     <div className='recipe-table-container'>

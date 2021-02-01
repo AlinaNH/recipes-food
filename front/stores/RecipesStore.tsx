@@ -1,4 +1,4 @@
-import { decorate, observable, computed, toJS } from 'mobx';
+import { decorate, observable, computed, toJS, action } from 'mobx';
 
 type recipesType = {
     title: string,
@@ -15,6 +15,7 @@ type recipesType = {
 class RecipesStore {
   recipesData = [];
   recipesShortData = [];
+  searchedTitle = '';
 
   constructor() {
     this.loadRecipesData();
@@ -40,6 +41,14 @@ class RecipesStore {
     return toJS(this.recipesShortData);
   }
 
+  get getSearchedTitle(): string {
+    return this.searchedTitle;
+  }
+
+  setSearchedTitle(title: string): void {
+    this.searchedTitle = title;
+  }
+
   _generateId(): string {
     return (
       performance.now().toString(36) + Math.random().toString(36)
@@ -51,7 +60,9 @@ decorate(RecipesStore, {
   recipesData: observable,
   recipesShortData: observable,
   getRecipesData: computed,
-  getRecipesShortData: computed
+  getRecipesShortData: computed,
+  getSearchedTitle: computed,
+  setSearchedTitle: action
 });
 
 export default RecipesStore;
