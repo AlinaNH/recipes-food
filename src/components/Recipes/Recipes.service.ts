@@ -130,18 +130,22 @@ export class RecipesService {
       .getMany();
   }
 
-  private async getProductsId(products: string[]) {
-    return await getConnection()
-      .createQueryBuilder(ProductsEntity, 'products')
-      .where('products.product IN (:...products)', { products: products })
-      .getMany();
+  private async getProductId(product: string) {
+    return await getConnection( )
+      .createQueryBuilder()
+      .select('id')
+      .from(ProductsEntity, 'products')
+      .where('product = :product', { product: product })
+      .getRawOne();
   }
 
-  private async getUnitsId(units: string[]) {
-    return await getConnection()
-      .createQueryBuilder(UnitsEntity, 'units')
-      .where('units.unit IN (:...units)', { units: units })
-      .getMany();
+  private async getUnitId(unit: string) {
+    return await getConnection( )
+      .createQueryBuilder()
+      .select('id')
+      .from(UnitsEntity, 'units')
+      .where('unit = :unit', { unit: unit })
+      .getRawOne();
   }
 
   private async getRecipeId(title: string) {
@@ -157,13 +161,8 @@ export class RecipesService {
   : Promise<{ added: string | boolean, message?: string }> {
     const checkRecipe = await this.checkRecipes(recipe);
     if (checkRecipe === 'valid') {
-      const products = recipe.ingredients.map((ingredient) => ingredient.product);
-      const units = recipe.ingredients.map((ingredient) => ingredient.unit);
-
       const cuisineId = await this.getCuisineId(recipe.cuisine);
       const mealtypesId = await this.getMealtypesId(recipe.mealtypes);
-      const productsId = await this.getProductsId(products);
-      const unitsId = await this.getUnitsId(units);
 
       await getConnection()
         .createQueryBuilder()
@@ -195,14 +194,17 @@ export class RecipesService {
       });
 
       await Promise.all(recipe.ingredients.map(async (e, i) => {
+        const productId = await this.getProductId(e.product);
+        const unitId = await this.getUnitId(e.unit);
+
         const ingredientId = await getConnection()
           .createQueryBuilder()
           .insert()
           .into('ingredients')
           .values({
-            product: productsId[i].id,
+            product: productId,
             quantity: recipe.ingredients[i].quantity,
-            unit: unitsId[i].id
+            unit: unitId
           })
           .returning('id')
           .execute();

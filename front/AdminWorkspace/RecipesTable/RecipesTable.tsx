@@ -78,18 +78,18 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
   const [product, setProduct] = React.useState('ale');
   const [quantity, setQuantity] = React.useState(1);
   const [unit, setUnit] = React.useState('can');
-  const [products, setProducts] = React.useState([]);
-  const [quantities, setQuantities] = React.useState([]);
-  const [units, setUnits] = React.useState([]);
+  const [ingredients, setIngredients] = React.useState([]);
   const [ingredientsInputs, setIngredientsInputs] = React.useState([]);
   const [ignored, forceUpdate] = React.useReducer((x) => x + 1, 0);
 
   function addNewIngredient(e) {
     e.preventDefault();
     e.stopPropagation();
-    setProducts([...products, product]);
-    setQuantities([...quantities, quantity]);
-    setUnits([...units, unit]);
+    setIngredients([...ingredients, {
+      product: product,
+      quantity: quantity,
+      unit: unit
+    }]);
 
     const result = [(
       <div className='ingredient ingredient-data'>
@@ -142,16 +142,9 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
       cuisine: cuisine,
       mealtypes: mealtypes,
       instruction: (document.querySelector('#recipe-description') as HTMLInputElement).value,
-      ingredients: []
+      ingredients: ingredients
     };
 
-    products.forEach((e, i) => {
-      recipe.ingredients.push({
-        product: products[i],
-        quantity: quantities[i],
-        unit: units[i]
-      });
-    });
     console.log(recipe);
     if (recipe) {
       await fetch(window.location.href.split('#')[0] + 'recipes', {
@@ -194,6 +187,8 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
     recipesStore.loadRecipesShortData();
     forceUpdate();
   }
+
+  React.useEffect(() => console.log(ingredients), [ingredients]);
 
   return (
     <div className='recipe-table-container'>
@@ -368,7 +363,7 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
                                   label='Quantity'
                                   variant='outlined'
                                   type='number'
-                                  InputProps={{ inputProps: { min: 1 } }}
+                                  InputProps={{ inputProps: { min: 1, step: 0.01 } }}
                                   size='small'
                                   className='recipe-quantity'
                                   onChange={(event) => setQuantity(+event.target.value) } />
