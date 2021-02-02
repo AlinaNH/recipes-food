@@ -5,6 +5,7 @@
 .recipe-title {
   text-align: center;
   margin: 30px 0;
+  margin-top: 50px;
 }
 
 .recipe-filters {
@@ -42,7 +43,7 @@
 }
 
 .recipe-img-container {
-  width: 40%;
+  width: 60%;
   height: 20%;
 }
 
