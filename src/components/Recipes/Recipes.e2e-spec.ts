@@ -17,7 +17,7 @@ describe('Recipes API', () => {
     instruction: 'test instruction',
     cuisine: 'None',
     mealtypes: ['none'],
-    ingredients: [{ product: 'apricot', quantity: 2, unit: 'fruit' }]
+    ingredients: [{ product: 'apricot', quantity: 2.00, unit: 'fruit' }]
   };
 
   beforeAll(async () => {
@@ -212,7 +212,7 @@ describe('Recipes API', () => {
 
     it('sending product in ingredients which doesn\'t exist in database in recipe by POST /recipes return an error', async () => {
       const invalidRecipe = Object.assign({}, recipe);
-      invalidRecipe.ingredients = [{ product: 'notExists', quantity: 2, unit: 'fruit' }];
+      invalidRecipe.ingredients = [{ product: 'notExists', quantity: 2.00, unit: 'fruit' }];
       const { body } = await request(app.getHttpServer())
         .post('/recipes')
         .set('Accept', 'application/json')
@@ -236,7 +236,7 @@ describe('Recipes API', () => {
 
     it('sending unit in ingredients which doesn\'t exist in database in recipe by POST /recipes return an error', async () => {
       const invalidRecipe = Object.assign({}, recipe);
-      invalidRecipe.ingredients = [{ product: 'notExists', quantity: 2, unit: 'notExists' }];
+      invalidRecipe.ingredients = [{ product: 'notExists', quantity: 2.00, unit: 'notExists' }];
       const { body } = await request(app.getHttpServer())
         .post('/recipes')
         .set('Accept', 'application/json')

@@ -9,6 +9,7 @@ import { HomePage } from './HomePage/HomePage';
 import { Footer } from './Footer/Footer';
 import { ResultsPage } from './ResultsPage/ResultsPage';
 import { UserPage } from './UserPage/UserPage';
+import RecipePage from './RecipePage/RecipePage';
 
 export const App: React.FunctionComponent = () =>{
   return (
@@ -37,10 +38,11 @@ export const App: React.FunctionComponent = () =>{
             <Route exact path="/(|signin|signup)" component={HomePage} />
             <Route path="/searchResults" component={ResultsPage} />
             <Route path="/my-account/:sections" component={UserPage} />
+            <Route path="/recipe-page" component={RecipePage} />
           </Switch>
         </AnimatePresence>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };
