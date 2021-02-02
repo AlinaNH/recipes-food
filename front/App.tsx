@@ -42,7 +42,7 @@ export const App: React.FunctionComponent = () =>{
           </Switch>
         </AnimatePresence>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

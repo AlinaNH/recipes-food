@@ -38,6 +38,7 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
 
   function renderRecipePage(title: string) {
     recipesStore.setSearchedTitle(title);
+    localStorage.setItem('searchedTitle', title);
     history.push('/recipe-page');
   }
 
