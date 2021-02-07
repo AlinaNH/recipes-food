@@ -2,8 +2,3 @@ div .MuiAutocomplete-inputRoot[class*='MuiOutlinedInput-root'] {
   padding: 5px;
   background-color: white;
 }
-
-fieldset.PrivateNotchedOutline-root-1.MuiOutlinedInput-notchedOutline {
-  border: 2px solid black;
-  border-radius: 15px;
-}
