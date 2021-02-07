@@ -43,3 +43,7 @@ button.slick-arrow.slick-prev:hover {
 button.slick-arrow.slick-next:hover {
   transform: translateX(0.2vw);
 }
+
+button.slick-arrow.slick-next::before, button.slick-arrow.slick-prev::before {
+  color: rgba(0, 0, 0, 0.582);
+}

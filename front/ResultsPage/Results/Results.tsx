@@ -1,4 +1,4 @@
-import { RecipesCard } from '../../HomePage/TopRecipes/RecipesCard/RecipesCard';
+import RecipesCard from '../../HomePage/TopRecipes/RecipesCard/RecipesCard';
 import * as React from 'react';
 import './Results.css';
 

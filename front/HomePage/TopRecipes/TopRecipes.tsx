@@ -1,6 +1,6 @@
 import * as React from 'react';
 import './TopRecipes.css';
-import { Carousel } from './Carousel/Carousel';
+import Carousel from './Carousel/Carousel';
 export const TopRecipes: React.FunctionComponent = () => {
   return (
     <div className="TopRecipes">
