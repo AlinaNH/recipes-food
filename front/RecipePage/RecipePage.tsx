@@ -44,7 +44,7 @@ const RecipePage: React.FunctionComponent<RecipePageProps> = ({ recipesStore }) 
   };
 
   const renderDescription = () => {
-    return recipe.instruction.split(/\r\n\r\n/g).map((e, i) => {
+    return recipe.instruction.split(/\n\n/g).map((e, i) => {
       const step = e.replace(/\n/g, ' ');
       return (
         <Step key={i} expanded={true} active = {true}>

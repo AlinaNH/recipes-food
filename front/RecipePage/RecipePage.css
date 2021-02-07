@@ -43,7 +43,7 @@
 }
 
 .recipe-img-container {
-  width: 60%;
+  min-width: 50%;
   height: 20%;
 }
 

@@ -471,7 +471,7 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
                 onClose={() => setOpenSuccessAlert(false)}
               >
                 <Alert onClose={() => setOpenSuccessAlert(false)} severity='success'>
-                    Product has been saved!
+                    Recipe has been saved!
                 </Alert>
               </Snackbar>
             </div>

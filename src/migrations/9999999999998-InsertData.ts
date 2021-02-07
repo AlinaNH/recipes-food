@@ -4,10 +4,10 @@ import cuisines from '../data/cuisines';
 import mealtypes from '../data/mealtypes';
 import aisles from '../data/aisles';
 import products from '../data/products';
-import units from './../data/units';
+import units from '../data/units';
 
-export class InsertData9999999999999 implements MigrationInterface {
-  name = 'InsertData9999999999999'
+export class InsertData9999999999998 implements MigrationInterface {
+  name = 'InsertData9999999999998'
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     cuisines.data.forEach(async (cuisine) => {
