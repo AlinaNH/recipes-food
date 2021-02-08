@@ -292,12 +292,30 @@ describe('Recipes API', () => {
     });
   });
 
-  describe('get short recipes data', () => {
-    it('GET /recipes/short returns all recipes short data', async () => {
+  describe('get recipe by title', () => {
+    it('GET /recipes/bytitle/:title returns recipe data by title', async () => {
       const { body } = await request(app.getHttpServer())
-        .get('/recipes/short')
+        .get('/recipes/bytitle/test')
+        .set('Accept', 'application/json');
+      expect(body[0].title === 'test').toBeTruthy();
+    });
+  });
+
+  describe('get recipes', () => {
+    it('GET /recipes returns all recipes', async () => {
+      const { body } = await request(app.getHttpServer())
+        .get('/recipes')
         .set('Accept', 'application/json');
       expect([...body].some((e) => e.title === 'test')).toBeTruthy();
+    });
+  });
+
+  describe('get recipe titles', () => {
+    it('GET /recipes/titles returns all recipes titles', async () => {
+      const { body } = await request(app.getHttpServer())
+        .get('/recipes/titles')
+        .set('Accept', 'application/json');
+      expect([...body].some((e) => e === 'test')).toBeTruthy();
     });
   });
 

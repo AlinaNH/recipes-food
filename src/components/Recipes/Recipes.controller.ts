@@ -44,8 +44,18 @@ export class RecipesController {
     return this.recipesService.getShortRecipesData();
   }
 
+  @Get('/titles')
+  getRecipesTitles(@Param('titles') titles: 'titles') {
+    return this.recipesService.getRecipesTitles();
+  }
+
   @Get(':recipeTitle')
-  getREcipe(@Param('recipeTitle') recipeTitle: string) {
+  getRecipe(@Param('recipeTitle') recipeTitle: string) {
     return this.recipesService.getRecipe(recipeTitle);
+  }
+
+  @Get('/bytitle/:title')
+  getRecipeByTitle(@Param('title') title: string) {
+    return this.recipesService.getRecipeByTitle(title);
   }
 }
