@@ -17,6 +17,7 @@ class RecipesStore {
   recipesShortData = [];
   searchedTitle = '';
   recipesTitles = [];
+  searchedRecipes = [];
 
   constructor() {
     this.loadRecipesData();
@@ -61,6 +62,14 @@ class RecipesStore {
     this.searchedTitle = title;
   }
 
+  get getSearchedRecipes() {
+    return this.searchedRecipes;
+  }
+
+  setSearchedRecipes(recipes) {
+    this.searchedRecipes = recipes;
+  }
+
   _generateId(): string {
     return (
       performance.now().toString(36) + Math.random().toString(36)
@@ -76,7 +85,9 @@ decorate(RecipesStore, {
   getRecipesTitles: computed,
   getRecipesShortData: computed,
   getSearchedTitle: computed,
-  setSearchedTitle: action
+  setSearchedTitle: action,
+  getSearchedRecipes: computed,
+  setSearchedRecipes: action
 });
 
 export default RecipesStore;

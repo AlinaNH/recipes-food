@@ -389,7 +389,7 @@ export class RecipesService {
   }
 
   async getRecipesByTitles(titles) {
-    const result = [];
+    const result: any = [];
     await Promise.all(JSON.parse(titles).map(async (title) => {
       const recipe = await this.getRecipeByTitle(title);
       result.push(recipe);

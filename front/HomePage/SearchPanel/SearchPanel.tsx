@@ -18,6 +18,7 @@ import { TiArrowSortedDown } from 'react-icons/ti';
 import { inject, observer } from 'mobx-react';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import colors from './AutocompleteSearch/AutocompleteTagColors';
+import { useHistory } from 'react-router-dom';
 
 type searchPanelProps = {
   recipesStore?: any,
@@ -32,6 +33,7 @@ const SearchPanel: React.FunctionComponent<searchPanelProps> = ({
   const anchorRef = React.useRef<HTMLDivElement>(null);
   const [selectedIndex, setSelectedIndex] = React.useState(1);
   const [inputValues, setInputValues] = React.useState([]);
+  const history = useHistory();
 
   const options = [
     'Search by ingredients',
@@ -55,7 +57,6 @@ const SearchPanel: React.FunctionComponent<searchPanelProps> = ({
   ) => {
     setSelectedIndex(index);
     setOpen(false);
-    console.log(options[index]);
   };
 
   const handleClose = (event: React.MouseEvent<Document, MouseEvent>) => {
@@ -97,34 +98,34 @@ const SearchPanel: React.FunctionComponent<searchPanelProps> = ({
 
   const handleClick = async (e) => {
     e.preventDefault();
-    console.info(`You clicked ${options[selectedIndex]}`);
     switch (options[selectedIndex]) {
         case 'Search by recipe\'s title': {
           const recipes = await fetch(
             window.location.href.split('#')[0] + 'recipes/bytitles/' + JSON.stringify(inputValues)
           )
-            .then((response) => response.json())
-            .then((result) => console.log(result));
+            .then((response) => response.json());
+          recipesStore.setSearchedRecipes(recipes);
           break;
         }
         case 'Search by ingredients': {
           const recipes = await fetch(
             window.location.href.split('#')[0] + 'recipes/byingredients/' + JSON.stringify(inputValues)
           )
-            .then((response) => response.json())
-            .then((result) => console.log(result));
+            .then((response) => response.json());
+          recipesStore.setSearchedRecipes(recipes);
           break;
         }
         case 'Search by meal type': {
           const recipes = await fetch(
             window.location.href.split('#')[0] + 'recipes/bymealtypes/' + JSON.stringify(inputValues)
           )
-            .then((response) => response.json())
-            .then((result) => console.log(result));
+            .then((response) => response.json());
+          recipesStore.setSearchedRecipes(recipes);
           break;
         }
         default: return;
     }
+    history.push('/searchResults');
   };
 
   return (

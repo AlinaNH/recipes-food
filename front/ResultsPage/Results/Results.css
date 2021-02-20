@@ -1,5 +1,14 @@
+.resultsContainer {
+  width: 100%;
+}
+
+.recipesFound{
+  text-align: center;
+  margin: 20px 0;
+}
+
 .Results {
-  width: 79%;
+  width: 100%;
   min-height: 92vh;
   text-align: center;
   display: -webkit-box;
@@ -14,7 +23,3 @@
   height: 410px;
   margin: 10px;
 }
-/* 
-.RecipesCard_descriptions_rating{
-
-} */
