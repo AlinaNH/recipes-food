@@ -12,7 +12,7 @@
 .SearchPanel_wrapper {
   width: 80%;
   background-color: white;
-  box-shadow: 0px 0px 10px black;
+  box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
   border-radius: 5px;
   padding: 4px 0;
 }
@@ -29,8 +29,6 @@
 .SearchPanel_searchInput {
   width: 80%;
   height: 65%;
-  /* border: 5px solid black;
-  border-radius: 10px; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -47,45 +45,38 @@
 }
 
 .SearchPanel_buttonGroup {
-  width: 17%;
+  width: 15%;
   height: 55%;
-  /* background-color: black; */
   display: flex;
   justify-content: space-around;
   align-items: center;
   margin-left: 1%;
+  z-index: 1;
 }
 
-.SearchPanel_buttonGroup button:first-child {
-  width: 100%;
-}
-.SearchPanel_buttonGroup a {
-  width: 23%;
-}
-.SearchPanel_buttonGroup button {
-  width: 70%;
-  height: 100%;
-  background-color: black;
-  color: white;
-  font-family: 'Courier New', Courier, monospace;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.2s;
-  transform: scale(1);
-  font-size: 0.8vw;
+.SearchPanel_buttonGroup .MuiButton-root:not(.SearchPanel-autocompleteButton) {
+  font-size: 0.6rem;
+  border-radius: 0px !important;
+  border-top-left-radius: 4px !important;
+  border-bottom-left-radius: 4px !important;
 }
 
-.SearchPanel_buttonGroup button:active {
-  transition: all 0.2s;
-  transform: scale(0.98);
+.SearchPanel_buttonGroup .MuiPaper-root {
+  width: 100% !important;
 }
 
-.SearchPanel_buttonGroup button:active > svg {
-  transform: scale(0.98);
+.SearchPanel-submitButton {
+  box-shadow: none !important;
 }
 
-.SearchPanel_buttonGroup button:focus {
-  outline: none;
+.SearchPanel-autocompleteButton {
+  border-radius: 0px !important;
+  border-top-right-radius: 4px !important;
+  border-bottom-right-radius: 4px !important;
+}
+
+.SearchPanel_wrapper .MuiAutocomplete-popper > .MuiPaper-root {
+  width: 100% !important;
 }
 
 .SearchPanel_searchInput > div {

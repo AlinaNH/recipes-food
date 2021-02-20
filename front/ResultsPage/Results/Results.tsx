@@ -1,29 +1,27 @@
 import RecipesCard from '../../HomePage/TopRecipes/RecipesCard/RecipesCard';
 import * as React from 'react';
 import './Results.css';
+import { inject, observer } from 'mobx-react';
 
-const data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+type resultsProps = {
+  recipesStore?: any
+};
 
-export const Results: React.FunctionComponent = () => {
-  const [recipes, setRecipes] = React.useState(data);
+const Results: React.FunctionComponent<resultsProps> = ({ recipesStore }) => {
+  const recipes = recipesStore.getSearchedRecipes;
   const card = recipes.map((e, i) => (
     <div key={i} className="cardWrapper">
-      <RecipesCard />
+      <RecipesCard key={i} recipe={
+        recipes[0].length ? recipes[i][0] : recipes[i]
+      } />
     </div>
   ));
-
-  const loadElement = () => {
-    if ( window.innerHeight + window.scrollY > document.body.scrollHeight - 280) {
-      setRecipes([...recipes, 1, 2, 3, 4]);
-    }
-  };
-
-  React.useEffect(() => {
-    window.addEventListener('scroll', loadElement);
-    return () => {
-      window.removeEventListener('scroll', loadElement);
-    };
-  });
-
-  return <div className="Results">{card}</div>;
+  return (
+    <div className='resultsContainer'>
+      <h5 className='recipesFound'>Recipes found: {recipes.length}</h5>
+      <div className="Results">{card}</div>
+    </div>
+  );
 };
+
+export default inject('recipesStore')(observer(Results));

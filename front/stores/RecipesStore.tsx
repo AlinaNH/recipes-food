@@ -16,10 +16,13 @@ class RecipesStore {
   recipesData = [];
   recipesShortData = [];
   searchedTitle = '';
+  recipesTitles = [];
+  searchedRecipes = [];
 
   constructor() {
     this.loadRecipesData();
     this.loadRecipesShortData();
+    this.loadRecipesTitles();
   }
 
   async loadRecipesData() {
@@ -30,6 +33,12 @@ class RecipesStore {
   async loadRecipesShortData() {
     this.recipesShortData
       = await fetch(window.location.href.split('#')[0] + 'recipes/short')
+        .then((response) => response.json());
+  }
+
+  async loadRecipesTitles() {
+    this.recipesTitles
+      = await fetch(window.location.href.split('#')[0] + 'recipes/titles')
         .then((response) => response.json());
   }
 
@@ -45,8 +54,20 @@ class RecipesStore {
     return this.searchedTitle;
   }
 
+  get getRecipesTitles(): string[] {
+    return this.recipesTitles;
+  }
+
   setSearchedTitle(title: string): void {
     this.searchedTitle = title;
+  }
+
+  get getSearchedRecipes() {
+    return this.searchedRecipes;
+  }
+
+  setSearchedRecipes(recipes) {
+    this.searchedRecipes = recipes;
   }
 
   _generateId(): string {
@@ -59,10 +80,14 @@ class RecipesStore {
 decorate(RecipesStore, {
   recipesData: observable,
   recipesShortData: observable,
+  recipesTitles: observable,
   getRecipesData: computed,
+  getRecipesTitles: computed,
   getRecipesShortData: computed,
   getSearchedTitle: computed,
-  setSearchedTitle: action
+  setSearchedTitle: action,
+  getSearchedRecipes: computed,
+  setSearchedRecipes: action
 });
 
 export default RecipesStore;

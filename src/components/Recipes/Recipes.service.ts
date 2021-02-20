@@ -352,4 +352,72 @@ export class RecipesService {
     });
     return recipes;
   }
+
+  async getRecipesTitles() {
+    const titles = await getConnection()
+      .createQueryBuilder()
+      .select('title')
+      .from(RecipesEntity, 'recipes')
+      .getRawMany();
+    return titles.map((e) => e.title);
+  }
+
+  async getRecipeByTitle(title: string) {
+    const recipe: any = await getConnection()
+      .getRepository(RecipesEntity)
+      .createQueryBuilder('recipes')
+      .where('recipes.title = :title', { title: title })
+      .leftJoinAndSelect('recipes.cuisine', 'cuisine')
+      .leftJoinAndSelect('recipes.mealtypes', 'mealtypes')
+      .leftJoinAndSelect('recipes.ingredients', 'ingredients')
+      .leftJoinAndSelect('ingredients.product', 'product')
+      .leftJoinAndSelect('ingredients.unit', 'unit')
+      .getMany();
+
+    delete recipe[0].id;
+    recipe[0].cuisine = recipe[0].cuisine.cuisine;
+    recipe[0].mealtypes = recipe[0].mealtypes.map((m) => m.mealtype);
+    recipe[0].ingredients = recipe[0].ingredients.map((i) => {
+      delete i.id;
+      return {
+        product: i.product.product,
+        quantity: i.quantity,
+        unit: i.unit.unit
+      };
+    });
+    return recipe;
+  }
+
+  async getRecipesByTitles(titles) {
+    const result: any = [];
+    await Promise.all(JSON.parse(titles).map(async (title) => {
+      const recipe = await this.getRecipeByTitle(title);
+      result.push(recipe);
+    }));
+    return result;
+  }
+
+  async getRecipesByIngredients(ingredients) {
+    const result = [];
+    const ingredientsNames = JSON.parse(ingredients);
+    const recipes = await this.getRecipes();
+    recipes.forEach((recipe) => {
+      const ingredients = recipe.ingredients.map((ingredient) => ingredient.product);
+      const hasIngredients = ingredientsNames.every((ingredient) => ingredients.includes(ingredient));
+      if (hasIngredients) result.push(recipe);
+    });
+    return result;
+  }
+
+  async getRecipesByMealtypes(mealtypes) {
+    const result = [];
+    const selectedMealtypes = JSON.parse(mealtypes);
+    const recipes = await this.getRecipes();
+    recipes.forEach((recipe) => {
+      const mealtypes = recipe.mealtypes.map((mealtype) => mealtype);
+      const hasMealtypes = selectedMealtypes.every((mealtype) => mealtypes.includes(mealtype));
+      if (hasMealtypes) result.push(recipe);
+    });
+    return result;
+  }
 }

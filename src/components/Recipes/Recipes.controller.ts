@@ -44,8 +44,33 @@ export class RecipesController {
     return this.recipesService.getShortRecipesData();
   }
 
+  @Get('/titles')
+  getRecipesTitles(@Param('titles') titles: 'titles') {
+    return this.recipesService.getRecipesTitles();
+  }
+
   @Get(':recipeTitle')
-  getREcipe(@Param('recipeTitle') recipeTitle: string) {
+  getRecipe(@Param('recipeTitle') recipeTitle: string) {
     return this.recipesService.getRecipe(recipeTitle);
+  }
+
+  @Get('/bytitle/:title')
+  getRecipeByTitle(@Param('title') title: string) {
+    return this.recipesService.getRecipeByTitle(title);
+  }
+
+  @Get('/bytitles/:titles')
+  getRecipesByTitles(@Param('titles') titles: string[]) {
+    return this.recipesService.getRecipesByTitles(titles);
+  }
+
+  @Get('/byingredients/:ingredients')
+  getRecipesByIngredients(@Param('ingredients') ingredients: string[]) {
+    return this.recipesService.getRecipesByIngredients(ingredients);
+  }
+
+  @Get('/bymealtypes/:mealtypes')
+  getRecipesByMealtypes(@Param('mealtypes') mealtypes: string[]) {
+    return this.recipesService.getRecipesByMealtypes(mealtypes);
   }
 }

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Filter } from './Filter/Filter';
-import { Results } from './Results/Results';
+import Results from './Results/Results';
 import './ResultsPage.css';
 import { motion } from 'framer-motion';
 
@@ -21,7 +21,6 @@ export const ResultsPage: React.FunctionComponent = () => (
     variants={PageVariants}
     className="ResultsPage"
   >
-    <Filter />
     <Results />
   </motion.div>
 );

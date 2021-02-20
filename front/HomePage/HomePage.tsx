@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './HomePage.css';
 import { motion } from 'framer-motion';
-import { SearchPanel } from './SearchPanel/SearchPanel';
+import SearchPanel from './SearchPanel/SearchPanel';
 import { TopRecipes } from './TopRecipes/TopRecipes';
 import { DescriptionSite } from './DescriptionSite/DescriptionSite';
 
