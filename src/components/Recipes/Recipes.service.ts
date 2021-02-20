@@ -387,4 +387,37 @@ export class RecipesService {
     });
     return recipe;
   }
+
+  async getRecipesByTitles(titles) {
+    const result = [];
+    await Promise.all(JSON.parse(titles).map(async (title) => {
+      const recipe = await this.getRecipeByTitle(title);
+      result.push(recipe);
+    }));
+    return result;
+  }
+
+  async getRecipesByIngredients(ingredients) {
+    const result = [];
+    const ingredientsNames = JSON.parse(ingredients);
+    const recipes = await this.getRecipes();
+    recipes.forEach((recipe) => {
+      const ingredients = recipe.ingredients.map((ingredient) => ingredient.product);
+      const hasIngredients = ingredientsNames.every((ingredient) => ingredients.includes(ingredient));
+      if (hasIngredients) result.push(recipe);
+    });
+    return result;
+  }
+
+  async getRecipesByMealtypes(mealtypes) {
+    const result = [];
+    const selectedMealtypes = JSON.parse(mealtypes);
+    const recipes = await this.getRecipes();
+    recipes.forEach((recipe) => {
+      const mealtypes = recipe.mealtypes.map((mealtype) => mealtype);
+      const hasMealtypes = selectedMealtypes.every((mealtype) => mealtypes.includes(mealtype));
+      if (hasMealtypes) result.push(recipe);
+    });
+    return result;
+  }
 }

@@ -58,4 +58,19 @@ export class RecipesController {
   getRecipeByTitle(@Param('title') title: string) {
     return this.recipesService.getRecipeByTitle(title);
   }
+
+  @Get('/bytitles/:titles')
+  getRecipesByTitles(@Param('titles') titles: string[]) {
+    return this.recipesService.getRecipesByTitles(titles);
+  }
+
+  @Get('/byingredients/:ingredients')
+  getRecipesByIngredients(@Param('ingredients') ingredients: string[]) {
+    return this.recipesService.getRecipesByIngredients(ingredients);
+  }
+
+  @Get('/bymealtypes/:mealtypes')
+  getRecipesByMealtypes(@Param('mealtypes') mealtypes: string[]) {
+    return this.recipesService.getRecipesByMealtypes(mealtypes);
+  }
 }

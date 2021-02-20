@@ -268,7 +268,7 @@ describe('Recipes API', () => {
   });
 
   describe('get recipe', () => {
-    it('sending recipe title by GET /recipes return a recipe object}', async () => {
+    it('sending recipe title by GET /recipes return a recipe object', async () => {
       const { body } = await request(app.getHttpServer())
         .get('/recipes/test')
         .set('Accept', 'application/json');
@@ -316,6 +316,33 @@ describe('Recipes API', () => {
         .get('/recipes/titles')
         .set('Accept', 'application/json');
       expect([...body].some((e) => e === 'test')).toBeTruthy();
+    });
+  });
+
+  describe('get recipes by titles', () => {
+    it('GET /recipes/bytitles/:titles returns recipes by titles', async () => {
+      const { body } = await request(app.getHttpServer())
+        .get('/recipes/bytitles/' + JSON.stringify(['test']))
+        .set('Accept', 'application/json');
+      expect([...body].some((e) => e.title === 'test')).toBeTruthy();
+    });
+  });
+
+  describe('get recipes by ingredients', () => {
+    it('GET /recipes/byingredients/:ingredients returns recipes by ingredients', async () => {
+      const { body } = await request(app.getHttpServer())
+        .get('/recipes/byingredients/' + JSON.stringify(['apricot']))
+        .set('Accept', 'application/json');
+      expect([...body].some((e) => e.title === 'test')).toBeTruthy();
+    });
+  });
+
+  describe('get recipes by mealtypes', () => {
+    it('GET /recipes/bymealtypes/:mealtypes returns recipes by mealtypes', async () => {
+      const { body } = await request(app.getHttpServer())
+        .get('/recipes/bymealtypes/' + JSON.stringify(['none']))
+        .set('Accept', 'application/json');
+      expect([...body].some((e) => e.title === 'test')).toBeTruthy();
     });
   });
 

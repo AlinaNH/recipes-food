@@ -1,23 +1,37 @@
+/* eslint-disable max-len */
 import * as React from 'react';
 import './SearchPanel.css';
 import { Link } from 'react-router-dom';
-import { AutocompleteSearch } from './AutocompleteSearch/AutocompleteSearch';
 import {
   Button,
   ButtonGroup,
+  Chip,
   ClickAwayListener,
   Grow,
   MenuItem,
   MenuList,
   Paper,
-  Popper
+  Popper,
+  TextField
 } from '@material-ui/core';
 import { TiArrowSortedDown } from 'react-icons/ti';
+import { inject, observer } from 'mobx-react';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import colors from './AutocompleteSearch/AutocompleteTagColors';
 
-export const SearchPanel: React.FunctionComponent = () => {
+type searchPanelProps = {
+  recipesStore?: any,
+  productsStore?: any,
+  mealtypesStore?: any
+};
+
+const SearchPanel: React.FunctionComponent<searchPanelProps> = ({
+  recipesStore, productsStore, mealtypesStore
+}) => {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef<HTMLDivElement>(null);
   const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const [inputValues, setInputValues] = React.useState([]);
 
   const options = [
     'Search by ingredients',
@@ -25,12 +39,14 @@ export const SearchPanel: React.FunctionComponent = () => {
     'Search by meal type'
   ];
 
+  const stores = [
+    productsStore.getProductsNames,
+    recipesStore.getRecipesTitles,
+    mealtypesStore.getMealtypes
+  ];
+
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
-  };
-
-  const handleClick = () => {
-    console.info(`You clicked ${options[selectedIndex]}`);
   };
 
   const handleMenuItemClick = (
@@ -39,6 +55,7 @@ export const SearchPanel: React.FunctionComponent = () => {
   ) => {
     setSelectedIndex(index);
     setOpen(false);
+    console.log(options[index]);
   };
 
   const handleClose = (event: React.MouseEvent<Document, MouseEvent>) => {
@@ -49,12 +66,73 @@ export const SearchPanel: React.FunctionComponent = () => {
     setOpen(false);
   };
 
+  const renderAutocomplete = () => {
+    const store = stores[selectedIndex];
+    return (
+      <Autocomplete
+        id="autocomplete"
+        multiple
+        key={selectedIndex}
+        limitTags={4}
+        options={store}
+        getOptionLabel={(option) => option.toString()}
+        renderInput={(params) => (
+          <TextField {...params} variant='outlined' />
+        )}
+        onChange={(event, value) => setInputValues(value)}
+        renderTags={(tagValue, getTagProps) => {
+          return tagValue.map((option, index) => {
+            return (
+              <Chip
+                {...getTagProps({ index })}
+                style={{ background: `${colors[index]}`, transition: 'none' }}
+                label={option.toString()}
+              />
+            );
+          });
+        }}
+      />
+    );
+  };
+
+  const handleClick = async (e) => {
+    e.preventDefault();
+    console.info(`You clicked ${options[selectedIndex]}`);
+    switch (options[selectedIndex]) {
+        case 'Search by recipe\'s title': {
+          const recipes = await fetch(
+            window.location.href.split('#')[0] + 'recipes/bytitles/' + JSON.stringify(inputValues)
+          )
+            .then((response) => response.json())
+            .then((result) => console.log(result));
+          break;
+        }
+        case 'Search by ingredients': {
+          const recipes = await fetch(
+            window.location.href.split('#')[0] + 'recipes/byingredients/' + JSON.stringify(inputValues)
+          )
+            .then((response) => response.json())
+            .then((result) => console.log(result));
+          break;
+        }
+        case 'Search by meal type': {
+          const recipes = await fetch(
+            window.location.href.split('#')[0] + 'recipes/bymealtypes/' + JSON.stringify(inputValues)
+          )
+            .then((response) => response.json())
+            .then((result) => console.log(result));
+          break;
+        }
+        default: return;
+    }
+  };
+
   return (
     <div className='SearchPanel'>
       <div className='SearchPanel_wrapper'>
         <form onSubmit={(e) => e.preventDefault}>
           <div className='SearchPanel_searchInput'>
-            <AutocompleteSearch />
+            {renderAutocomplete()}
           </div>
           <div className='SearchPanel_buttonGroup'>
             <ButtonGroup
@@ -65,7 +143,7 @@ export const SearchPanel: React.FunctionComponent = () => {
             >
               <Link to='/searchResults'>
                 <Button
-                  onClick={handleClick}
+                  onClick={(e) => handleClick(e)}
                   color='primary'
                   variant='contained'
                   className='SearchPanel-submitButton'
@@ -91,7 +169,6 @@ export const SearchPanel: React.FunctionComponent = () => {
                 <Grow
                   {...TransitionProps}
                   style={{
-                    // eslint-disable-next-line max-len
                     transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom',
                   }}
                 >
@@ -119,3 +196,9 @@ export const SearchPanel: React.FunctionComponent = () => {
     </div>
   );
 };
+
+export default inject(
+  'recipesStore',
+  'productsStore',
+  'mealtypesStore'
+)(observer(SearchPanel));
