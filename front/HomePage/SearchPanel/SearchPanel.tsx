@@ -34,6 +34,7 @@ const SearchPanel: React.FunctionComponent<searchPanelProps> = ({
   const [selectedIndex, setSelectedIndex] = React.useState(1);
   const [inputValues, setInputValues] = React.useState([]);
   const history = useHistory();
+  const [ignored, forceUpdate] = React.useReducer((x) => x + 1, 0);
 
   const options = [
     'search by ingredients',
@@ -98,34 +99,35 @@ const SearchPanel: React.FunctionComponent<searchPanelProps> = ({
 
   const handleClick = async (e) => {
     e.preventDefault();
+    let recipes: any;
     switch (options[selectedIndex]) {
         case 'search by recipe\'s title': {
-          const recipes = await fetch(
+          recipes = await fetch(
             window.location.href.split('#')[0] + 'recipes/bytitles/' + JSON.stringify(inputValues)
           )
             .then((response) => response.json());
-          recipesStore.setSearchedRecipes(recipes);
           break;
         }
         case 'search by ingredients': {
-          const recipes = await fetch(
+          recipes = await fetch(
             window.location.href.split('#')[0] + 'recipes/byingredients/' + JSON.stringify(inputValues)
           )
             .then((response) => response.json());
-          recipesStore.setSearchedRecipes(recipes);
           break;
         }
         case 'search by meal type': {
-          const recipes = await fetch(
+          recipes = await fetch(
             window.location.href.split('#')[0] + 'recipes/bymealtypes/' + JSON.stringify(inputValues)
           )
             .then((response) => response.json());
-          recipesStore.setSearchedRecipes(recipes);
           break;
         }
         default: return;
     }
+    recipesStore.setSearchedRecipes(recipes);
+    localStorage.setItem('searchedRecipes', JSON.stringify(recipes));
     history.push('/searchResults');
+    forceUpdate();
   };
 
   return (

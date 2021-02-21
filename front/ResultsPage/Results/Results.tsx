@@ -8,7 +8,7 @@ type resultsProps = {
 };
 
 const Results: React.FunctionComponent<resultsProps> = ({ recipesStore }) => {
-  const recipes = recipesStore.getSearchedRecipes;
+  const recipes = JSON.parse(localStorage.searchedRecipes);
   const card = recipes.map((e, i) => (
     <div key={i} className="cardWrapper">
       <RecipesCard key={i} recipe={
