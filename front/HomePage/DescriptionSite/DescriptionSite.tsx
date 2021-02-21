@@ -1,14 +1,15 @@
 import * as React from 'react';
 import './DescriptionSite.css';
+
 export const DescriptionSite: React.FunctionComponent = () => (
   <div className="description-site">
     <div className="description-site__content">
-      <h1>This place for our title</h1>
+      <img src='https://i.ibb.co/sFWQ4YW/image.png' />
       <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero, soluta
-        totam illo animi nostrum reprehenderit tempore quas quam voluptas eius
-        rem, repellendus ratione officiis eveniet, tenetur recusandae voluptates
-        consequatur sequi?
+        Here you can find any recipe with the ingredients
+        you currently have in your refrigerator or by recipe title or by meal type.
+        Simply choose ingredients name, recipe titles or a mealtype you needed
+        in the field below and we will the most suitable recipes.
       </p>
     </div>
   </div>

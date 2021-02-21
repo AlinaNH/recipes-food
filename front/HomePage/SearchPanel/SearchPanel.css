@@ -52,13 +52,18 @@
   align-items: center;
   margin-left: 1%;
   z-index: 1;
+  margin-right: 10px;
 }
 
 .SearchPanel_buttonGroup .MuiButton-root:not(.SearchPanel-autocompleteButton) {
-  font-size: 0.6rem;
+  font-size: 14px;
   border-radius: 0px !important;
   border-top-left-radius: 4px !important;
   border-bottom-left-radius: 4px !important;
+  font-family: Catamaran, sans-serif !important;
+  padding: 6px 14px;
+  line-height: 1.2 !important;
+  font-weight: 400 !important;
 }
 
 .SearchPanel_buttonGroup .MuiPaper-root {
@@ -81,4 +86,12 @@
 
 .SearchPanel_searchInput > div {
   width: 99%;
+}
+
+.buttonGroup {
+  background-color: #FFA641 !important;
+}
+
+.MuiButtonGroup-groupedContainedHorizontal:not(:last-child) {
+  border-right: none !important;
 }
