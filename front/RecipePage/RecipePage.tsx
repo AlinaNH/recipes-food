@@ -3,7 +3,14 @@ import * as React from 'react';
 import './RecipePage.css';
 import { BiDish, BiTimeFive, BiSmile, BiFoodMenu } from 'react-icons/bi';
 import { ImSpoonKnife } from 'react-icons/im';
-import { Step, StepLabel, StepContent, Stepper } from '@material-ui/core';
+import {
+  Step,
+  StepLabel,
+  StepContent,
+  Stepper,
+  Card,
+  CardContent
+} from '@material-ui/core';
 
 type RecipePageProps = {
   title: string,
@@ -69,18 +76,26 @@ const RecipePage: React.FunctionComponent<RecipePageProps> = ({ recipesStore }) 
         </div>
         <div className='recipe-details-container'>
           <div className='recipe-img-container'><img src={recipe.image} /></div>
-          <div>
-            <div className='recipe-ingredients-container'>
-              <h4>Ingredients</h4>
-              <div>{ renderIngredients() }</div>
-            </div>
-            <div className='recipe-description-container'>
+          <div className='ingredients'>
+            <Card>
+              <CardContent>
+                <div className='recipe-ingredients-container'>
+                  <h4>Ingredients</h4>
+                  <div>{ renderIngredients() }</div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+        <div className='recipe-description-container'>
+          <Card>
+            <CardContent>
               <h4>Description</h4>
               <Stepper orientation="vertical">
                 { renderDescription() }
               </Stepper>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
     );
