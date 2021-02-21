@@ -112,6 +112,12 @@
   font-size: 15px;
 }
 
+.RecipesCard_descriptions_titleTimeAndDifficult span {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 5px;
+}
+
 .TimeIcon {
   margin-bottom: -2%;
 }

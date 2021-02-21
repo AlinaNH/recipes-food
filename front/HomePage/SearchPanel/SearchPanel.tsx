@@ -36,9 +36,9 @@ const SearchPanel: React.FunctionComponent<searchPanelProps> = ({
   const history = useHistory();
 
   const options = [
-    'Search by ingredients',
-    'Search by recipe\'s title',
-    'Search by meal type'
+    'search by ingredients',
+    'search by recipe\'s title',
+    'search by meal type'
   ];
 
   const stores = [
@@ -99,7 +99,7 @@ const SearchPanel: React.FunctionComponent<searchPanelProps> = ({
   const handleClick = async (e) => {
     e.preventDefault();
     switch (options[selectedIndex]) {
-        case 'Search by recipe\'s title': {
+        case 'search by recipe\'s title': {
           const recipes = await fetch(
             window.location.href.split('#')[0] + 'recipes/bytitles/' + JSON.stringify(inputValues)
           )
@@ -107,7 +107,7 @@ const SearchPanel: React.FunctionComponent<searchPanelProps> = ({
           recipesStore.setSearchedRecipes(recipes);
           break;
         }
-        case 'Search by ingredients': {
+        case 'search by ingredients': {
           const recipes = await fetch(
             window.location.href.split('#')[0] + 'recipes/byingredients/' + JSON.stringify(inputValues)
           )
@@ -115,7 +115,7 @@ const SearchPanel: React.FunctionComponent<searchPanelProps> = ({
           recipesStore.setSearchedRecipes(recipes);
           break;
         }
-        case 'Search by meal type': {
+        case 'search by meal type': {
           const recipes = await fetch(
             window.location.href.split('#')[0] + 'recipes/bymealtypes/' + JSON.stringify(inputValues)
           )
@@ -147,13 +147,13 @@ const SearchPanel: React.FunctionComponent<searchPanelProps> = ({
                   onClick={(e) => handleClick(e)}
                   color='primary'
                   variant='contained'
-                  className='SearchPanel-submitButton'
+                  className='SearchPanel-submitButton buttonGroup'
                 >{options[selectedIndex]}</Button>
               </Link>
               <Button
                 color='primary'
                 size='small'
-                className='SearchPanel-autocompleteButton'
+                className='SearchPanel-autocompleteButton buttonGroup'
                 aria-controls={open ? 'split-button-menu' : undefined}
                 aria-expanded={open ? 'true' : undefined}
                 aria-haspopup='menu'
