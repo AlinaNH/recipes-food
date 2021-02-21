@@ -121,7 +121,7 @@ export class InsertRecipes9999999999999 implements MigrationInterface {
     
     To serve, slice the tart and serve with double cream or custard.',	27);`);
 
-    await queryRunner.query(`INSERT INTO "ingredients" VALUES
+    await queryRunner.query(`INSERT INTO "ingredients" ("id", "productId", "unitId", "quantity") VALUES
     (158,	198,	16,	1),
     (159,	720,	10,	1),
     (160,	105,	16,	4),
