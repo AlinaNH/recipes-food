@@ -43,18 +43,19 @@
 }
 
 .recipe-img-container {
-  min-width: 50%;
-  height: 20%;
+  max-width: 50%;
 }
 
 .recipe-img-container img {
-  max-width: 100%;
+  width: 100% !important;
   height: auto;
+  z-index: -1;
 }
 
 .recipe-ingredients-container {
   color: #6b6768;
   margin-bottom: 20px;
+  height: 30%;
 }
 
 .recipe-ingredients-container h4 {
@@ -62,7 +63,7 @@
 }
 
 .recipe-ingredients-container svg {
-  color: green;
+  color: #DE643F;
   margin-right: 5px;
 }
 
@@ -82,5 +83,24 @@
 }
 
 .recipe-description-container svg {
-  color: green !important;
+  color: #DE643F !important;
+}
+
+.recipe-description-container {
+  margin: 20px 0;
+}
+
+.ingredients {
+  width: 50%;
+  height: 30%;
+}
+
+.ingredients .MuiCard-root, .MuiCardContent-root {
+  width: 100%;
+  height: 100%;
+}
+
+.ingredients .MuiCardContent-root {
+  width: 100%;
+  height: 100%;
 }

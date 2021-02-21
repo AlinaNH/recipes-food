@@ -15,7 +15,7 @@ import './AdminWorkspace.css';
 export const AdminWorkspace: React.FunctionComponent = () => {
   return (
     <div className='admin-workspace-container'>
-      <List component='nav' className='admin-workspace-nav'>
+      {/* <List component='nav' className='admin-workspace-nav'>
         <div className='admin-workspace-heading'>
           App Logo
         </div>
@@ -47,7 +47,7 @@ export const AdminWorkspace: React.FunctionComponent = () => {
           </ListItemIcon>
           <ListItemText primary='Log Out' />
         </ListItem>
-      </List>
+      </List> */}
       <Switch>
         <Route path='/admin-workspace/products-table' component={ProductsTable} />
         <Route path='/admin-workspace/recipes-table' component={RecipesTable} />

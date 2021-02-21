@@ -1,7 +1,6 @@
 .description-site {
   width: 100%;
-  height: 30%;
-  font-family: 'Times New Roman', Times, serif;
+  height: 40%;
 }
 
 .description-site__content {
@@ -9,18 +8,18 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 60%;
+  width: 70%;
   height: 100%;
   text-align: center;
   margin: 0 auto;
 }
 
-.description-site__content h1 {
-  margin-bottom: 2%;
-  font-size: 5vw;
+.description-site__content p {
+  width: 70%;
+  font-size: 14px;
+  color: #6b6768;
 }
 
-.description-site__content p {
-  width: 60%;
-  font-size: 1vw;
+.description-site__content img {
+  height: 50%;
 }

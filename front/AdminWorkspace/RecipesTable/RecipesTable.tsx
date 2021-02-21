@@ -47,7 +47,7 @@ const RecipesTable: React.FunctionComponent<RecipesTableProps> = (
       dataField: 'title',
       text: 'Title',
       sort: true,
-      style: { 'color': 'blue', 'text-decoration-style': 'solid', 'cursor': 'pointer' },
+      style: { 'color': '#DE643F', 'text-decoration-style': 'solid', 'cursor': 'pointer' },
       events: {
         onClick: (e, column, columnIndex, row, rowIndex) => renderRecipePage(row.title)
       }
