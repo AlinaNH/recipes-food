@@ -272,6 +272,7 @@ describe('Recipes API', () => {
       const { body } = await request(app.getHttpServer())
         .get('/recipes/test')
         .set('Accept', 'application/json');
+      body.found.ingredients[0].quantity = 2.00;
       expect(body).toEqual({ found: recipe });
     });
 
@@ -324,7 +325,7 @@ describe('Recipes API', () => {
       const { body } = await request(app.getHttpServer())
         .get('/recipes/bytitles/' + JSON.stringify(['test']))
         .set('Accept', 'application/json');
-      expect([...body].some((e) => e.title === 'test')).toBeTruthy();
+      expect([...body].some((e) => e[0].title === 'test')).toBeTruthy();
     });
   });
 
