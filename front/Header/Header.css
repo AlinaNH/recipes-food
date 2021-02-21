@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: space-between;
   height: 40px;
-  background-color: #000;
+  background-color: #7e7e7e;
 }
 
 .header-container ul {
@@ -13,16 +13,24 @@
 
 .nav-button {
   display: flex;
+  align-items: center;
   height: 18px;
   margin: 0 25px;
   color: #fff;
   list-style-type: none;
   text-decoration: none;
   cursor: pointer;
+  font-size: 14px;
+}
+
+.disabled {
+  color: #aaa;
+  pointer-events: none;
 }
 
 .nav-button:hover {
   text-decoration: underline;
+  color: rgb(250, 226, 118);
 }
 
 .nav-button li {
