@@ -32,13 +32,14 @@ const RecipesCard: React.FunctionComponent<RecipesCardProps>
       }>
         <div className="RecipesCard_descriptions_titleTimeAndDifficult">
           <h5>{recipe.title}</h5>
-          <p>
-            <MdTimer />
-            {recipe.minutes} minutes
-          </p>
-          <p>
-            <BiDish /> {recipe.cuisine}
-          </p>
+          <span>
+            <span><MdTimer /></span>
+            <span>{recipe.minutes} minutes</span>
+          </span>
+          <span>
+            <span><BiDish /></span>
+            <span>{recipe.cuisine}</span>
+          </span>
         </div>
       </div>
     </div>
