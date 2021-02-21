@@ -10,6 +10,25 @@
 
 .products-table-header {
     margin-bottom: 30px;
+    font-weight: bold !important;
+}
+
+.products-table-container .MuiButton-containedPrimary {
+    background-color: #ffde4d !important;
+}
+
+.products-table-container .MuiButton-containedSecondary {
+    background-color: #ffa641 !important;
+}
+
+.products-table-container .page-item.active .page-link {
+    background-color: #DE643F !important;
+    border-color: #DE643F !important;
+    color: #fff !important;
+}
+
+.products-table-container .page-link {
+    color: #DE643F !important;
 }
 
 .products-table-button-container {
