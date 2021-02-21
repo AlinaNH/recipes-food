@@ -7,7 +7,7 @@ export class InsertRecipes9999999999999 implements MigrationInterface {
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     // 07.02.2021
-    await queryRunner.query(`INSERT INTO "recipes" ("id", "title", "image", "servings", "minutes", "source", "instruction", "cuisineId") VALUES
+    await queryRunner.query(`INSERT INTO "recipes" VALUES
     (160,	'Simple Baked Eggs',	'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F8739148.jpg',	2,	15,	'https://www.allrecipes.com/recipe/273461/simple-baked-eggs/',	'Preheat the oven to 350 degrees F (175 degrees C). Grease 2 ceramic ramekins.
     
     Whisk together eggs, milk, and heavy cream in a bowl until well combined.
@@ -121,7 +121,7 @@ export class InsertRecipes9999999999999 implements MigrationInterface {
     
     To serve, slice the tart and serve with double cream or custard.',	27);`);
 
-    await queryRunner.query(`INSERT INTO "ingredients" ("id", "productId", "unitId", "quantity") VALUES
+    await queryRunner.query(`INSERT INTO "ingredients" VALUES
     (158,	198,	16,	1.00),
     (159,	720,	10,	1.00),
     (160,	105,	16,	4.00),
@@ -197,7 +197,7 @@ export class InsertRecipes9999999999999 implements MigrationInterface {
     (232,	1529,	225,	1.00),
     (233,	399,	18,	2.00);`);
 
-    await queryRunner.query(`INSERT INTO "recipes_ingredients_ingredients" ("recipesId", "ingredientsId") VALUES
+    await queryRunner.query(`INSERT INTO "recipes_ingredients_ingredients" VALUES
     (160,	158),
     (160,	160),
     (160,	159),
@@ -273,7 +273,7 @@ export class InsertRecipes9999999999999 implements MigrationInterface {
     (171,	231),
     (171,	232);`);
 
-    await queryRunner.query(`INSERT INTO "recipes_mealtypes_mealtypes" ("recipesId", "mealtypesId") VALUES
+    await queryRunner.query(`INSERT INTO "recipes_mealtypes_mealtypes" VALUES
     (160,	7),
     (163,	1),
     (164,	1),
