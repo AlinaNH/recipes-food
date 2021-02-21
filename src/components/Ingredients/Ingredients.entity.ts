@@ -8,7 +8,7 @@ export class IngredientsEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('decimal', { precision: 5, scale: 2 })
+  @Column('decimal', { precision: 10, scale: 2 })
   quantity: number;
 
   @ManyToOne(
