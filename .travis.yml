@@ -1,13 +1,14 @@
 language: node_js
-
 install:
-    - docker-compose up -d
-    - npm install
-    - npm run lint
-    - npm run build:front
-    - npm run build
-    - npm run typeorm:run
-    - npm run test:cov
-
+- docker-compose up -d
+- npm install
+- npm run lint
+- npm run build:front
+- npm run build
+- npm run typeorm:run
+- npm run test:cov
 node_js:
-  - "12.18.3"
+- 12.18.3
+env:
+  global:
+    secure: IqrBo0k+V0HH7m2vYQXfn7Fb4c7AB5GejeO31ws4oQcOjjb19kXhuJQHTtlpoM46h2VHCVUI0CWL68W5c2aR1IhaE4/VSvXWPckGy+y9YE2gH7b6pDxSQvbfNzNQddsNSLJbEKVkLbjTXvjZqjmW5HEP+UYdZrtjDAsuCv4r3H/v+jqSNoA8zO1Li4TeLX4qz43yS1y/Nj9U94qcISRrlxGTEUCiuM9DHvOxAXJxh9F+ZcpLTMwNI7RNu68pwqn+5eJ4Xp5VI5S6Qxlyx0KpAZF/MeX7AZfGDk5zJmV4pA1Q720V5oXUmjKPtGbgkaS2AIyX7ycPa+y9s/W+Yqg57AGfuED6uosAXXHWb3Pg+53gk3l3qWWyF1VxwYhA7IVKoyxUTmqKdguF9x/CiyCxwSje+9tk3H3cHrI3J3bV3USIqdMNdfIlriOYDt47//1SoHcrNYKmjwQGHvz0xls49ATkjqJVjeX+5buoYakgk6KbRvPCcyWx53KqJYz+fNYB64jo4XvoB7JWlEHmd7/r/bI3tZw5dM+E9h47au5LYGvgerU61ZzIX7n4+OfJBvTDg93fmFffni2mqMaBwKNM600hHUnq8zjkbTy06pZAtHNF2J/jKyKlionIYXUDJbWzrzsWuYHzmpyklDbWZmkubSxmb8GbPfeo20Nq4fppAxU=
