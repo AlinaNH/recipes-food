@@ -1,6 +1,6 @@
 language: node_js
 before_install:
-  - openssl aes-256-cbc -K $encrypted_0a6446eb3ae3_key -iv $encrypted_0a6446eb3ae3_iv -in key.enc -out key.txt -d
+  - openssl aes-256-cbc -K $encrypted_b8048afd00e8_key -iv $encrypted_b8048afd00e8_iv -in key.txt.enc -out key.txt -d
 install:
 - docker-compose up -d
 - npm install
