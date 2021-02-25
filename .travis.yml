@@ -7,6 +7,7 @@ install:
 - npm run build
 - npm run typeorm:run
 - npm run test:cov
+- npm run pm2 deploy ecosystem.config.js production update
 node_js:
 - 12.18.3
 env:

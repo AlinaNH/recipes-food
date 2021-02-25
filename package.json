@@ -8,6 +8,7 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
+    "pm2": "pm2",
     "build:front": "webpack --mode development",
     "build:front:prod": "webpack --mode production",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" \"front/**/*.tsx\"",
