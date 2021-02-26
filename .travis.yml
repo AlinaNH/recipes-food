@@ -1,6 +1,4 @@
 language: node_js
-before_install:
-  - openssl aes-256-cbc -K $encrypted_a62f2225bf70_key -iv $encrypted_a62f2225bf70_iv -in key.enc -out key -d
 install:
 - docker-compose up -d
 - npm install
@@ -13,3 +11,6 @@ install:
 - npm run pm2 deploy ecosystem.config.js production setup
 node_js:
 - 12.18.3
+before_install:
+- openssl aes-256-cbc -K $encrypted_a62f2225bf70_key -iv $encrypted_a62f2225bf70_iv
+  -in key.enc -out key -d
