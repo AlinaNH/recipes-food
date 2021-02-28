@@ -29,13 +29,16 @@ module.exports = {
       'path': '/var/www/recipes-food',
       'pre-deploy-local': '',
       'pre-deploy': 'git reset --hard',
-      'post-deploy': 'docker-compose up -d && npm install && npm run build:front && npm run build && npm run typeorm:run && pm2 reload ecosystem.config.js --env production',
+      'post-deploy': 'pm2 startOrRestart ecosystem.json --env production',
       'pre-setup': '',
       'postinstall': '$(yarn bin)/pm2 install typescript',
       'ssh_options': [
         'StrictHostKeyChecking=no',
         'PasswordAuthentication=no'
-      ]
+      ],
+      'env': {
+        'NODE_ENV': 'staging'
+      }
     }
   },
   'staging': {
