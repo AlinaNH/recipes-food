@@ -31,7 +31,7 @@ module.exports = {
       'pre-deploy': 'git reset --hard',
       'post-deploy': 'pm2 startOrRestart ecosystem.config.js --env production',
       'pre-setup': '',
-      'postinstall': '$(yarn bin)/pm2 install typescript',
+      'postinstall': 'npm run pm2 install typescript',
       'ssh_options': [
         'StrictHostKeyChecking=no',
         'PasswordAuthentication=no'
