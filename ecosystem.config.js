@@ -28,10 +28,9 @@ module.exports = {
       'repo': 'https://github.com/AlinaNH/recipes-food.git',
       'path': '/var/www/recipes-food',
       'pre-deploy-local': '',
-      'pre-deploy': 'git reset --hard',
+      'pre-deploy': 'npm run pm2 install typescript',
       'post-deploy': 'pm2 startOrRestart ecosystem.config.js --env production',
       'pre-setup': '',
-      'postinstall': 'npm run pm2 install typescript',
       'ssh_options': [
         'StrictHostKeyChecking=no',
         'PasswordAuthentication=no'
