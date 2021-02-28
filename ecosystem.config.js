@@ -21,7 +21,7 @@ module.exports = {
 
   'deploy': {
     production: {
-      'key': 'key',
+      'key': 'key.txt',
       'user': 'root',
       'host': '165.227.158.125',
       'ref': 'origin/master',
