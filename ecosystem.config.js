@@ -1,5 +1,6 @@
 module.exports = {
   'apps': [{
+    name: 'recipes-food-server',
     script: 'src/main.ts',
     watch: 'src/main.ts',
     interpreter: 'ts-node',
@@ -12,6 +13,7 @@ module.exports = {
       NODE_ENV: 'production'
     }
   }, {
+    name: 'recipes-food-client',
     script: 'front/index.tsx',
     watch: ['front/index.tsx'],
     interpreter: 'ts-node',
