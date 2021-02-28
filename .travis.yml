@@ -8,6 +8,7 @@ install:
 - npm run typeorm:run
 - npm run test:cov
 - npm install pm2 -g
+- git reset --hard
 - npm run pm2 deploy ecosystem.config.js production
 node_js:
 - 12.18.3
@@ -17,4 +18,3 @@ before_install:
 - eval "$(ssh-agent -s)"
 - chmod 600 ./key
 - ssh-add ./key
-- git reset --hard
