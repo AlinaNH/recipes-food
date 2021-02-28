@@ -14,3 +14,6 @@ node_js:
 before_install:
 - openssl aes-256-cbc -K $encrypted_12ce2cd59fcc_key -iv $encrypted_12ce2cd59fcc_iv
   -in key.enc -out key -d
+- eval "$(ssh-agent -s)"
+- chmod 600 ./key
+- ssh-add ./key
