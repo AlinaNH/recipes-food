@@ -5,6 +5,6 @@ export class ConfigService {
   public readonly port: number;
 
   constructor() {
-    this.port = 3000;
+    this.port = 2121;
   }
 }
