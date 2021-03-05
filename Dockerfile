@@ -1,13 +1,14 @@
-FROM alpine:latest
+FROM node:12.13-alpine
 
-RUN apk add --update nginx && rm -rf /var/cache/apk/*
-COPY config/nginx.conf /etc/nginx/nginx.conf
-COPY config/vhost.conf /etc/nginx/conf.d/vhost.conf
+WORKDIR /usr/src/app
 
-# forward request and error logs to docker log collector
-RUN ln -svf /dev/stdout /var/log/nginx/access.log \
-    && ln -svf /dev/stderr /var/log/nginx/error.log
+COPY package*.json ./
 
-EXPOSE 80 443
+RUN npm install
 
-CMD ["nginx", "-g", "daemon off;"]
+COPY . .
+
+RUN npm run build
+
+EXPOSE 80 2121
+CMD ["node", "dist"]
