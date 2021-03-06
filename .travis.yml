@@ -18,6 +18,3 @@ before_install:
 - eval "$(ssh-agent -s)"
 - chmod 600 ./key
 - ssh-add ./key
-cache:
-  directories:
-  - "node_modules"
