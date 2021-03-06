@@ -9,6 +9,7 @@ RUN npm install
 COPY . .
 
 RUN npm run build
+RUN npm run typeorm:run
 
 EXPOSE 80 2121
 CMD ["node", "dist"]

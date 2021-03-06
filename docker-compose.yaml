@@ -11,7 +11,7 @@ services:
       - /usr/src/app/node_modules
     ports:
       - 2121:2121
-    command: npm run start && npm run typeorm:run
+    command: npm run start
     env_file:
       - .env
     depends_on:
