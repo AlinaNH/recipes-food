@@ -4,7 +4,6 @@ install:
 - npm install
 - npm run lint
 - npm run build:front
-- npm install @types/react
 - npm run build
 - npm run typeorm:run
 - npm run test:cov
