@@ -1,18 +1,24 @@
 version: '3.7'
 
 services:
-  nginx:
+  main:
+    image: main
+    restart: always
     build:
       context: .
-      dockerfile: ./Dockerfile
-    ports:
-      - 80:80
-      - 443:443
     volumes:
-      - "./:/www/"
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 2121:2121
+    command: npm run start && npm run typeorm:run
+    env_file:
+      - .env
+    depends_on:
+      - postgres_db
 
-
-  postgres-db:
+  postgres_db:
+    container_name: postgres
     image: postgres
     restart: always
     env_file:
@@ -27,7 +33,7 @@ services:
     ports:
       - 8080:8080
     depends_on:
-      - postgres-db
+      - postgres_db
 
 volumes:
   database-data:
