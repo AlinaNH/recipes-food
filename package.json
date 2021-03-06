@@ -152,5 +152,8 @@
     "last 2 version",
     "not dead",
     ">0.1%"
-  ]
+  ],
+  "resolutions": {
+    "@types/react": "^15.0.16"
+  }
 }
