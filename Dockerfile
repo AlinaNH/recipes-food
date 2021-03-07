@@ -9,7 +9,7 @@ RUN npm install
 COPY . .
 
 RUN npm run build
-RUN npm run build:front
+RUN npm run build:front:prod
 RUN npm run typeorm:run
 
 EXPOSE 80 2121
