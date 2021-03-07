@@ -2,6 +2,15 @@ const path = require('path');
 
 module.exports = {
   entry: './front/index.tsx',
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+    },
+  },
+  performance: {
+    maxEntrypointSize: 99999999,
+    maxAssetSize: 99999999
+  },
   module: {
     rules: [
       {
