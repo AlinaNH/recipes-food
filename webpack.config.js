@@ -11,6 +11,11 @@ module.exports = {
     maxEntrypointSize: 99999999,
     maxAssetSize: 99999999
   },
+  devServer: {
+    contentBase: path.join(__dirname, 'dist'),
+    compress: true,
+    port: 2121,
+  },
   module: {
     rules: [
       {

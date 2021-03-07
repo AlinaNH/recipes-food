@@ -10,7 +10,7 @@
     "build": "nest build",
     "pm2": "pm2",
     "build:front": "webpack --mode development",
-    "build:front:prod": "webpack p --mode=production",
+    "build:front:prod": "webpack-dev-server --mode production --config webpack.config.js",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" \"front/**/*.tsx\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
@@ -112,7 +112,8 @@
     "tsconfig-paths": "^3.9.0",
     "typescript": "^3.7.4",
     "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.12"
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.2"
   },
   "jest": {
     "moduleFileExtensions": [
