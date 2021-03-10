@@ -1,14 +1,11 @@
-FROM node:12.18.3-alpine as production
-
-ARG NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}    
+FROM node:12.18.3-alpine   
 
 WORKDIR /usr/src/app
 
 COPY package*.json ./
 
 RUN npm install
-RUN npm build
+RUN npm run build
 
 COPY . .
 
