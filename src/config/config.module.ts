@@ -10,7 +10,7 @@ config();
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: process.env.HOST,
+      host: process.env.NODE_ENV === 'production' ? 'postgres' : process.env.HOST,
       port: 5432,
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
