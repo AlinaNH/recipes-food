@@ -2,7 +2,6 @@ import * as React from 'react';
 import { observer, inject } from 'mobx-react';
 import { UserPageNavigationProps } from '../../stores/UserPageNavigationStore';
 import './AccountNavigation.css';
-import bg from './assets/bg.jpg';
 import { NavigationLink } from './NavigationLink/NavigationLink';
 const br = 'url(https://i.pinimg.com/564x/4f/a8/5a/4fa85a38f8a5e7a3f209d99b884417a5.jpg)';
 
@@ -14,8 +13,7 @@ export const AccountNavigation = inject('userPageNavStore')(
   observer((props: AccountNavigationProps) => {
     const store = props.userPageNavStore;
     return (
-      <div style={{ background: `url(/dist/${bg})`, backgroundSize: 'contain' }}
-        className="Account_wrapper">
+      <div className="Account_wrapper">
         <ul className="Account_navigation">
           <NavigationLink NavigationLink={store.NavigationLink} />
         </ul>
