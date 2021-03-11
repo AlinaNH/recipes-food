@@ -13,23 +13,26 @@ This project use .env file
 $ npm install
 ```
 
-## Building the frontend app
+## Running the app in production mode
 
 ```
-npm run build:front:prod
+docker-compose up -d
 ```
 
-## Running the app
+## Running the app in development mode
 
 ```bash
-# development
-$ npm run start
+#run database
+docker-compose up -d postgres_db
 
-# watch mode
+# run frontend
+$ npm run start:dev:front
+
+# run backend
 $ npm run start:dev
 
-# production mode
-$ npm run start:prod
+# run migrations
+$ npm run typeorm:run
 ```
 
 ## Test
@@ -48,6 +51,4 @@ $ npm run test:cov
 ## Built with
 
 [NestJS](https://nestjs.com/)
-[EJS templates](https://ejs.co/)
-[Bulma](https://bulma.io/)
-[React]()
+[React](https://reactjs.org/)
