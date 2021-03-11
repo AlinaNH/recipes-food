@@ -10,7 +10,7 @@
     "build": "nest build",
     "pm2": "pm2",
     "build:front": "webpack --mode development",
-    "build:front:prod": "webpack --mode production",
+    "build:front:prod": "webpack -p --mode=production",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" \"front/**/*.tsx\"",
     "start": "nest start",
     "start:dev": "nest start --watch",

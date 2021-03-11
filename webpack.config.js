@@ -3,9 +3,7 @@ const path = require('path');
 module.exports = {
   entry: './front/index.tsx',
   optimization: {
-    splitChunks: {
-      chunks: 'all',
-    },
+    runtimeChunk: 'single',
   },
   performance: {
     maxEntrypointSize: 99999999,
@@ -77,7 +75,7 @@ module.exports = {
   },
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'public', 'dist'),
     publicPath: '/dist/'
   },
 };
