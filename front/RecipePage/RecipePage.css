@@ -104,3 +104,16 @@
   width: 100%;
   height: 100%;
 }
+
+.recipe-source-container {
+  margin: 20px 0;
+}
+
+.recipe-source-container .MuiCardContent-root:last-child {
+  padding-bottom: 10px !important; 
+}
+
+.recipe-source {
+  text-decoration: none;
+  color: #DE643F;
+}

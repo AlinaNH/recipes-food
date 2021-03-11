@@ -45,13 +45,13 @@ const RecipePage: React.FunctionComponent<RecipePageProps> = ({ recipesStore }) 
     return recipe.ingredients.map((i) => {
       const quantity = i.quantity.toString().replace(/(\.0*|(?<=(\..*))0*)$/, '');
       return (
-        <div><ImSpoonKnife /> {quantity} {i.unit} of {i.product}</div>
+        <div><ImSpoonKnife /> {quantity} {i.unit} {i.product}</div>
       );
     });
   };
 
   const renderDescription = () => {
-    return recipe.instruction.split(/\n\n/g).map((e, i) => {
+    return recipe.instruction.split(/\s{10}/g).map((e, i) => {
       const step = e.replace(/\n/g, ' ');
       return (
         <Step key={i} expanded={true} active = {true}>
@@ -96,6 +96,13 @@ const RecipePage: React.FunctionComponent<RecipePageProps> = ({ recipesStore }) 
               </Stepper>
             </CardContent>
           </Card>
+          <div className='recipe-source-container'>
+            <Card>
+              <CardContent>
+                <a href={recipe.source} className='recipe-source'><h6>Source Link</h6></a>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
     );
