@@ -16,14 +16,14 @@ $ npm install
 ## Running the app in production mode
 
 ```
-docker-compose up -d
+docker-compose -f docker-compose.yaml up -d
 ```
 
 ## Running the app in development mode
 
 ```bash
 #run database
-docker-compose up -d postgres_db
+docker-compose -f docker-compose.yaml up -d postgres_db
 
 # run frontend
 $ npm run start:dev:front
