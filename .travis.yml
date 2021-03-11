@@ -1,6 +1,5 @@
 language: node_js
 install:
-- docker-compose up -d postgres_db
 - npm install
 - npm run lint
 - npm run build:front
@@ -18,3 +17,4 @@ before_install:
 - eval "$(ssh-agent -s)"
 - chmod 600 ./key
 - ssh-add ./key
+- docker-compose up -d postgres_db
