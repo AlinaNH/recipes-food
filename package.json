@@ -13,7 +13,7 @@
     "build:front:prod": "webpack --mode production",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" \"front/**/*.tsx\"",
     "start": "nest start",
-    "start:dev": "typeorm:run && nest start --watch",
+    "start:dev": "nest start --watch",
     "start:dev:front": "webpack --watch --mode development",
     "start:debug": "nest start --debug --watch",
     "start:prod": "npm run typeorm:run && nest start",
