@@ -17,4 +17,4 @@ before_install:
 - eval "$(ssh-agent -s)"
 - chmod 600 ./key
 - ssh-add ./key
-- docker-compose up -d postgres_db
+- docker-compose -f docker-compose.yaml up -d postgres_db
