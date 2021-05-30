@@ -8,6 +8,10 @@ RUN npm install
 
 COPY . .
 
+ARG NODE_OPTIONS="--max-old-space-size=8192"
+
+RUN npm run build:front:prod
+
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
 
